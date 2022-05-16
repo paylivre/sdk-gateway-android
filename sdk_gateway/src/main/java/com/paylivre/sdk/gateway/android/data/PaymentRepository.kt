@@ -11,11 +11,9 @@ import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferP
 import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
 import java.lang.Exception
 
-class PaymentRepository {
-    private val remoteDataSource: RemoteDataSource by lazy {
-        RemoteDataSource(App.apiService)
-    }
-
+class PaymentRepository(
+    private val remoteDataSource: RemoteDataSource = RemoteDataSource(App.apiService),
+) {
 
     fun getPixApprovalTime(
         getApprovalTimeSuccess: (response: PixApprovalTimeResponse) -> Unit,

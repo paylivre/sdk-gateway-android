@@ -1,7 +1,6 @@
 package com.paylivre.sdk.gateway.android.ui.header
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,11 +22,11 @@ import kotlin.math.roundToInt
 class HeaderFragment : Fragment() {
 
     private var _binding: HeaderTitleBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,56 +41,59 @@ class HeaderFragment : Fragment() {
         binding.ButtonCloseSDK.setOnClickListener {
             //Set Log Analytics
             LogEvents.setLogEventAnalytics("Btn_GoBack_Header")
-
             mainViewModel.setIsCloseSDK(true)
         }
 
         var logoUrl: String? = null
 
-        mainViewModel.logoUrl.observe(viewLifecycleOwner, {
+        mainViewModel.logoUrl.observe(viewLifecycleOwner) {
             logoUrl = it
-        })
+        }
 
-        mainViewModel.logoResId.observe(viewLifecycleOwner, {
-            if (checkValidDrawableId(requireContext(), it)) {
-                binding.logoMerchant.setImageResource(it)
-            } else if (logoUrl != null) {
-                try {
-                    val sizeWidth = dpToPx(resources, 160f).roundToInt()
-                    val sizeHeight = dpToPx(resources, 160f).roundToInt()
+        mainViewModel.logoResId.observe(viewLifecycleOwner) {
+            when {
+                checkValidDrawableId(requireContext(), it) -> {
+                    binding.logoMerchant.setImageResource(it)
+                }
+                logoUrl != null -> {
+                    try {
+                        val sizeWidth = dpToPx(resources, 160f).roundToInt()
+                        val sizeHeight = dpToPx(resources, 160f).roundToInt()
 
-                    val picasso = Picasso.Builder(requireContext())
-                        .listener { picasso, uri, exception ->
-                            println("Exception Picasso: " + exception.stackTraceToString())
-                            binding.logoMerchant.setImageResource(R.drawable.ic_logo_paylivre_blue)
-                        }
-                        .build()
+                        val picasso = Picasso.Builder(requireContext())
+                            .listener { picasso, uri, exception ->
+                                println("Exception Picasso: " + exception.stackTraceToString())
+                                binding.logoMerchant.setImageResource(R.drawable.ic_logo_paylivre_blue)
+                            }
+                            .build()
 
-                    picasso
-                        .load(logoUrl)
-                        .resize(sizeWidth, sizeHeight)
-                        .centerInside()
-                        .into(binding.logoMerchant)
+                        picasso
+                            .load(logoUrl)
+                            .resize(sizeWidth, sizeHeight)
+                            .centerInside()
+                            .into(binding.logoMerchant)
 
-                } catch (e: Exception) {
-                    println("Catch Picasso:" + e.stackTraceToString())
+                    } catch (e: Exception) {
+                        println("Catch Picasso:" + e.stackTraceToString())
+                        binding.logoMerchant.setImageResource(R.drawable.ic_logo_paylivre_blue)
+                    }
+
+                }
+                else -> {
                     binding.logoMerchant.setImageResource(R.drawable.ic_logo_paylivre_blue)
                 }
-
-            } else {
-                binding.logoMerchant.setImageResource(R.drawable.ic_logo_paylivre_blue)
             }
 
-        })
+        }
 
         val textViewOperation: TextView = binding.textViewOperation
 
 
-        mainViewModel.operation.observe(viewLifecycleOwner, {
+        mainViewModel.operation.observe(viewLifecycleOwner) {
             val operation =
                 if (it == Operation.DEPOSIT.code) getString(R.string.deposit) else getString(R.string.withdraw)
             textViewOperation.text = operation
-        })
+        }
 
         val versionName = BuildConfig.VERSION_NAME
 

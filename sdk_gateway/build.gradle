@@ -185,8 +185,9 @@ dependencies {
 
     implementation 'com.amplitude:android-sdk:2.23.2'
 
-        dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.21")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.21")
 
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
 }
 
 afterEvaluate {

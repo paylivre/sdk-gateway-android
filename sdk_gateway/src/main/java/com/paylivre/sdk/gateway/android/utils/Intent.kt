@@ -4,7 +4,6 @@ import android.content.Intent
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.domain.model.DataStartCheckout
-import com.paylivre.sdk.gateway.android.domain.model.DepositStatus
 
 data class FormDataExtra(
     val btnNameTypeSelected: Int = -1,

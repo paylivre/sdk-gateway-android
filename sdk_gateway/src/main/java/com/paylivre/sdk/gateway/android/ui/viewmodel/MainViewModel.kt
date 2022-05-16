@@ -16,11 +16,9 @@ import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.utils.getNumberByTypes
 import kotlinx.coroutines.*
 
-class MainViewModel() : ViewModel() {
-    private val paymentRepository: PaymentRepository by lazy {
-        PaymentRepository()
-    }
-
+class MainViewModel(
+    private val paymentRepository: PaymentRepository = PaymentRepository(),
+) : ViewModel() {
     private val _clearAllFocus = MutableLiveData<Boolean>()
     val clearAllFocus: MutableLiveData<Boolean> get() = _clearAllFocus
 
@@ -45,7 +43,7 @@ class MainViewModel() : ViewModel() {
 
 
     private val _checkStatusDepositResponse = MutableLiveData<CheckStatusDepositResponse>()
-    val checkStatusDepositResponse: MutableLiveData<CheckStatusDepositResponse> get() = _checkStatusDepositResponse
+    val checkStatusDepositResponse: LiveData<CheckStatusDepositResponse> get() = _checkStatusDepositResponse
 
     private val _checkStatusOrderDataResponse = MutableLiveData<CheckStatusOrderResponse>()
     val checkStatusOrderDataResponse: MutableLiveData<CheckStatusOrderResponse> get() = _checkStatusOrderDataResponse
@@ -470,7 +468,7 @@ class MainViewModel() : ViewModel() {
         _checkStatusDepositLoading.value = isLoading
     }
 
-    private fun checkStatusDepositSuccess(response: CheckStatusDepositResponse) {
+    fun checkStatusDepositSuccess(response: CheckStatusDepositResponse) {
         _checkStatusDepositResponse.value = response
         setCheckStatusDepositLoading(false)
 

@@ -50,9 +50,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
         this.movementMethod =
             LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
         this.setText(spannableString, TextView.BufferType.SPANNABLE)
-    } catch (error: Exception) {
-        println("error: $error")
-    }
+    } catch (error: Exception) { }
 
 }
 
@@ -63,7 +61,6 @@ fun setTextWithSpan(textView: TextView, text: String, spanText: String, style: S
     sb.setSpan(style, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
     textView.text = sb
 }
-
 
 
 fun setTextBackground(
