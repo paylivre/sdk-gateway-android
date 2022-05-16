@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/paylivre/sdk-gateway-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/paylivre/sdk-gateway-android)
+[![codecov](https://codecov.io/gh/paylivre/sdk-gateway-android/branch/master/graph/badge.svg)](https://codecov.io/gh/paylivre/sdk-gateway-android)
 [![android min api](https://img.shields.io/badge/Android_API->=21-66c718.svg)](https://github.com/neijrdev/sdk-gateway-android/releases)
 [![](https://jitpack.io/v/neijrdev/sdk-gateway-android.svg)](https://jitpack.io/#neijrdev/sdk-gateway-android)
 
