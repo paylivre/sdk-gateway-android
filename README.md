@@ -1,5 +1,4 @@
 [![codecov](https://codecov.io/gh/neijrdev/sdk-gateway-android/branch/master/graph/badge.svg)](https://codecov.io/gh/neijrdev/sdk-gateway-android)
-[![codecov](https://codecov.io/gh/paylivre/sdk-gateway-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/paylivre/sdk-gateway-android)
 [![android min api](https://img.shields.io/badge/Android_API->=21-66c718.svg)](https://github.com/neijrdev/sdk-gateway-android/releases)
 [![](https://jitpack.io/v/neijrdev/sdk-gateway-android.svg)](https://jitpack.io/#neijrdev/sdk-gateway-android)
 
@@ -33,10 +32,10 @@ Paylivre SDK Gateway Android
 
   - Add it in your root build.gradle at the end of repositories:
     allprojects {
-    repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-    }
+      repositories {
+      ...
+        maven { url 'https://jitpack.io' }
+      }
     }
 
   or
@@ -44,11 +43,11 @@ Paylivre SDK Gateway Android
 * Add it in file settings.gradle
 
 dependencyResolutionManagement {
-repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-repositories {
-google()
-mavenCentral()
-maven { url 'https://jitpack.io' }
-jcenter() // Warning: this repository is going to shut down soon
-}
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    jcenter() // Warning: this repository is going to shut down soon
+  }
 }
