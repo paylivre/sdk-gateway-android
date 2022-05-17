@@ -133,7 +133,7 @@ data class ErrorTransaction(
     val messageDetails: String? = null,
     val error: ErrorData? = null,
     val errors: Errors? = null,
-    val errorTags: String? = null,
+    var errorTags: String? = null,
     val original_message: String? = null,
 )
 

@@ -31,7 +31,7 @@ fun setSelectBankFragment(
     container: ConstraintLayout,
     bankAccounts: BankAccounts? = null
 ) {
-    //Data StartCheckout
+    //Data StartCheckoutByParams
     val bankAccountsString = Gson().toJson(bankAccounts)
 
     val bundle = Bundle()

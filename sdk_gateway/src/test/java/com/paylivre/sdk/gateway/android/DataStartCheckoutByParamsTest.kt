@@ -6,7 +6,7 @@ import com.paylivre.sdk.gateway.android.utils.*
 import org.junit.Assert
 import org.junit.Test
 
-class DataStartCheckoutTest {
+class DataStartCheckoutByParamsTest {
     @Test
     fun `Test CurrencyPrefix`() {
         Assert.assertEquals("R$", CurrencyPrefix.BRL.prefix)

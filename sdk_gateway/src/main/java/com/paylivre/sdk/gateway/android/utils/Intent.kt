@@ -32,11 +32,11 @@ fun setDataPaymentIntent(
     formDataExtra: FormDataExtra,
     logoResId: Int = R.drawable.ic_logo_paylivre_blue,
 ): Intent? {
-    //Data StartCheckout
+    //Data StartCheckoutByParams
     val dataStartCheckoutString = Gson().toJson(data)
     intent?.putExtra("dataStartCheckout", dataStartCheckoutString)
 
-    //Type StartCheckout
+    //Type StartCheckoutByParams
     intent?.putExtra("type_start_checkout", typeStartCheckout)
 
     //Base url

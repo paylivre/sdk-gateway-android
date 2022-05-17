@@ -444,9 +444,9 @@ class MainViewModel(
         }
     }
 
-    private fun newOrderGateway(dataGenerateSignature: OrderDataRequest) {
+    fun newOrderGateway(data: OrderDataRequest) {
         paymentRepository.newTransaction(
-            dataGenerateSignature,
+            data,
             ::transactionSuccess,
             ::transactionFailure
         )
@@ -527,8 +527,6 @@ class MainViewModel(
     }
 
 
-
-
     private fun setCheckStatusTransactionLoading(isLoading: Boolean) {
         _checkStatusTransactionLoading.value = isLoading
     }
@@ -560,7 +558,10 @@ class MainViewModel(
     }
 
 
-    fun startPayment(dataGenerateSignatureStartRequest: DataGenerateSignature) {
+    fun startPayment(
+        dataGenerateSignatureStartRequest: DataGenerateSignature,
+        generateSignatureService: GenerateSignature = GenerateSignature(),
+    ) {
         //Reset statusResponseTransaction
         _statusResponseTransaction.value = StatusTransactionResponse(
             isLoading = true,
@@ -569,7 +570,6 @@ class MainViewModel(
             error = null,
         )
 
-        val generateSignatureService = GenerateSignature()
         CoroutineScope(Dispatchers.Main).launch {
             val generatedSignature = withContext(Dispatchers.Default) {
                 generateSignatureService.generateSignature(dataGenerateSignatureStartRequest)

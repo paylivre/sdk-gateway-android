@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
-import com.amplitude.api.Amplitude
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.domain.model.DataStartCheckout
 import com.paylivre.sdk.gateway.android.domain.model.validateLocaleLanguage
@@ -13,11 +12,9 @@ import com.paylivre.sdk.gateway.android.utils.FormDataExtra
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
 import com.paylivre.sdk.gateway.android.utils.setDataPaymentIntent
 import io.sentry.Sentry
-import org.json.JSONException
-import org.json.JSONObject
 import java.util.*
 
-class StartCheckout private constructor(
+class StartCheckoutByParams private constructor(
     private val requestCode: Int? = null,
     private val merchant_id: Int,
     private val gateway_token: String,
@@ -180,8 +177,8 @@ class StartCheckout private constructor(
     ) {
 
 
-        fun build(): StartCheckout {
-            return StartCheckout(
+        fun build(): StartCheckoutByParams {
+            return StartCheckoutByParams(
                 request_code,
                 merchant_id,
                 gateway_token,

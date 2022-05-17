@@ -20,7 +20,7 @@ enum class ErrorTags {
     RX015, //Parameter pix_key_type not valid
     RX016, //Parameter pix_key not valid
 
-    //Error parameters SDK StartCheckout
+    //Error parameters SDK StartCheckoutByParams
     RP001, //Parameter base_url do not exist or are not valid
     RP002, //Parameter gateway_token do not exist or are not valid
 

@@ -9,6 +9,7 @@ import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataReq
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataResponse
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderResponse
 import com.paylivre.sdk.gateway.android.data.model.order.ErrorTransaction
+import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -31,19 +32,19 @@ class MainViewModelTest {
 
     var fileTestsUtils = FileTestsUtils()
 
-
     @Test
     fun `test mainViewModel checkStatusDeposit success`() = runBlocking {
         //GIVEN
         val server = MockWebServer()
         server.start()
 
-        val rawResponse = fileTestsUtils.loadJsonAsString("res_check_status_deposit_success.json")
+        val responseExpectedString =
+            fileTestsUtils.loadJsonAsString("res_check_status_deposit_success.json")
 
         server.enqueue(
             MockResponse()
                 .setResponseCode(200)
-                .setBody(rawResponse)
+                .setBody(responseExpectedString)
         )
         val mockMainViewModel = MockMainViewModel(server)
 
@@ -177,8 +178,84 @@ class MainViewModelTest {
             isLoading = false,
             isSuccess = false,
             data = null,
-            error= ErrorTransaction(message="title_unexpected_error", messageDetails="title_unexpected_error_body", error=null, errors=null, errorTags="UX000", original_message=null)
+            error = ErrorTransaction(message = "title_unexpected_error",
+                messageDetails = "title_unexpected_error_body",
+                error = null,
+                errors = null,
+                errorTags = "UX000",
+                original_message = null)
         ), mockMainViewModel.mainViewModel.checkStatusOrderDataResponse.getOrAwaitValueTest())
+
+        server.shutdown()
+    }
+
+    @Test
+    fun `test mainViewModel checkStatusTransaction success`() = runBlocking {
+        //GIVEN
+        val server = MockWebServer()
+        server.start()
+        val rawResponse =
+            "{\"status\":\"success\",\"status_code\":200,\"message\":\"OK\",\"data\":{\"transaction_status_id\":null,\"deposit_status_id\":2}}"
+
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(rawResponse)
+        )
+        val mockMainViewModel = MockMainViewModel(server)
+
+        //WHEN
+        //Check Status Transaction
+        mockMainViewModel.mainViewModel.checkStatusTransaction(transactionId = 1)
+
+        //THEN
+        //check Endpoint path is correct
+        val request1 = server.takeRequest()
+        Assert.assertEquals("/api/v2/transaction/status/1", request1.path)
+
+        val expectedDataResponse = Gson().fromJson(
+            rawResponse, CheckStatusTransactionResponse::class.java
+        )
+
+        //check the value returned to livedata
+        Assert.assertEquals(expectedDataResponse,
+            mockMainViewModel.mainViewModel.checkStatusTransactionResponse.getOrAwaitValueTest())
+
+        server.shutdown()
+    }
+
+    @Test
+    fun `test mainViewModel checkStatusTransaction failure error generic`() = runBlocking {
+        //GIVEN
+        val server = MockWebServer()
+        server.start()
+        val rawResponse = "{\"message\":\"error\"}"
+
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(rawResponse)
+        )
+        val mockMainViewModel = MockMainViewModel(server)
+
+        //WHEN
+        //Check Status Transaction
+        mockMainViewModel.mainViewModel.checkStatusTransaction(transactionId = 1)
+
+        //THEN
+        //check Endpoint path is correct
+        val request1 = server.takeRequest()
+        Assert.assertEquals("/api/v2/transaction/status/1", request1.path)
+
+
+        //check the value returned to livedata
+        Assert.assertEquals(
+            CheckStatusTransactionResponse(
+                status = "error",
+                status_code = 0,
+                message = "title_unexpected_error",
+                data = null
+            ), mockMainViewModel.mainViewModel.checkStatusTransactionResponse.getOrAwaitValueTest())
 
         server.shutdown()
     }

@@ -58,7 +58,7 @@
                         android:id="@+id/txtLabelDataParams"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Data Params to StartCheckout"
+                        android:text="Data to StartCheckout by Params"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"

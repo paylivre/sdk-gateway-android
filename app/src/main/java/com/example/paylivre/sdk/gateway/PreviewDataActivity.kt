@@ -19,7 +19,7 @@ import com.example.paylivre.sdk.gateway.utils.getSdkGatewayExtraData
 import com.example.paylivre.sdk.gateway.utils.makeBold
 import com.example.paylivre.sdk.gateway.utils.setValueTextViewWithLabelBold
 import com.google.gson.Gson
-import com.paylivre.sdk.gateway.android.StartCheckout
+import com.paylivre.sdk.gateway.android.StartCheckoutByParams
 import com.paylivre.sdk.gateway.android.StartCheckoutByURL
 import com.paylivre.sdk.gateway.android.domain.model.extractDataFromUrl
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
@@ -400,7 +400,7 @@ class PreviewDataActivity : AppCompatActivity() {
 
 
         fun startCheckoutByParams() {
-            val checkout = StartCheckout.Builder(
+            val checkout = StartCheckoutByParams.Builder(
 //                request_code = SDK_GATEWAY_PAYLIVRE_ACTIVITY_REQUEST_CODE,
                 merchant_id = dataStartCheckoutByParams.merchant_id,
                 gateway_token = dataStartCheckoutByParams.gateway_token,
