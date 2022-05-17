@@ -379,7 +379,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
         mainViewModel.callback_url.observe(viewLifecycleOwner, { callback_url = it })
         mainViewModel.account_id.observe(viewLifecycleOwner, { account_id = it })
         mainViewModel.type.observe(viewLifecycleOwner, { type = it.toString() })
-        mainViewModel.auto_approve.observe(viewLifecycleOwner, { auto_approve = it })
+        mainViewModel.autoApprove.observe(viewLifecycleOwner, { auto_approve = it })
         mainViewModel.buttonTypeSelected.observe(
             viewLifecycleOwner,
             { selected_type = it.toString() })

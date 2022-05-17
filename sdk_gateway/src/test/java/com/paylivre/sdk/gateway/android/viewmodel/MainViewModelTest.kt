@@ -12,6 +12,7 @@ import com.paylivre.sdk.gateway.android.domain.model.Currency
 import com.paylivre.sdk.gateway.android.domain.model.DataStartCheckout
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
+import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.utils.BASE_URL_ENVIRONMENT_DEV
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -339,5 +340,360 @@ class MainViewModelTest {
             mockMainViewModel.mainViewModel.selectedBankAccountWireTransfer.getOrAwaitValueTest())
     }
 
+    @Test
+    fun `test mainViewModel setAmount`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setAmount(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.amount.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setAutoApprove`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setAutoApprove(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.autoApprove.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setGatewayToken`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setGatewayToken("123456")
+        Assert.assertEquals(
+            "123456", mockMainViewModel.mainViewModel.editGatewayToken.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEditEmail`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEditEmail("test@test.com")
+        Assert.assertEquals(
+            "test@test.com", mockMainViewModel.mainViewModel.editEmail.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEditDocument`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEditDocument("12345678912")
+        Assert.assertEquals(
+            "12345678912", mockMainViewModel.mainViewModel.editDocument.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setLanguage`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setLanguage("pt")
+        Assert.assertEquals(
+            "pt", mockMainViewModel.mainViewModel.language.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setTypeStartCheckout`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setTypeStartCheckout(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.type_start_checkout.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setBaseUrl`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setBaseUrl("http://test.com")
+        Assert.assertEquals(
+            "http://test.com", mockMainViewModel.mainViewModel.base_url.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setOperation`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setOperation(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.operation.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEditPixKeyValue`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEditPixKeyValue("12345678912")
+        Assert.assertEquals(
+            "12345678912", mockMainViewModel.mainViewModel.editPixKeyValue.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setButtonPixKeyTypeSelected`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setButtonPixKeyTypeSelected(1)
+        Assert.assertEquals(
+            1, mockMainViewModel.mainViewModel.buttonPixKeyTypeSelected.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setButtonTypeSelected`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setButtonTypeSelected(1)
+        Assert.assertEquals(
+            1, mockMainViewModel.mainViewModel.buttonTypeSelected.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setIsCloseSDK`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setIsCloseSDK(false)
+        Assert.assertEquals(
+            false, mockMainViewModel.mainViewModel.isCloseSDK.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setCurrency`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setCurrency("BRL")
+        Assert.assertEquals(
+            "BRL", mockMainViewModel.mainViewModel.currency.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setMerchantId`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setMerchantId(123)
+        Assert.assertEquals(
+            123, mockMainViewModel.mainViewModel.merchant_id.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setCallbackUrl`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setCallbackUrl("http://test.com")
+        Assert.assertEquals(
+            "http://test.com", mockMainViewModel.mainViewModel.callback_url.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setMerchantTransactionId`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setMerchantTransactionId("123")
+        Assert.assertEquals(
+            "123", mockMainViewModel.mainViewModel.merchant_transaction_id.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setAccountId`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setAccountId("123")
+        Assert.assertEquals(
+            "123", mockMainViewModel.mainViewModel.account_id.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEditEmailWallet`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEditEmailWallet("test@test.com")
+        Assert.assertEquals(
+            "test@test.com", mockMainViewModel.mainViewModel.editEmailWallet.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEditApiToken`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEditApiToken("123456")
+        Assert.assertEquals(
+            "123456", mockMainViewModel.mainViewModel.editApiToken.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setLogoUrl`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setLogoUrl("http://logo.png")
+        Assert.assertEquals(
+            "http://logo.png", mockMainViewModel.mainViewModel.logoUrl.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setLogoResId`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setLogoResId(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.logoResId.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setGetServicesStatusSuccess`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setGetServicesStatusSuccess(null)
+        Assert.assertEquals(
+            MainViewModel.ServicesStatusSuccess(isSuccess = null, typeStatusServices = 0),
+            mockMainViewModel.mainViewModel.getServicesStatusSuccess.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setType`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setType(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.type.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEnabledEditDocument`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEnabledEditDocument(false)
+        Assert.assertEquals(
+            false, mockMainViewModel.mainViewModel.enableEditDocument.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setClearAllFocus`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setClearAllFocus(false)
+        Assert.assertEquals(
+            false, mockMainViewModel.mainViewModel.clearAllFocus.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setEnabledEditEmail`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setEnabledEditEmail(false)
+        Assert.assertEquals(
+            false, mockMainViewModel.mainViewModel.enableEditEmail.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setIsCloseKeyboard`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setIsCloseKeyboard(false)
+        Assert.assertEquals(
+            false, mockMainViewModel.mainViewModel.isCloseKeyboard.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setErrorTags`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setErrorTags("RX123")
+        Assert.assertEquals(
+            "RX123", mockMainViewModel.mainViewModel.errorTags.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setTypeStatusServices`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setTypeStatusServices(0)
+        Assert.assertEquals(
+            0, mockMainViewModel.mainViewModel.type_status_services.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setServicesStatusLoading`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setServicesStatusLoading(false)
+        Assert.assertEquals(
+            false,
+            mockMainViewModel.mainViewModel.getServicesStatusLoading.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setMessageDetailsError`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setMessageDetailsError("test")
+        Assert.assertEquals(
+            "test",
+            mockMainViewModel.mainViewModel.msgDetailsError.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setIsFatalError`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setIsFatalError(false, "error")
+        Assert.assertEquals(
+            false,
+            mockMainViewModel.mainViewModel.isFatalError.getOrAwaitValueTest()
+        )
+        Assert.assertEquals(
+            "error",
+            mockMainViewModel.mainViewModel.keyMsgFatalError.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel transactionFailure`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.transactionFailure(ErrorTransaction())
+        Assert.assertEquals(
+            ErrorTransaction(),
+            mockMainViewModel.mainViewModel.transactionError.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setCheckStatusTransactionLoading`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setCheckStatusTransactionLoading(false)
+        Assert.assertEquals(
+            false,
+            mockMainViewModel.mainViewModel.checkStatusTransactionLoading.getOrAwaitValueTest()
+        )
+    }
+
+
+    @Test
+    fun `test mainViewModel setCheckStatusDepositLoading`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setCheckStatusDepositLoading(false)
+        Assert.assertEquals(
+            false,
+            mockMainViewModel.mainViewModel.checkStatusDepositLoading.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setDataStartPayment`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setDataStartPayment(null)
+        Assert.assertEquals(
+            null,
+            mockMainViewModel.mainViewModel.data_start_payment.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setDataRequestOrder`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setDataRequestOrder(null)
+        Assert.assertEquals(
+            null,
+            mockMainViewModel.mainViewModel.order_data.getOrAwaitValueTest()
+        )
+    }
 
 }

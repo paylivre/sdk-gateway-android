@@ -88,7 +88,7 @@ class MainViewModel(
     val amount: LiveData<Int> get() = _amount
 
     private val _auto_approve = MutableLiveData<Int>()
-    val auto_approve: LiveData<Int> get() = _auto_approve
+    val autoApprove: LiveData<Int> get() = _auto_approve
 
     private val _transactionError = MutableLiveData<ErrorTransaction?>()
     val transactionError: LiveData<ErrorTransaction?> get() = _transactionError
@@ -197,8 +197,6 @@ class MainViewModel(
     fun setTypeStatusServices(typeValue: Int) {
         _type_status_services.value = typeValue
     }
-
-
 
     fun setGetServicesStatusSuccess(data: ServicesStatusSuccess?) {
         if (data == null) {
@@ -404,7 +402,7 @@ class MainViewModel(
     }
 
 
-    private fun transactionFailure(error: ErrorTransaction) {
+    fun transactionFailure(error: ErrorTransaction) {
         _transactionError.value = error
 
         _statusResponseTransaction.value = StatusTransactionResponse(
@@ -450,7 +448,7 @@ class MainViewModel(
         _selectedBankAccountWireTransfer.value = bankAccount
     }
 
-    private fun setCheckStatusDepositLoading(isLoading: Boolean) {
+    fun setCheckStatusDepositLoading(isLoading: Boolean) {
         _checkStatusDepositLoading.value = isLoading
     }
 
@@ -513,7 +511,7 @@ class MainViewModel(
     }
 
 
-    private fun setCheckStatusTransactionLoading(isLoading: Boolean) {
+    fun setCheckStatusTransactionLoading(isLoading: Boolean) {
         _checkStatusTransactionLoading.value = isLoading
     }
 
