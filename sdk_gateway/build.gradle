@@ -44,6 +44,8 @@ tasks.withType(Test) {
             }
         }
     }
+
+    jvmArgs = ["--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED"]
 }
 
 //task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {

@@ -5,20 +5,16 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.CoroutineTestRule
 import com.paylivre.sdk.gateway.android.FileTestsUtils
-import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
-import com.paylivre.sdk.gateway.android.data.model.deposit.DataStatusDeposit
 import com.paylivre.sdk.gateway.android.data.model.order.DataGenerateSignature
 import com.paylivre.sdk.gateway.android.data.model.order.OrderDataRequest
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
-import com.paylivre.sdk.gateway.android.dataMock
 import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
 import com.paylivre.sdk.gateway.android.services.argon2i.Argon2iHash
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert
@@ -155,6 +151,44 @@ class StartPaymentTest {
         )
 
         server.shutdown()
+    }
+
+    @Test
+    fun `test mainViewModel setStatusTransactionResponse when data valid`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+
+        val responseExpectedString =
+            fileTestsUtils.loadJsonAsString("request_deposit_pix_transaction.json")
+
+        val responseDataExpected =
+            Gson().fromJson(responseExpectedString, ResponseCommonTransactionData::class.java)
+
+        val responseExpected = StatusTransactionResponse(
+            isLoading = false,
+            isSuccess = true,
+            data = responseDataExpected,
+            error = null,
+        )
+
+        mockMainViewModel.mainViewModel.setStatusTransactionResponse(responseExpected)
+
+        //check the value returned to livedata
+        Assert.assertEquals(
+            responseExpected,
+            mockMainViewModel.mainViewModel.statusResponseTransaction.getOrAwaitValueTest()
+        )
+    }
+
+    @Test
+    fun `test mainViewModel setStatusTransactionResponse when data = null`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setStatusTransactionResponse(null)
+
+        //check the value returned to livedata
+        Assert.assertEquals(
+            StatusTransactionResponse(null, null, null, null),
+            mockMainViewModel.mainViewModel.statusResponseTransaction.getOrAwaitValueTest()
+        )
     }
 
 }

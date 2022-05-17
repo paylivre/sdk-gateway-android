@@ -1,16 +1,19 @@
 package com.paylivre.sdk.gateway.android.viewmodel
 
+import android.net.Uri
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.FileTestsUtils
 import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
 import com.paylivre.sdk.gateway.android.data.model.deposit.DataStatusDeposit
-import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataRequest
-import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataResponse
-import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderResponse
-import com.paylivre.sdk.gateway.android.data.model.order.ErrorTransaction
+import com.paylivre.sdk.gateway.android.data.model.order.*
 import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
+import com.paylivre.sdk.gateway.android.domain.model.Currency
+import com.paylivre.sdk.gateway.android.domain.model.DataStartCheckout
+import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
+import com.paylivre.sdk.gateway.android.utils.BASE_URL_ENVIRONMENT_DEV
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -258,6 +261,82 @@ class MainViewModelTest {
             ), mockMainViewModel.mainViewModel.checkStatusTransactionResponse.getOrAwaitValueTest())
 
         server.shutdown()
+    }
+
+
+    @Test
+    fun `test mainViewModel setStatusResponseCheckServices`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setStatusResponseCheckServices(null)
+        Assert.assertEquals(null,
+            mockMainViewModel.mainViewModel.statusResponseCheckServices.getOrAwaitValueTest())
+    }
+
+    @Test
+    fun `test mainViewModel setStatusWithdrawOrder`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setStatusWithdrawOrder(
+            StatusWithdrawOrder(null, null, null, null)
+        )
+        Assert.assertEquals(
+            StatusWithdrawOrder(null, null, null, null),
+            mockMainViewModel.mainViewModel.statusWithdrawOrder.getOrAwaitValueTest())
+    }
+
+
+    @Test
+    fun `test mainViewModel setDataStartCheckout`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        val mockDataStartCheckout = DataStartCheckout(
+            10,
+            "123asd4a56sf4a56s4d65as4d",
+            Operation.DEPOSIT.code,
+            "12asd323",
+            500,
+            Currency.BRL.currency,
+            1,
+            "1d2a3sd",
+            "https://google.com",
+            "user_gateway_test@tutanota.com",
+            "61317581075",
+            BASE_URL_ENVIRONMENT_DEV,
+            1,
+            signature = "123asd4a56s4f65a4sd1as32d1gfasfgafdgsdfg"
+        )
+        mockMainViewModel.mainViewModel.setDataStartCheckout(
+            mockDataStartCheckout
+        )
+        Assert.assertEquals(
+            mockDataStartCheckout,
+            mockMainViewModel.mainViewModel.dataStartCheckout.getOrAwaitValueTest())
+    }
+
+    @Test
+    fun `test mainViewModel setOriginTypeInsertProof`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setOriginTypeInsertProof(null)
+        Assert.assertEquals(
+            null,
+            mockMainViewModel.mainViewModel.origin_type_insert_proof.getOrAwaitValueTest())
+    }
+
+    @Test
+    fun `test mainViewModel setProofImageUri`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        val mockUri: Uri = mockk()
+        mockMainViewModel.mainViewModel.setProofImageUri(mockUri)
+        Assert.assertEquals(
+            mockUri,
+            mockMainViewModel.mainViewModel.proof_image_uri.getOrAwaitValueTest())
+    }
+
+    @Test
+    fun `test mainViewModel setSelectedBankAccountWireTransfer`() = runBlocking {
+        val mockMainViewModel = MockMainViewModel()
+        mockMainViewModel.mainViewModel.setSelectedBankAccountWireTransfer(null)
+        Assert.assertEquals(
+            null,
+            mockMainViewModel.mainViewModel.selectedBankAccountWireTransfer.getOrAwaitValueTest())
     }
 
 

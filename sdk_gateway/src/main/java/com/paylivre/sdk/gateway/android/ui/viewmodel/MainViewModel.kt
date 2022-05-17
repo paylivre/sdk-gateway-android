@@ -153,12 +153,6 @@ class MainViewModel(
     private val _pixApprovalTime = MutableLiveData<PixApprovalTimeResponse>()
     val pixApprovalTime: LiveData<PixApprovalTimeResponse> get() = _pixApprovalTime
 
-    private val _pixApprovalTimeIsSuccess = MutableLiveData<Boolean>()
-    val pixApprovalTimeIsSuccess: LiveData<Boolean> get() = _pixApprovalTimeIsSuccess
-
-    private val _pixApprovalTimeIsLoading = MutableLiveData<Boolean>()
-    val pixApprovalTimeIsLoading: LiveData<Boolean> get() = _pixApprovalTimeIsLoading
-
     private val _getServicesStatusLoading = MutableLiveData<Boolean>()
     val getServicesStatusLoading: LiveData<Boolean> get() = _getServicesStatusLoading
 
@@ -204,9 +198,6 @@ class MainViewModel(
         _type_status_services.value = typeValue
     }
 
-    private fun setPixApprovalTimeIsLoading(value: Boolean) {
-        _pixApprovalTimeIsLoading.value = value
-    }
 
 
     fun setGetServicesStatusSuccess(data: ServicesStatusSuccess?) {
@@ -333,7 +324,7 @@ class MainViewModel(
         _language.value = value
     }
 
-    private fun setPixApprovalTime(pixApprovalTimeResponse: PixApprovalTimeResponse?) {
+    fun setPixApprovalTime(pixApprovalTimeResponse: PixApprovalTimeResponse?) {
         if (pixApprovalTimeResponse == null) {
             _pixApprovalTime.value = PixApprovalTimeResponse(
                 "", 0,
@@ -347,13 +338,9 @@ class MainViewModel(
 
     fun getPixApprovalTimeSuccess(response: PixApprovalTimeResponse?) {
         setPixApprovalTime(response)
-        setPixApprovalTimeIsLoading(false)
-        _pixApprovalTimeIsSuccess.value = true
     }
 
     private fun getPixApprovalTimeFailure(error: Throwable) {
-        setPixApprovalTimeIsLoading(false)
-        _pixApprovalTimeIsSuccess.value = false
         _pixApprovalTime.value = PixApprovalTimeResponse(
             "error", 0,
             "", null
@@ -361,7 +348,6 @@ class MainViewModel(
     }
 
     fun getPixApprovalTime() {
-        setPixApprovalTimeIsLoading(true)
         paymentRepository.getPixApprovalTime(
             ::getPixApprovalTimeSuccess,
             ::getPixApprovalTimeFailure
@@ -418,7 +404,7 @@ class MainViewModel(
     }
 
 
-    fun transactionFailure(error: ErrorTransaction) {
+    private fun transactionFailure(error: ErrorTransaction) {
         _transactionError.value = error
 
         _statusResponseTransaction.value = StatusTransactionResponse(
@@ -629,7 +615,7 @@ class MainViewModel(
         _dataStartCheckout.value = data
     }
 
-    private fun insertTransferProofSuccess(responseData: InsertTransferProofDataResponse) {
+    fun insertTransferProofSuccess(responseData: InsertTransferProofDataResponse) {
         _transfer_proof_response.value = InsertTransferProofDataResponse(
             responseData.id,
             responseData.proof,

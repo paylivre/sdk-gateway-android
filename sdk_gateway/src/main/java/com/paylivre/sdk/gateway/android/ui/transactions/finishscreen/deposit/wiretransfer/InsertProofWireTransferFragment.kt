@@ -77,20 +77,20 @@ class InsertProofWireTransferFragment : Fragment() {
 
         }
 
-        mainViewModel.proof_image_uri.observe(viewLifecycleOwner, {
+        mainViewModel.proof_image_uri.observe(viewLifecycleOwner) {
             if (it != null) {
                 setActivateBorderButton(false)
             } else {
                 setActivateBorderButton(true)
             }
-        })
+        }
 
-        mainViewModel.statusResponseTransaction.observe(viewLifecycleOwner, {
+        mainViewModel.statusResponseTransaction.observe(viewLifecycleOwner) {
             if (it != null) {
                 tokenTransferTransaction = it.data?.verification_token
                 orderIdTransferTransaction = it.data?.order_id
             }
-        })
+        }
 
         setActivateBorderButton(true)
 
@@ -136,7 +136,7 @@ class InsertProofWireTransferFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.origin_type_insert_proof.observe(viewLifecycleOwner, {
+        mainViewModel.origin_type_insert_proof.observe(viewLifecycleOwner) {
             when (it) {
                 OriginTypeInsertProof.GALLERY -> {
                     ImagePicker.with(this)
@@ -174,7 +174,7 @@ class InsertProofWireTransferFragment : Fragment() {
 
                 }
             }
-        })
+        }
 
 
         binding.btnChooseFile.setOnClickListener {
