@@ -124,7 +124,7 @@ android {
 
 ext {
     coroutines = "1.5.1"
-    fragment_version = "1.2.4"
+    fragment_version = "1.4.1"
     sentry_version = "5.6.1"
 }
 
@@ -221,4 +221,14 @@ jacocoAndroidUnitTestReport {
     csv.enabled false
     html.enabled true
     xml.enabled true
+}
+
+configurations.all{
+    resolutionStrategy {
+        eachDependency { details ->
+            if ('org.jacoco' == details.requested.group) {
+                details.useVersion "0.8.7"
+            }
+        }
+    }
 }

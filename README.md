@@ -4,7 +4,13 @@
 
 Paylivre SDK Gateway Android
 
-- run all test and generate jacoco coverage report:
+- run all test and generate jacoco coverage reports for the debug variant.
+  ./gradlew --no-daemon clean jacocoTestDebugUnitTestReport
+
+- run all test and generate jacoco coverage report s for the release variant.
+  ./gradlew --no-daemon clean jacocoTestReleaseUnitTestReport
+
+- run all test and generate jacoco coverage reports for the release and debug variant.
   ./gradlew --no-daemon clean jacocoTestReport
 
 - run all tests:
@@ -32,10 +38,10 @@ Paylivre SDK Gateway Android
 
   - Add it in your root build.gradle at the end of repositories:
     allprojects {
-    repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-    }
+      repositories {
+      ...
+      maven { url 'https://jitpack.io' }
+      }
     }
 
   or

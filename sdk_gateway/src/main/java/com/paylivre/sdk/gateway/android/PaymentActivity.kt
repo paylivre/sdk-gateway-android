@@ -26,8 +26,8 @@ interface IOnBackPressed {
 
 class PaymentActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var binding: StartCheckoutBinding
+    lateinit var mainViewModel: MainViewModel
+    lateinit var binding: StartCheckoutBinding
     private var insertRegisterResultData = InsertRegisterResultData(this)
 
     /**

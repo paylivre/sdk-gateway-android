@@ -42,7 +42,9 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
     ): View {
 
         _binding = FormStartPaymentBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
+
 
         var pixKeyTypeSelected: Int = -1
         val editDocument: EditText = binding.editDocument

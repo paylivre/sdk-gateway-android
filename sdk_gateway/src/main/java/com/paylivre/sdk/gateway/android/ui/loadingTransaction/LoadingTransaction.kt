@@ -31,6 +31,8 @@ class LoadingTransaction : Fragment() {
     ): View? {
 
         _binding = FragmentLoadingTransactionBinding.inflate(inflater, container, false)
+
+        println("LoadingTransaction")
         return binding.root
     }
 
