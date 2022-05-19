@@ -28,7 +28,7 @@ class PaymentActivity : AppCompatActivity() {
 
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: StartCheckoutBinding
-    private var insertRegisterResultData = InsertRegisterResultData(this)
+    var insertRegisterResultData = InsertRegisterResultData(this)
 
     /**
      * Does not allow returning to previous navigation within SDK screens

@@ -3,12 +3,9 @@ package com.paylivre.sdk.gateway.android.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.FileTestsUtils
-import com.paylivre.sdk.gateway.android.data.model.order.DataGenerateSignature
 import com.paylivre.sdk.gateway.android.data.model.order.OrderDataRequest
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
-import com.paylivre.sdk.gateway.android.domain.model.Operation
-import com.paylivre.sdk.gateway.android.domain.model.TypesToSelect
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

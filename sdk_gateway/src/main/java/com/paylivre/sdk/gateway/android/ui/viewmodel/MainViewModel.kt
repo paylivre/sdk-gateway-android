@@ -626,7 +626,7 @@ class MainViewModel(
         )
     }
 
-    private fun insertTransferProofFailure(responseErrorData: Throwable) {
+    fun insertTransferProofFailure(responseErrorData: Throwable) {
         _transfer_proof_response.value = InsertTransferProofDataResponse(
             null,
             null,
