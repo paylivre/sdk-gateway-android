@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.paylivre.sdk.gateway.data.*
 import com.example.paylivre.sdk.gateway.databinding.ActivityFormBinding
 import com.example.paylivre.sdk.gateway.model.DataGenerateUrl
@@ -161,6 +160,7 @@ class FormActivity : AppCompatActivity() {
             amount.setText("500")
             binding.checkGroupCurrency.check(R.id.checkBRL)
             callbackUrl.setText(CALLBACK_URL)
+            operation = Operation.DEPOSIT.code
             binding.checkGroupOperation.check(R.id.checkTypeDeposit)
             setAllOptionsDeposit(View.VISIBLE)
             setCheckedAllTypes(false)
@@ -169,19 +169,14 @@ class FormActivity : AppCompatActivity() {
             typesChecked = TypesChecked(0, 0, 0, 1)
 
             binding.editRedirectUrl.setText(REDIRECT_URL)
-
             binding.editLogoUrl.setText(LOGO_URL)
-
             binding.checkGroupLanguage.clearCheck()
             binding.checkAutoApprove1.isChecked = true
-
             binding.checkIgnoreLogoUrl.isChecked = false
             binding.checkIgnoreEmail.isChecked = false
             binding.checkIgnoreDocument.isChecked = false
             binding.checkIgnoreRedirectUrl.isChecked = false
-
             binding.typesOperationContainer.visibility = View.VISIBLE
-
             binding.containerCheckBoxTypeWithdraw.visibility = View.GONE
 
             setIsShowPixFields(false)
