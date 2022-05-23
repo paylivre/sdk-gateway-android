@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/txtTitleModal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -36,7 +36,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txtSubTitle"
+                android:id="@+id/txtSubTitleModal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

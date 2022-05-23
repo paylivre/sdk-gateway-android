@@ -17,14 +17,7 @@ import com.paylivre.sdk.gateway.android.utils.makeBold
 
 class HowToGenerateApiToken : DialogFragment() {
     private var _binding: FragmentHowToGenerateApiTokenBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
-
-    private fun View.hideKeyboard() {
-        val imm =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(applicationWindowToken, 0)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +28,7 @@ class HowToGenerateApiToken : DialogFragment() {
         _binding = FragmentHowToGenerateApiTokenBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.txtSubTitle.makeBold(
+        binding.txtSubTitleModal.makeBold(
             DataMakeBold(
                 getString(R.string.label_safety),
                 getString(R.string.instructions_how_to_generate_api_token),

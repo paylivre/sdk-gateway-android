@@ -1,19 +1,16 @@
-package com.paylivre.sdk.gateway.android.ui
+package com.paylivre.sdk.gateway.android.ui.form
 
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.testing.launchFragmentInContainer
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.PaymentActivity
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.ui.form.FormStartPaymentFragment
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -25,10 +22,9 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
-class FormFragmentTest {
+class ActivityNavFormTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -106,36 +102,4 @@ class FormFragmentTest {
             textViewTitleForm?.text.toString())
 
     }
-
-
-    @Test
-    fun testEventFragment() {
-        val fragmentArgs = Bundle()
-        val fragment = launchFragmentInContainer<FormStartPaymentFragment>(fragmentArgs,
-            themeResId = R.style.Theme_SDKGatewayAndroid)
-        fragment.onFragment {
-            //GIVEN
-            val textViewTitleForm = it.view?.findViewById<TextView>(R.id.textViewTitleForm)
-            val editEmail = it.view?.findViewById<EditText>(R.id.editEmail)
-
-            //WHEN
-            editEmail?.setText("test@test.com")
-
-            //THEN
-            assertEquals("Preencha os campos abaixo para continuar",
-                textViewTitleForm?.text.toString())
-
-            assertEquals("test@test.com", editEmail?.text.toString())
-        }
-    }
-
-//    @Test
-//    fun testEventActivity() {
-//
-//        val activityScenario = launchActivity<PaymentActivity>()
-//        activityScenario.onActivity {
-//            it.mainViewModel.setAmount(100)
-//            Assert.assertEquals(100, it.mainViewModel.amount.getOrAwaitValueTest())
-//        }
-//    }
 }

@@ -68,7 +68,7 @@
     <string name="legal_notice_part1">A Paylivre é uma empresa facilitadora de serviços de pagamento eletrônico que permite a você fazer depósitos e retiradas de valores em sites internacionais.</string>
     <string name="legal_notice_part2">A atuação da PAYLIVRE BRASIL atende os protocolos instituídos pelo BACEN e pela Lei 12.865/2013. A PAYLIVRE BRASIL não atua no Mercado de Capitais Brasileiro.</string>
     <string name="legal_notice_part3">O conteúdo aqui publicado não configura recomendação de investimento, aporte ou aposta. A PAYLIVRE BRASIL não capta recursos e não realiza investimento, aporte financeiro ou apostas.</string>
-    <string name="required_field">Campo Obrigatório.</string>
+    <string name="required_field">Campo obrigatório.</string>
     <string name="error_key_invalid">inválido.</string>
     <string name="error_short_password">Mínimo 6 caracteres</string>
     <string name="type_required_error">Método de %1$s é obrigatório.</string>

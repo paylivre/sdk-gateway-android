@@ -1,14 +1,11 @@
 package com.paylivre.sdk.gateway.android.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.launchActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
@@ -19,29 +16,18 @@ import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositRes
 import com.paylivre.sdk.gateway.android.data.model.deposit.DataStatusDeposit
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
-import com.paylivre.sdk.gateway.android.data.model.order.checkIsErrorApiToken
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataResponse
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
-import com.paylivre.sdk.gateway.android.ui.form.FormStartPaymentFragment
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.concurrent.TimeUnit
 
 
 @RunWith(RobolectricTestRunner::class)
@@ -131,6 +117,7 @@ class PaymentActivityTest {
     @Test
     fun `test PaymentActivity - onBackPressed`() {
         val activityScenario = launchActivity<PaymentActivity>()
+
         activityScenario.onActivity {
             //GIVEN - active activity
             assertFalse(it.isFinishing);
@@ -393,16 +380,6 @@ class PaymentActivityTest {
         activityScenario.onActivity {
             //GIVEN
             val mockError = RuntimeException("error")
-            val mockErrorResponse = InsertTransferProofDataResponse(
-                null,
-                null,
-                null,
-                null,
-                null,
-                isSuccess = false,
-                loading = false,
-                error = mockError.message,
-            )
 
             //WHEN
             it.mainViewModel.insertTransferProofFailure(

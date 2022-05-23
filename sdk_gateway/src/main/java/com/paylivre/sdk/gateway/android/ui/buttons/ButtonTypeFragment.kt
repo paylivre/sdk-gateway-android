@@ -27,7 +27,6 @@ class ButtonTypeFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
 
     private var type: Int = 0
-    private var operation: Int = -1
 
     private val binding get() = _binding!!
 
@@ -204,25 +203,23 @@ class ButtonTypeFragment : Fragment() {
             setLayoutParams(type, operation)
         }
 
-
-
-        mainViewModel.operation.observe(viewLifecycleOwner, {
+        mainViewModel.operation.observe(viewLifecycleOwner) {
             operation = it
-        })
+        }
 
-        mainViewModel.buttonTypeSelected.observe(viewLifecycleOwner, { buttonTypeSelected ->
+        mainViewModel.buttonTypeSelected.observe(viewLifecycleOwner) { buttonTypeSelected ->
             if (operation == Operation.DEPOSIT.code) {
                 setActivateButton(buttonTypeSelected == type)
             }
-        })
+        }
 
         mainViewModel.buttonPixKeyTypeSelected.observe(
-            viewLifecycleOwner,
-            { buttonPixKeyTypeSelected ->
-                if (operation == Operation.WITHDRAW.code) {
-                    setActivateButton(buttonPixKeyTypeSelected == type)
-                }
-            })
+            viewLifecycleOwner
+        ) { buttonPixKeyTypeSelected ->
+            if (operation == Operation.WITHDRAW.code) {
+                setActivateButton(buttonPixKeyTypeSelected == type)
+            }
+        }
 
         binding.buttonType.setOnClickListener {
 

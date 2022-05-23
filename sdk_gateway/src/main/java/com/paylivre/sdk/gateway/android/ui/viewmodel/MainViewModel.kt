@@ -159,10 +159,10 @@ class MainViewModel(
     private val _getServicesStatusSuccess = MutableLiveData<ServicesStatusSuccess>()
     val getServicesStatusSuccess: LiveData<ServicesStatusSuccess> get() = _getServicesStatusSuccess
 
-    private val _type = MutableLiveData(1)
+    private val _type = MutableLiveData<Int>()
     val type: LiveData<Int> get() = _type
 
-    private val _type_status_services = MutableLiveData(1)
+    private val _type_status_services = MutableLiveData<Int>()
     val type_status_services: LiveData<Int> get() = _type_status_services
 
     private val _editPixKeyValue = MutableLiveData("")

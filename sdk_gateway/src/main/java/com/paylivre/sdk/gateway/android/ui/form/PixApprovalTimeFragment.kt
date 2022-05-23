@@ -39,9 +39,9 @@ class PixApprovalTimeFragment : Fragment() {
         val textAveragePixApprovalTime = binding.textPixApprovalTime
         val statusPixApprovalTime = binding.statusPixApprovalTime
 
-        mainViewModel.operation.observe(viewLifecycleOwner, {
+        mainViewModel.operation.observe(viewLifecycleOwner) {
             operation = it
-        })
+        }
 
 //        mainViewModel.pixApprovalTimeIsLoading.observe(viewLifecycleOwner, {
 //            pixApprovalTimeIsLoading = it
@@ -53,7 +53,7 @@ class PixApprovalTimeFragment : Fragment() {
 //        })
 
 
-        mainViewModel.pixApprovalTime.observe(viewLifecycleOwner, {
+        mainViewModel.pixApprovalTime.observe(viewLifecycleOwner) {
             val isSuccess = it.status == "success" && it.data != null
 
             pixApprovalTimeIsSuccess = isSuccess
@@ -86,9 +86,9 @@ class PixApprovalTimeFragment : Fragment() {
 
                 textAveragePixApprovalTime.text = textAverageTime
             }
-        })
+        }
 
-        mainViewModel.buttonTypeSelected.observe(viewLifecycleOwner, {
+        mainViewModel.buttonTypeSelected.observe(viewLifecycleOwner) {
             if (it == Type.PIX.code) {
                 pixTypeIsSelected = true
                 if (pixApprovalTimeIsSuccess && operation == Operation.DEPOSIT.code) {
@@ -101,7 +101,7 @@ class PixApprovalTimeFragment : Fragment() {
                 pixTypeIsSelected = false
                 binding.containerPixApprovalTime.visibility = View.GONE
             }
-        })
+        }
 
 
 

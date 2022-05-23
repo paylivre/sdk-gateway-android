@@ -43,7 +43,7 @@
             android:visibility="gone">
 
             <FrameLayout
-                android:id="@+id/buttonType1"
+                android:id="@+id/buttonTypePix1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -57,7 +57,7 @@
             android:visibility="gone">
 
             <FrameLayout
-                android:id="@+id/buttonType2"
+                android:id="@+id/buttonTypePix2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -71,7 +71,7 @@
             android:visibility="gone">
 
             <FrameLayout
-                android:id="@+id/buttonType3"
+                android:id="@+id/buttonTypePix3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -81,7 +81,7 @@
     </com.google.android.flexbox.FlexboxLayout>
 
     <TextView
-        android:id="@+id/textViewErrorType"
+        android:id="@+id/textViewErrorTypePix"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"

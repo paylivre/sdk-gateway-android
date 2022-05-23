@@ -31,8 +31,9 @@ import com.paylivre.sdk.gateway.android.utils.*
 class FormStartPaymentFragment : Fragment(), IOnBackPressed {
 
     private var _binding: FormStartPaymentBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
+    var enableOnchangeValidateFields = false
 
 
     override fun onCreateView(
@@ -91,12 +92,12 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
                 binding.instructionsDepositWallet.visibility = View.VISIBLE
                 editEmailWallet.text = editEmail.text
 
-                binding.textViewRememberPassword.visibility = View.VISIBLE
+                binding.textViewHotGenerateApiToken.visibility = View.VISIBLE
             } else {
                 binding.editApiTokenLayout.visibility = View.GONE
                 binding.editEmailWalletLayout.visibility = View.GONE
                 binding.instructionsDepositWallet.visibility = View.GONE
-                binding.textViewRememberPassword.visibility = View.GONE
+                binding.textViewHotGenerateApiToken.visibility = View.GONE
                 editEmailWallet.setText("")
             }
         }
@@ -188,15 +189,15 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
             documentPassedByParam = !it
         }
 
-        var enableOnchangeValidateFields = false
+
 
 
         val errorEmail = binding.textViewErrorEmail
         val errorDocument = binding.textViewErrorDocument
         val errorEmailWallet = binding.textViewErrorEmailWallet
         val errorApiToken = binding.textViewErrorApiToken
-        val errorTypeSelect = binding.textViewErrorType
-        val errorTypePixKeySelect = binding.textViewErrorPixKeyValue
+        val errorTypeSelect = binding.textViewErrorTypeForm
+        val errorTypePixKeyValue = binding.textViewErrorPixKeyValue
         var typeSelected = -1
 
         fun errorMessageFormatted(fieldErrorStatus: FieldErrorStatus): String {
@@ -218,27 +219,34 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
                 operation == Operation.WITHDRAW.code &&
                 pixKeyType != TypePixKey.DOCUMENT.code
             ) {
-                errorTypePixKeySelect.text = errorMessageFormatted(isPixKeyValue)
-                errorTypePixKeySelect.visibility = View.VISIBLE
+                errorTypePixKeyValue.text = errorMessageFormatted(isPixKeyValue)
+                errorTypePixKeyValue.visibility = View.VISIBLE
             } else {
-                errorTypePixKeySelect.visibility = View.GONE
+                errorTypePixKeyValue.visibility = View.GONE
             }
         }
 
         mainViewModel.buttonPixKeyTypeSelected.observe(viewLifecycleOwner) {
             setPixKeyValueDefault(it)
             pixKeyType = it
+            //Reset error pixKeyType
+            binding.textViewErrorPixKeyValue.visibility = View.GONE
             binding.textViewErrorPixKeyType.visibility = View.GONE
 
             if (enableOnchangeValidateFields) {
-                if (pixKeyType == TypePixKey.EMAIL.code) {
+                if (it == TypePixKey.EMAIL.code) {
                     handleValidatePixKeyValue(binding.editPixKeyEmail.text.toString())
                 }
-                if (pixKeyType == TypePixKey.PHONE.code) {
+                if (it == TypePixKey.PHONE.code) {
                     handleValidatePixKeyValue(binding.editPixKeyCellPhone.text.toString())
+                }
+                if (it == TypePixKey.DOCUMENT.code) {
+                    binding.textViewErrorPixKeyValue.visibility = View.GONE
                 }
             }
 
+
+            //Enable input by PixKeyType
             if (operation == Operation.WITHDRAW.code) {
                 when (it) {
                     TypePixKey.DOCUMENT.code -> {
@@ -349,7 +357,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
                     enableOnchangeValidateFields = true
                     errorApiToken.text = getString(R.string.error_invalid_api_token)
                     errorApiToken.visibility = View.VISIBLE
-                    binding.textViewRememberPassword.visibility = View.VISIBLE
+                    binding.textViewHotGenerateApiToken.visibility = View.VISIBLE
                 }
             }
         }
@@ -383,8 +391,8 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
         mainViewModel.type.observe(viewLifecycleOwner, { type = it.toString() })
         mainViewModel.autoApprove.observe(viewLifecycleOwner, { auto_approve = it })
         mainViewModel.buttonTypeSelected.observe(
-            viewLifecycleOwner,
-            { selected_type = it.toString() })
+            viewLifecycleOwner
+        ) { selected_type = it.toString() }
 
         mainViewModel.dataStartCheckout.observe(viewLifecycleOwner) {
             dataStartCheckout = it
@@ -499,7 +507,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
             val isFormValidated = formValidatedData.statusFormDataValidated
 
             if (typeSelected == -1) {
-                binding.textViewErrorType.text =
+                binding.textViewErrorTypeForm.text =
                     getString(R.string.type_required_error, operationName)
                 errorTypeSelect.visibility = View.VISIBLE
             } else {
@@ -579,7 +587,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
             }
         }
 
-        binding.textViewRememberPassword.setOnClickListener {
+        binding.textViewHotGenerateApiToken.setOnClickListener {
             isShowLanguageDialog(true)
             mainViewModel.setEditEmailWallet(editEmailWallet.text.toString())
         }

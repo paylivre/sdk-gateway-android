@@ -104,13 +104,16 @@ class StartCheckoutByURL private constructor(
         }
 
         when {
+            //Configured setRegisterForResult
             startForCheckoutResult != null -> {
                 startForCheckoutResult.launch(paymentIntentWithData)
             }
+            //Configured Activity For Result
             context is Activity && requestCode != null -> {
                 context.startActivityForResult(paymentIntentWithData, requestCode)
             }
             else -> {
+                //Not not configured Activity For Result
                 paymentIntentWithData?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(paymentIntentWithData)
             }
