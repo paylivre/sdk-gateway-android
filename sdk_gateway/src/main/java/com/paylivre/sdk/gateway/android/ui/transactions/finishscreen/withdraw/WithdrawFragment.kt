@@ -15,6 +15,7 @@ import com.paylivre.sdk.gateway.android.data.model.order.StatusWithdrawOrder
 import com.paylivre.sdk.gateway.android.databinding.FragmentWithdrawBinding
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Types
+import com.paylivre.sdk.gateway.android.domain.model.WithdrawTypes
 import com.paylivre.sdk.gateway.android.services.log.LogEvents
 import com.paylivre.sdk.gateway.android.ui.form.AcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.data.TransactionDataFragment

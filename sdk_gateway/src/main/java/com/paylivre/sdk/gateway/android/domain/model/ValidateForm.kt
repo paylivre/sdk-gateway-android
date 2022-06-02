@@ -143,7 +143,7 @@ fun validatePixKeyType(pixKeyTypeSelect: Int?): Boolean {
 fun validateForm(
     dataForm: ValidateForm,
     operation: Int,
-    typeSelected: Int
+    typeSelected: Int,
 ): ResponseValidateForm {
     val validatedEmail = getFieldStatusEmail(dataForm.email)
     val validatedDocument = getFieldStatusDocument(dataForm.document)
@@ -162,9 +162,12 @@ fun validateForm(
         statusFormDataValidated = statusFormDataValidated &&
                 validatedEmailEmailWallet.isValidated &&
                 validatedApiToken.isValidated
-    } else if (operation == Operation.WITHDRAW.code) {
+    } else if (operation == Operation.WITHDRAW.code && typeSelected == Type.PIX.code) {
         statusFormDataValidated =
-            statusFormDataValidated && validatedPixKeyValue.isValidated && validatedPixKeyTypeSelected
+            statusFormDataValidated &&
+                    validatedPixKeyValue.isValidated &&
+                    validatedPixKeyTypeSelected
+
     }
 
 

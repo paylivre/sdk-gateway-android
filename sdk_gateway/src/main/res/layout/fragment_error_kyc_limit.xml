@@ -29,48 +29,25 @@
                 android:maxWidth="160dp"
                 android:maxHeight="160dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
-            <TextView
-                android:id="@+id/TextIconError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/avenir_next_lt_pro_regular"
-                android:text=":("
-                android:layout_marginTop="50dp"
-                android:textAlignment="textStart"
-                android:textSize="70sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/logoMerchant"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
                 android:id="@+id/TextViewError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/avenir_next_lt_pro_bold"
-                android:text="@string/warning_label"
-                android:textAlignment="textStart"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextIconError" />
-
-
-            <TextView
-                android:id="@+id/TextViewMsgSubtitleError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/avenir_next_lt_pro_regular"
-                android:text="@string/warning_limit_exceeded_subtitle"
+                android:text="@string/title_how_much_you_used_limit"
                 android:textAlignment="textStart"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:lineHeight="25sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextViewError" />
+                app:layout_constraintTop_toBottomOf="@+id/logoMerchant" />
+
 
             <TextView
                 android:id="@+id/textViewLimits"
@@ -84,23 +61,27 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextViewMsgSubtitleError" />
+                app:layout_constraintTop_toBottomOf="@+id/TextViewError" />
 
-            <TextView
-                android:id="@+id/textViewMsgMakeNewTransaction"
+
+            <Button
+                android:id="@+id/btnIncreaseLimit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="15dp"
+                android:backgroundTint="@drawable/color_button_start_payment"
                 android:fontFamily="@font/avenir_next_lt_pro_regular"
-                android:lineHeight="25dp"
-                android:text="make a new transaction."
-                android:textAlignment="textStart"
+                android:minHeight="60dp"
+                android:text="@string/label_button_increase_limit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone"
+                android:letterSpacing="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLimits" />
-
+                app:layout_constraintTop_toBottomOf="@id/textViewLimits"
+                app:rippleColor="@color/primary_2" />
 
             <TextView
                 android:id="@+id/textViewMsgSubtitle3Error"
@@ -114,7 +95,7 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMsgMakeNewTransaction" />
+                app:layout_constraintTop_toBottomOf="@+id/btnIncreaseLimit" />
 
             <TextView
                 android:id="@+id/linkPageSupportHelp"
@@ -125,7 +106,7 @@
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:paddingVertical="5dp"
                 android:paddingRight="10dp"
-                android:text="paylivrehelp.zendesk.com"
+                android:text="@string/label_for_more_information_article"
                 android:textAlignment="textStart"
                 android:textColor="@color/primary"
                 android:textSize="16sp"

@@ -44,6 +44,9 @@ class PreviewDataActivity : AppCompatActivity() {
         setTheme(R.style.Theme_SDKGatewayAndroid)
 
         val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"
+        }
 
         val typeStartCheckout: Int = intent.getIntExtra("type_start_checkout", -1)
 
@@ -144,7 +147,7 @@ class PreviewDataActivity : AppCompatActivity() {
         when (typeStartCheckout) {
             TypesStartCheckout.BY_PARAMS.code -> {
                 binding.buttonStartCheckout.text = getString(R.string.start_checkout_by_params)
-                actionBar?.title = "Preview Checkout Params - ${BuildConfig.VERSION_NAME}"
+                actionBar?.title = "Preview Checkout Params - v${BuildConfig.VERSION_NAME}"
 
                 setValueTextViewWithLabelBold(
                     binding.txtGatewayToken,
@@ -268,7 +271,7 @@ class PreviewDataActivity : AppCompatActivity() {
 
             TypesStartCheckout.BY_URL.code -> {
                 binding.buttonStartCheckout.text = getString(R.string.start_checkout_by_url)
-                actionBar?.title = "Preview Checkout By Url - ${BuildConfig.VERSION_NAME}"
+                actionBar?.title = "Preview Checkout By Url - v${BuildConfig.VERSION_NAME}"
 
                 val urlFormatted = url.replace("?", "?\n")
                     .replace("&", "&\n")

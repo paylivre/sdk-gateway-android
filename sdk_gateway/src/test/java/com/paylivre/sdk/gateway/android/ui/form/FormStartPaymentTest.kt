@@ -158,6 +158,7 @@ class FormFragmentTest {
             //Button Start Payment
             val btnStartPayment = formStartPayment.view?.findViewById<Button>(R.id.btnStartPayment)
 
+            formStartPayment.mainViewModel.setOperation(Operation.DEPOSIT.code)
             editApiToken?.setText("123das45da65ssadasfads")
             formStartPayment.mainViewModel.setEditEmail("test@test.com")
             formStartPayment.mainViewModel.setEditDocument("61317581075")

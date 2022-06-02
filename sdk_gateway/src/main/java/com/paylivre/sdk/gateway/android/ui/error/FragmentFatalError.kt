@@ -16,7 +16,7 @@ import kotlin.math.roundToInt
 class FragmentFatalError : Fragment() {
 
     private var _binding: FragmentFatalErrorBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
 
     private val binding get() = _binding!!
 
@@ -32,23 +32,14 @@ class FragmentFatalError : Fragment() {
         val textViewMsgError = binding.TextViewMsgSubtitleError
 
         var logoUrl: String? = null
-        var isErrorWithdrawLimit: Boolean? = null
         var currency: String? = null
-        var msgError1 : String? = null
-        var msgError2 : String? = null
-        var msgError3 : String? = null
+        var msgError1: String? = null
+        var msgError2: String? = null
+        var msgError3: String? = null
 
 
         //Set Log Analytics
         LogEvents.setLogEventAnalytics("Screen_GenericError")
-
-        fun getMessageDetails(keyMessage: String?): String {
-            return if (isErrorWithdrawLimit == true) {
-                getStringByKey(context, keyMessage + currency)
-            } else {
-                getStringByKey(context, keyMessage.toString())
-            }
-        }
 
         binding.btnClose.setOnClickListener {
             //Set Log Analytics
@@ -86,26 +77,24 @@ class FragmentFatalError : Fragment() {
 
 
         mainViewModel.keyMsgFatalError.observe(viewLifecycleOwner) {
-            val titleMsgError = getStringByKey(context, it.toString())
-            if (!titleMsgError.isNullOrEmpty()) {
-                msgError1 = titleMsgError
-                textViewMsgError.text = titleMsgError
-                textViewMsgError.visibility = View.VISIBLE
-            }
+            setErrorMessage(
+                context = context,
+                keyError = it,
+                textView = textViewMsgError,
+                currency = currency
+            )
         }
 
         mainViewModel.msgDetailsError.observe(viewLifecycleOwner) {
-            isErrorWithdrawLimit = it == "exceeded_withdrawal_limit_value"
-            val msgDetailsError = getMessageDetails(it.toString())
-            if (!msgDetailsError.isNullOrEmpty()) {
-                msgError2 = msgDetailsError
-                binding.textViewMsgSubtitle3Error.text = msgDetailsError
-                binding.textViewMsgSubtitle3Error.visibility = View.VISIBLE
-            }
+            setErrorMessage(
+                context = context,
+                keyError = it,
+                textView = binding.textViewMsgSubtitle3Error,
+                currency = currency
+            )
         }
 
         mainViewModel.errorTags.observe(viewLifecycleOwner) {
-            println("errorTags-> $it")
             val errorCodes = it
             if (!errorCodes.isNullOrEmpty()) {
                 msgError3 = errorCodes

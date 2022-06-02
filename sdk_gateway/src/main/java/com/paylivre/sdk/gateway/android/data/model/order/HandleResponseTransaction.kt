@@ -66,6 +66,8 @@ data class OrderData(
     val order_type_id: Int? = null,
     val merchant_approval_status_id: Int? = null,
     val merchant_approval_status_name: String? = "",
+    val type: Int? = null,
+    val type_name: String? = "",
 )
 
 data class BankAccounts(

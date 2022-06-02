@@ -78,6 +78,10 @@ class PaymentActivity : AppCompatActivity() {
             insertRegisterResultData.currency = it?.toString()
         }
 
+        mainViewModel.operation.observe(this) {
+            insertRegisterResultData.operation = it?.toString()
+        }
+
         mainViewModel.checkStatusDepositResponse.observe(this) {
             if (it.status == "success") {
                 insertRegisterResultData.transactionStatusId = it.data?.transaction_status_id
@@ -85,10 +89,19 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
+        mainViewModel.checkStatusTransactionResponse.observe(this) {
+            if (it.status == "success") {
+                insertRegisterResultData.transactionStatusId = it.data?.transaction_status_id
+            }
+        }
+
         mainViewModel.statusResponseTransaction.observe(this) {
             insertRegisterResultData.setIntentWithTransactionResponse(it)
         }
 
+        mainViewModel.checkStatusOrderDataResponse.observe(this) {
+            insertRegisterResultData.setIntentWithStatusOrderDataResponse(it)
+        }
 
         /**
          * Insert in register result data the status check services errors
@@ -104,6 +117,8 @@ class PaymentActivity : AppCompatActivity() {
         mainViewModel.transfer_proof_response.observe(this) {
             insertRegisterResultData.setIntentWithTransferInsertProofResponse(it)
         }
+
+
 
         mainViewModel.isCloseSDK.observe(this) {
             if (it) {

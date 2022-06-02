@@ -238,7 +238,7 @@
     <string name="label_for_more_information_go_to">Para mais informações acesse:</string>
     <string name="error_pix_key_cpf_divergent">O CPF da chave PIX informado deve ser igual ao CPF da conta do usuário.</string>
     <string name="error_pix_key_cnpj_divergent">O CNPJ da chave PIX informado deve ser igual ao CNPJ da conta do usuário.</string>
-    <string name="label_for_more_information_access_support_site">Para maiores informações acesse nosso site de suporte.</string>
+    <string name="label_for_more_information_access_support_site">Para saber mais sobre limites, indicamos o artigo:</string>
     <string name="warning_limit_exceeded_subtitle">Essa transação não pode ser efetuada. O valor excede o limite disponível.</string>
     <string name="error_limit_kyc_make_a_new_transaction_kyc_level_above_1">Faça uma nova transação
          com um valor máximo de %1$s ou aguarde a renovação do seu limite mensal.</string>
@@ -258,4 +258,10 @@
     <string name="label_message_merchant_approval_pending">O saque será processado assim que a retirada do valor de sua conta for aprovada. Você receberá um email notificando a aprovação.</string>
     <string name="label_title_withdraw_wallet">Instruções de Saldo Paylivre</string>
     <string name="info_withdraw_wallet_body">Para essa transação foi ultilizado o saldo da carteira Paylivre!</string>
+    <string name="user_not_found_with_document_number">Não existe uma conta cadastrada com esse
+        documento na Paylivre.\n\nO Saque não pode ser processado.\n\nPara maiores informações cadastre-se em web.paylivre.com.</string>
+    <string name="title_how_much_you_used_limit">Veja o quanto você já usou do seu limite mensal.</string>
+    <string name="label_for_more_information_article">Quais são os limites?</string>
+    <string name="label_button_increase_limit">Quero aumentar meu limite na Paylivre</string>
+    <string name="paylivre_gateway_sdk_is_outdated">Recurso não disponível para esta versão do SDK do Gateway da Paylivre.</string>
 </resources>

@@ -73,8 +73,6 @@ class ButtonsTypeSelectFragment : Fragment() {
         mainViewModel.type.observe(viewLifecycleOwner) {
             var listTypesEnabled: MutableList<Int> = mutableListOf()
 
-
-
             if (checkTypeEnable(it, Type.PIX.code)) {
                 setButtonType(
                     ButtonTypeFragment(),

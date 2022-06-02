@@ -98,7 +98,7 @@ class HeaderFragment : Fragment() {
         val versionName = BuildConfig.VERSION_NAME
 
         if (versionName.isNotEmpty()) {
-            binding.textVersionSDK.text = versionName
+            binding.textVersionSDK.text = "v${versionName}"
         }
 
         return root

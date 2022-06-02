@@ -17,21 +17,23 @@ import com.paylivre.sdk.gateway.android.services.log.LogEvents
 import com.paylivre.sdk.gateway.android.utils.checkValidDrawableId
 import com.paylivre.sdk.gateway.android.utils.dpToPx
 import com.paylivre.sdk.gateway.android.utils.formatToCurrencyBRL
-import com.paylivre.sdk.gateway.android.utils.makeLinks
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 import kotlin.math.roundToInt
 
 const val LINK_PAGE_SUPPORT_LIMITS =
     "https://paylivrehelp.zendesk.com/hc/pt-br/articles/1500006060141-Quais-s%C3%A3o-os-limites-"
+const val LINK_PAGE_REGISTER =
+    "https://web.paylivre.com/signup"
 
 class ErrorKycLimitFragment : Fragment() {
 
     private var _binding: FragmentErrorKycLimitBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
-
+    val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private var language: String? = ""
+    var urlToOpen: String = LINK_PAGE_SUPPORT_LIMITS
+    var urlPageSupportLimits: String = LINK_PAGE_SUPPORT_LIMITS
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,10 +45,15 @@ class ErrorKycLimitFragment : Fragment() {
         val root: View = binding.root
         var logoUrl: String? = null
         val textViewLimits = binding.textViewLimits
-        val textViewMsgMakeNewTransaction = binding.textViewMsgMakeNewTransaction
+        var kycLevel: String? = null
+        var document: String? = null
 
         //Set Log Analytics
         LogEvents.setLogEventAnalytics("Screen_ErrorKycLimit")
+
+        mainViewModel.order_data.observe(viewLifecycleOwner) {
+            document = it?.document_number
+        }
 
         mainViewModel.language.observe(viewLifecycleOwner) {
             language = it
@@ -97,61 +104,13 @@ class ErrorKycLimitFragment : Fragment() {
             }
         }
 
-        fun openUrl(url: String?) {
-            try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(browserIntent)
-            } catch (e: Exception) {
-                var toast: Toast = Toast.makeText(
-                    context,
-                    getString(R.string.erro_default_open_url),
-                    Toast.LENGTH_SHORT
-                )
-                toast.show();
-            }
-        }
 
         fun setErrors(errorKycLimit: Errors? = null) {
             try {
-                val kycLevel = errorKycLimit?.kyc_level.toString()
-                val kycLimitAvailable = errorKycLimit?.available_limit.toString()
-                val kycLimitAvailableFormatted =
-                    formatToCurrencyBRL(kycLimitAvailable, 100, language.toString())
-
                 val errorKycLimitFormatted = getLimitsKycString(errorKycLimit)
                 if (errorKycLimitFormatted.isNotEmpty()) {
                     textViewLimits.text = errorKycLimitFormatted
                 }
-
-                if (errorKycLimit?.available_limit!! > 0) {
-                    binding.textViewMsgMakeNewTransaction.visibility = View.VISIBLE
-                    //is kyc_level = 1
-                    if (kycLevel == "1") {
-                        val messageMakeNewTransaction =
-                            getString(R.string.error_limit_kyc_make_a_new_transaction_kyc_level_1,
-                                kycLimitAvailableFormatted)
-                        textViewMsgMakeNewTransaction.text = messageMakeNewTransaction
-
-                        //Insert link to register on Paylivre
-                        textViewMsgMakeNewTransaction.makeLinks(
-                            Pair("App Paylivre", View.OnClickListener {
-                                openUrl("https://play.google.com/store/apps/details?id=com.paylivre.br")
-                            }),
-                            Pair("web.paylivre.com", View.OnClickListener {
-                                openUrl("https://web.paylivre.com")
-                            })
-                        )
-
-                    }
-                    //is kyc_level = 2 || is kyc_level = 3
-                    else if (kycLevel == "2" || kycLevel == "3") {
-                        val messageMakeNewTransaction =
-                            getString(R.string.error_limit_kyc_make_a_new_transaction_kyc_level_above_1,
-                                kycLimitAvailableFormatted)
-                        textViewMsgMakeNewTransaction.text = messageMakeNewTransaction
-                    }
-                }
-
             } catch (e: Exception) {
                 println("Exception setError ErrorKycLimitFragment: $e")
             }
@@ -160,6 +119,15 @@ class ErrorKycLimitFragment : Fragment() {
 
         mainViewModel.transactionError.observe(viewLifecycleOwner) {
             setErrors(it?.errors)
+            kycLevel = it?.errors?.kyc_level
+
+            urlToOpen = if (kycLevel == "0" || kycLevel == "1") {
+                if (document != null) "$LINK_PAGE_REGISTER?document=$document"
+                else LINK_PAGE_REGISTER
+            }
+            else {
+                LINK_PAGE_SUPPORT_LIMITS
+            }
         }
 
         mainViewModel.logoUrl.observe(viewLifecycleOwner) {
@@ -185,16 +153,48 @@ class ErrorKycLimitFragment : Fragment() {
             }
         }
 
+        fun openUrlPageSupportLimits() {
+            try {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlPageSupportLimits))
+                startActivity(browserIntent)
+            } catch (e: Exception) {
+                var toast: Toast = Toast.makeText(
+                    context,
+                    getString(R.string.erro_default_open_url),
+                    Toast.LENGTH_SHORT
+                )
+                toast.show();
+            }
+        }
+
+
+        fun openUrl() {
+            try {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlToOpen))
+                startActivity(browserIntent)
+            } catch (e: Exception) {
+                var toast: Toast = Toast.makeText(
+                    context,
+                    getString(R.string.erro_default_open_url),
+                    Toast.LENGTH_SHORT
+                )
+                toast.show();
+            }
+        }
 
 
 
+        binding.btnIncreaseLimit.setOnClickListener {
+            //Set Log Analytics
+            LogEvents.setLogEventAnalytics("Btn_OpenLinkIncreaseLimit")
+            openUrl()
+        }
 
 
         binding.linkPageSupportHelp.setOnClickListener {
             //Set Log Analytics
             LogEvents.setLogEventAnalytics("Btn_OpenLinkPageDocumentsLimits")
-
-            openUrl(LINK_PAGE_SUPPORT_LIMITS)
+            openUrlPageSupportLimits()
         }
 
 

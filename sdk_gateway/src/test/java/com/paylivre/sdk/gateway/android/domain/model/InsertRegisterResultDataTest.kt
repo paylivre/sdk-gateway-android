@@ -1,4 +1,4 @@
-package com.paylivre.sdk.gateway.android
+package com.paylivre.sdk.gateway.android.domain.model
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,6 @@ import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.data.model.order.*
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataResponse
-import com.paylivre.sdk.gateway.android.domain.model.InsertRegisterResultData
-import com.paylivre.sdk.gateway.android.domain.model.Type
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +17,6 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class InsertRegisterResultDataTest {
-
 
     @Test
     fun `Test insertRegisterResultData initial data`() {
@@ -50,7 +47,6 @@ class InsertRegisterResultDataTest {
         insertRegisterResultData.setIntentWithTransferInsertProofResponse(
             InsertTransferProofDataResponse(1, null, 1,
                 1, 1, false, "", true))
-
         Assert.assertEquals(null, insertRegisterResultData.actionNotCompletedCode)
         Assert.assertEquals(null, insertRegisterResultData.actionNotCompletedMessage)
         Assert.assertEquals(null, insertRegisterResultData.errorCompletedTransactionMessage)
@@ -121,7 +117,6 @@ class InsertRegisterResultDataTest {
         val mockIntent = Intent()
         insertRegisterResultData.getIntentWithResultData(mockIntent)
 
-
         //THEN
         Assert.assertEquals(mockTransactionResponse, insertRegisterResultData.transactionResponse)
         Assert.assertEquals(0, insertRegisterResultData.isErrorTransaction)
@@ -132,19 +127,25 @@ class InsertRegisterResultDataTest {
 
         //check the data returned to activity via extras
         val extrasIntentExpected = Bundle()
+        extrasIntentExpected.putString("deposit_type_id", "0")
         extrasIntentExpected.putString("error_transaction_code", "null")
         extrasIntentExpected.putString("error_transaction_message", "null")
         extrasIntentExpected.putString("deposit_status_id", "null")
         extrasIntentExpected.putString("is_generated_transaction", "1")
+        extrasIntentExpected.putString("order_type_id", "null")
+        extrasIntentExpected.putString("withdrawal_id", "null")
         extrasIntentExpected.putString("action_not_completed_message", "null")
         extrasIntentExpected.putString("action_not_completed_code", "null")
         extrasIntentExpected.putString("deposit_id", "0")
         extrasIntentExpected.putString("is_error_transaction", "0")
         extrasIntentExpected.putString("error_completed_transaction_message", "null")
+        extrasIntentExpected.putString("withdrawal_type_id", "0")
+        extrasIntentExpected.putString("order_status_id", "null")
         extrasIntentExpected.putString("transaction_id", "0")
         extrasIntentExpected.putString("is_user_completed_transaction", "1")
         extrasIntentExpected.putString("order_id", "0")
         extrasIntentExpected.putString("selected_type", "null")
+        extrasIntentExpected.putString("withdrawal_status_id", "null")
         extrasIntentExpected.putString("transaction_status_id", "null")
 
         Assert.assertEquals(extrasIntentExpected.toString(), mockIntent.extras.toString())
@@ -173,21 +174,26 @@ class InsertRegisterResultDataTest {
 
         //check the data returned to activity via extras
         val extrasIntentExpected = Bundle()
+        extrasIntentExpected.putString("deposit_type_id", "0")
         extrasIntentExpected.putString("error_transaction_code", "null")
         extrasIntentExpected.putString("error_transaction_message", "null")
         extrasIntentExpected.putString("deposit_status_id", "null")
         extrasIntentExpected.putString("is_generated_transaction", "1")
+        extrasIntentExpected.putString("order_type_id", "null")
+        extrasIntentExpected.putString("withdrawal_id", "null")
         extrasIntentExpected.putString("action_not_completed_message", "User did not insert proof of deposit type bank transfer")
         extrasIntentExpected.putString("action_not_completed_code", "RC001")
         extrasIntentExpected.putString("deposit_id", "0")
         extrasIntentExpected.putString("is_error_transaction", "0")
         extrasIntentExpected.putString("error_completed_transaction_message", "null")
+        extrasIntentExpected.putString("withdrawal_type_id", "0")
+        extrasIntentExpected.putString("order_status_id", "null")
         extrasIntentExpected.putString("transaction_id", "0")
         extrasIntentExpected.putString("is_user_completed_transaction", "0")
         extrasIntentExpected.putString("order_id", "0")
         extrasIntentExpected.putString("selected_type", "0")
+        extrasIntentExpected.putString("withdrawal_status_id", "null")
         extrasIntentExpected.putString("transaction_status_id", "null")
-
 
         //THEN
         Assert.assertEquals(mockTransactionResponse, insertRegisterResultData.transactionResponse)
@@ -196,8 +202,6 @@ class InsertRegisterResultDataTest {
         Assert.assertEquals(null, insertRegisterResultData.errorTransactionCode)
         Assert.assertEquals(null, insertRegisterResultData.errorTransactionMessageDetails)
         Assert.assertEquals(null, insertRegisterResultData.isErrorWalletInvalidApiToken)
-
-
         Assert.assertEquals(extrasIntentExpected.toString(), mockIntent.extras.toString())
 
     }

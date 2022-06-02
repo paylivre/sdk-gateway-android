@@ -34,31 +34,17 @@
                 app:layout_constraintVertical_bias="0.10" />
 
             <TextView
-                android:id="@+id/TextIconError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/avenir_next_lt_pro_regular"
-                android:text=":("
-                android:textAlignment="textStart"
-                android:textSize="70sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logoMerchant" />
-
-            <TextView
                 android:id="@+id/TextViewError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/avenir_next_lt_pro_bold"
                 android:text="@string/warning_label"
                 android:textAlignment="textStart"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextIconError" />
+                app:layout_constraintTop_toBottomOf="@+id/logoMerchant" />
 
 
             <TextView

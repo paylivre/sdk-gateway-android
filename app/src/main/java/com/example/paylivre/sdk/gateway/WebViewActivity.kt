@@ -20,7 +20,7 @@ class WebViewActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.title = "SDK Gateway (Webview) - ${BuildConfig.VERSION_NAME}"
+            actionBar.title = "SDK Gateway (Webview) - v${BuildConfig.VERSION_NAME}"
         }
 
         val myWebView: WebView = binding.webview

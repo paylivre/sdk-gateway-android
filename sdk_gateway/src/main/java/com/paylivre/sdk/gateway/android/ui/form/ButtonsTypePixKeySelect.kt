@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.TypePixKey
+import com.paylivre.sdk.gateway.android.ui.buttons.ButtonPixTypeFragment
 import com.paylivre.sdk.gateway.android.ui.buttons.ButtonTypeFragment
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 
@@ -55,15 +56,6 @@ class ButtonsTypePixKeySelect : Fragment() {
         val root: View = binding.root
         var pixKeySelectCode: Int? = null
 
-//        mainViewModel.buttonTypeSelected.observe(viewLifecycleOwner, {
-//            isTypeSelected = it
-//            errorTypeSelect.visibility = View.INVISIBLE
-//            if (it != Type.WALLET.code) {
-//                errorEmailWallet.visibility = View.GONE
-//                errorPassword.visibility = View.GONE
-//            }
-//        })
-
 
         //Set Title select option Pix Key Type
         mainViewModel.operation.observe(viewLifecycleOwner) {
@@ -86,7 +78,7 @@ class ButtonsTypePixKeySelect : Fragment() {
                 }
 
                 setButtonType(
-                    ButtonTypeFragment(),
+                    ButtonPixTypeFragment(),
                     TypePixKey.DOCUMENT.code,
                     R.id.buttonTypePix1,
                     binding.containerType1,
@@ -94,7 +86,7 @@ class ButtonsTypePixKeySelect : Fragment() {
                 )
 
                 setButtonType(
-                    ButtonTypeFragment(),
+                    ButtonPixTypeFragment(),
                     TypePixKey.EMAIL.code,
                     R.id.buttonTypePix2,
                     binding.containerType2,
@@ -102,7 +94,7 @@ class ButtonsTypePixKeySelect : Fragment() {
                 )
 
                 setButtonType(
-                    ButtonTypeFragment(),
+                    ButtonPixTypeFragment(),
                     TypePixKey.PHONE.code,
                     R.id.buttonTypePix3,
                     binding.containerType3,

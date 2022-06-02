@@ -66,11 +66,12 @@ fun getErrorTagResponseError(errorMessage: String): String {
 
 data class KeysResponseError(
     val keyMessage: String?,
-    val keyMessageDetails: String?
+    val keyMessageDetails: String?,
 )
 
 fun getStringKeyResponseError(error: String): KeysResponseError {
     val genericError = "invalid_data_error"
+
     if (error.contains(
             "The given document number does not match the document number associated with user with email",
             true
@@ -89,6 +90,13 @@ fun getStringKeyResponseError(error: String): KeysResponseError {
     ) {
         return KeysResponseError(
             keyMessage = genericError, keyMessageDetails = "validation_service_error"
+        )
+    }
+
+    if (error.contains("User not found with document number", true)
+    ) {
+        return KeysResponseError(
+            keyMessage = genericError, keyMessageDetails = "user_not_found_with_document_number"
         )
     }
 
@@ -149,7 +157,11 @@ fun getStringKeyResponseError(error: String): KeysResponseError {
                 keyMessage = genericError, keyMessageDetails = "error_pix_key_cnpj_divergent"
             )
         }
-
+        "The version of the paylivre gateway sdk used is outdated" -> {
+            KeysResponseError(
+                keyMessage = "paylivre_gateway_sdk_is_outdated", keyMessageDetails = ""
+            )
+        }
         else -> KeysResponseError(
             keyMessage = genericError, keyMessageDetails = ""
         )

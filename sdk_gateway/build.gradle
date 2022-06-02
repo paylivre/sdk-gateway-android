@@ -76,7 +76,7 @@ android {
         minSdk 21
         targetSdk 31
         versionCode 1
-        versionName "v1.0.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -195,6 +195,7 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1.3'
     testImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
 }
 
 afterEvaluate {

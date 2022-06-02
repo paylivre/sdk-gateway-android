@@ -21,7 +21,7 @@ class RegisterForActivityResult : AppCompatActivity() {
 
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.title = "SDK Gateway Paylivre - ${BuildConfig.VERSION_NAME}"
+            actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"
         }
 
         binding.buttonBack.setOnClickListener {
@@ -42,30 +42,30 @@ class RegisterForActivityResult : AppCompatActivity() {
         setValueTextViewWithLabelBold(
             binding.selectedTypeValue,
             "selected_type",
-            "${selectedType?.code} ${selectedType?.name?:""}"
+            "${selectedType?.code} ${selectedType?.name ?: ""}"
         )
 
         binding.isGeneratedTransactionValue.text =
             "${dataRegisterForActivityResult.is_generated_transaction}"
 
         setValueTextViewWithLabelBold(
-            binding.transactionStatusValue,
-            " - transaction_status_id",
-            "${dataRegisterForActivityResult.transaction_status_id}" +
-                    " ${dataRegisterForActivityResult.transaction_status_name}"
+            binding.orderIdValue,
+            " - order_id",
+            "${dataRegisterForActivityResult.order_id}"
         )
 
         setValueTextViewWithLabelBold(
-            binding.depositStatusValue,
-            " - deposit_status_id",
-            "${dataRegisterForActivityResult.deposit_status_id}" +
-                    " ${dataRegisterForActivityResult.deposit_status_name}"
+            binding.orderTypeIdValue,
+            " - order_type_id",
+            "${dataRegisterForActivityResult.order_type_id}" +
+                    " ${dataRegisterForActivityResult.order_type_name}"
         )
 
         setValueTextViewWithLabelBold(
-            binding.depositIdValue,
-            " - deposit_id",
-            "${dataRegisterForActivityResult.deposit_id}"
+            binding.orderStatusIdValue,
+            " - order_status_id",
+            "${dataRegisterForActivityResult.order_status_id}" +
+                    " ${dataRegisterForActivityResult.order_status_name}"
         )
 
         setValueTextViewWithLabelBold(
@@ -75,9 +75,50 @@ class RegisterForActivityResult : AppCompatActivity() {
         )
 
         setValueTextViewWithLabelBold(
-            binding.orderIdValue,
-            " - order_id",
-            "${dataRegisterForActivityResult.order_id}"
+            binding.transactionStatusIdValue,
+            " - transaction_status_id",
+            "${dataRegisterForActivityResult.transaction_status_id}" +
+                    " ${dataRegisterForActivityResult.transaction_status_name}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.depositIdValue,
+            " - deposit_id",
+            "${dataRegisterForActivityResult.deposit_id}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.depositTypeIdValue,
+            " - deposit_type_id",
+            "${dataRegisterForActivityResult.deposit_type_id}" +
+                    " ${dataRegisterForActivityResult.deposit_type_name}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.depositStatusIdValue,
+            " - deposit_status_id",
+            "${dataRegisterForActivityResult.deposit_status_id}" +
+                    " ${dataRegisterForActivityResult.deposit_status_name}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.withdrawalIdValue,
+            " - withdrawal_id",
+            "${dataRegisterForActivityResult.withdrawal_id}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.withdrawalTypeIdValue,
+            " - withdrawal_type_id",
+            "${dataRegisterForActivityResult.withdrawal_type_id}" +
+                    " ${dataRegisterForActivityResult.withdrawal_type_name}"
+        )
+
+        setValueTextViewWithLabelBold(
+            binding.withdrawalStatusIdValue,
+            " - withdrawal_status_id",
+            "${dataRegisterForActivityResult.withdrawal_status_id}" +
+                    " ${dataRegisterForActivityResult.withdrawal_status_name}"
         )
 
         binding.isErrorTransactionValue.text =

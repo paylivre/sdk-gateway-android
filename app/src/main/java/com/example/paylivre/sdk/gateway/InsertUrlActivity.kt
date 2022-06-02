@@ -28,7 +28,7 @@ class InsertUrlActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.title = "SDK Gateway Paylivre - ${BuildConfig.VERSION_NAME}"
+            actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"
         }
 
         fun View.hideKeyboard() {

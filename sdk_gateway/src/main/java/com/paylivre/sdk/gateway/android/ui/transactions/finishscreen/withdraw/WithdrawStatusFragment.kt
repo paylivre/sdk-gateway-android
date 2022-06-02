@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.StatusWithdrawOrder
 import com.paylivre.sdk.gateway.android.databinding.FragmentStatusWithdrawBinding
+import com.paylivre.sdk.gateway.android.domain.model.WithdrawTypes
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 
 class WithdrawStatusFragment : Fragment() {

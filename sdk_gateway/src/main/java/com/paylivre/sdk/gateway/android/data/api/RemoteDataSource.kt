@@ -54,11 +54,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                 Sentry.setExtra("error_throwable", t.message.toString())
                 Sentry.setExtra("error", "error_request_not_connect_server")
                 Sentry.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
-
             }
-
         })
-
     }
 
     fun getServicesStatus(

@@ -37,7 +37,7 @@ class FormActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.title = "Form Generate Checkout - ${BuildConfig.VERSION_NAME}"
+            actionBar.title = "Form Generate Checkout - v${BuildConfig.VERSION_NAME}"
         }
 
 
@@ -78,13 +78,17 @@ class FormActivity : AppCompatActivity() {
         fun setIsShowPixFields(isShow: Boolean) {
             binding.containerCheckAutoWithdraw.visibility = getVisibility(isShow)
             binding.containerCheckBoxPixKeyType.visibility = getVisibility(isShow)
-            binding.checkIgnorePixKeyType.visibility = getVisibility(isShow)
             binding.layoutEditPixKeyValue.visibility = getVisibility(isShow)
+            binding.checkIgnorePixKeyType.visibility = getVisibility(isShow)
             binding.checkIgnorePixKey.visibility = getVisibility(isShow)
+
 
             binding.layoutEditPixKeyValue.isEnabled = isShow
             binding.editPixKeyValue.isEnabled = isShow
             binding.checksPixKeyType.isEnabled = isShow
+            setIsEnableAllRadiosInRadioGroup(binding.checksPixKeyType, isShow)
+            binding.checkIgnorePixKey.isChecked = !isShow
+            binding.checkIgnorePixKeyType.isChecked = !isShow
         }
 
         fun setValuesDefaultPixFields() {
@@ -317,10 +321,6 @@ class FormActivity : AppCompatActivity() {
 
             }
 
-            //generate new merchant_transaction_id random
-            merchantTransactionId.setText(getRandomString(10))
-
-
             startActivity(intent)
         }
 
@@ -366,6 +366,9 @@ class FormActivity : AppCompatActivity() {
                 language = getLanguageChecked(),
                 logoUrl = getInputTextValueOrNull(binding.editLogoUrl), //Optional
             )
+
+            //generate new merchant_transaction_id random
+            merchantTransactionId.setText(getRandomString(10))
         }
 
         suspend fun startCheckoutByURL() {
@@ -413,12 +416,16 @@ class FormActivity : AppCompatActivity() {
                 val url = withContext(Dispatchers.Default) {
                     generateUrlToCheckout.getUrlWithSignature()
                 }
+
                 startIntentPreview(
                     TypesStartCheckout.BY_URL.code,
                     url = url,
                     language = getLanguageChecked()
                 )
             }
+
+            //generate new merchant_transaction_id random
+            merchantTransactionId.setText(getRandomString(10))
         }
 
 

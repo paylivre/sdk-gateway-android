@@ -234,7 +234,7 @@
     <string name="label_for_more_information_go_to">Para más información acceda a:</string>
     <string name="error_pix_key_cpf_divergent">El CPF de la clave PIX ingresada debe ser el mismo que el CPF de la cuenta del usuario.</string>
     <string name="error_pix_key_cnpj_divergent">O CNPJ da chave PIX informado deve ser igual ao CNPJ da conta do usuário.</string>
-    <string name="label_for_more_information_access_support_site">Para obtener más información, visite nuestro sitio de soporte.</string>
+    <string name="label_for_more_information_access_support_site">Para saber más sobre los límites, te recomendamos el artículo:</string>
     <string name="warning_limit_exceeded_subtitle">Esta transacción no se puede llevar a cabo. El valor supera el límite disponible.</string>
     <string name="error_limit_kyc_make_a_new_transaction_kyc_level_above_1">Hacer una nueva
         transacción
@@ -256,5 +256,11 @@
     <string name="label_message_merchant_approval_pending">El retiro se procesará una vez que se apruebe el retiro del monto de su cuenta. Recibirá un correo electrónico notificándole la aprobación.</string>
     <string name="label_title_withdraw_wallet">Instrucciones para el saldo Paylivre</string>
     <string name="info_withdraw_wallet_body">¡Para esta transacción, se utilizó el saldo de la billetera Paylivre!</string>
-    \
+    <string name="user_not_found_with_document_number">No hay cuenta registrada con este
+         documento en Paylivre.\n\nNo se puede procesar el Retiro.\n\nPara más información, regístrese
+         en web.paylivre.com.</string>
+    <string name="title_how_much_you_used_limit">Vea cuánto ha usado de su límite mensual.</string>
+    <string name="label_for_more_information_article">¿Cuáles son los límites?</string>
+    <string name="label_button_increase_limit">Quiero aumentar mi límite en Paylivre</string>
+    <string name="paylivre_gateway_sdk_is_outdated">Característica no disponible para esta versión de Paylivre Gateway SDK.</string>
 </resources>
