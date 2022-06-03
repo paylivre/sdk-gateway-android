@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.utils.MaskDocumentUtil
 import com.paylivre.sdk.gateway.android.utils.MaskType
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -36,10 +37,15 @@ class DocumentMaskTest {
         editText?.addTextChangedListener(MaskDocumentUtil.insert(editText!!, null))
     }
 
+    @After
+    fun tearDown(){
+        context = null
+        editText = null
+    }
+
     @Test
     fun `Test DocumentMask with cpf mask`() {
         editText?.setText("12345612345")
-
         Assert.assertEquals("123.456.123-45", editText!!.text.toString())
     }
 
