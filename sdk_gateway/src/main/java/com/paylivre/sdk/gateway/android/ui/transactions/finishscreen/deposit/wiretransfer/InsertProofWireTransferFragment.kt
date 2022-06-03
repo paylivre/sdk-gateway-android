@@ -1,6 +1,7 @@
 package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wiretransfer
 
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,20 +27,57 @@ import java.io.File
 
 class InsertProofWireTransferFragment : Fragment() {
     private var _binding: FragmentInsertProofWireTransferBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private var uriProofFile: Uri? = null
     private var tokenTransferTransaction: String? = null
     private var orderIdTransferTransaction: Int? = null
 
+    fun handleImagePickerSuccess(data: Intent?) {
+        //Image Uri will not be null for RESULT_OK
+        val uri: Uri = data?.data!!
+
+        // Use Uri object instead of File to avoid storage permissions
+        binding.imgPreviewProof.visibility = View.VISIBLE
+        binding.imgPreviewProof.setImageURI(uri)
+        binding.textNameSelectedFile.visibility = View.GONE
+        binding.txtChooseFile.text = getString(R.string.change_selected_file)
+        binding.btnSubmit.isEnabled = true
+        mainViewModel.setProofImageUri(uri)
+        uriProofFile = uri
+
+        //Set Log Analytics
+        LogEvents.setLogEventAnalytics("EnteredProofImage")
+    }
+
+    fun handleImagePickerError(data: Intent?) {
+        //Set Log Analytics
+        LogEvents.setLogEventAnalytics("ErrorEnteredProofImage")
+        println("data: ${ImagePicker.getError(data)}")
+    }
+
+    fun handleImagePickerCancelled() {
+        //Set Log Analytics
+        LogEvents.setLogEventAnalytics("CancelledEnteredProofImage")
+        println("Task Cancelled")
+    }
+
+    private val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            when (result.resultCode) {
+                Activity.RESULT_OK -> handleImagePickerSuccess(result.data)
+                ImagePicker.RESULT_ERROR -> handleImagePickerError(result.data)
+                else -> handleImagePickerCancelled()
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentInsertProofWireTransferBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         fun dpToPxLocalInt(value: Float): Int {
             return dpToPx(resources, value).roundToInt()
@@ -97,41 +135,6 @@ class InsertProofWireTransferFragment : Fragment() {
         return root
     }
 
-    private val startForProfileImageResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
-
-            when (resultCode) {
-                Activity.RESULT_OK -> {
-                    //Image Uri will not be null for RESULT_OK
-                    val uri: Uri = data?.data!!
-
-                    // Use Uri object instead of File to avoid storage permissions
-                    binding.imgPreviewProof.visibility = View.VISIBLE
-                    binding.imgPreviewProof.setImageURI(uri)
-                    binding.textNameSelectedFile.visibility = View.GONE
-                    binding.txtChooseFile.text = getString(R.string.change_selected_file)
-                    binding.btnSubmit.isEnabled = true
-                    mainViewModel.setProofImageUri(uri)
-                    uriProofFile = uri
-
-                    //Set Log Analytics
-                    LogEvents.setLogEventAnalytics("EnteredProofImage")
-
-                }
-                ImagePicker.RESULT_ERROR -> {
-                    //Set Log Analytics
-                    LogEvents.setLogEventAnalytics("ErrorEnteredProofImage")
-                    println("data: ${ImagePicker.getError(data)}")
-                }
-                else -> {
-                    //Set Log Analytics
-                    LogEvents.setLogEventAnalytics("CancelledEnteredProofImage")
-                    println("Task Cancelled")
-                }
-            }
-        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -151,9 +154,6 @@ class InsertProofWireTransferFragment : Fragment() {
                         .crop()
                         .compress(2048)
                         .maxResultSize(1080, 1920)
-                        .setImageProviderInterceptor { imageProvider -> //Intercept ImageProvider
-                            println("Selected ImageProvider: " + imageProvider.name)
-                        }
                         .createIntent { intent ->
                             startForProfileImageResult.launch(intent)
                         }
@@ -165,9 +165,6 @@ class InsertProofWireTransferFragment : Fragment() {
                         .crop()
                         .compress(2048)
                         .maxResultSize(1080, 1920)
-                        .setImageProviderInterceptor { imageProvider -> //Intercept ImageProvider
-                            println("Selected ImageProvider: " + imageProvider.name)
-                        }
                         .createIntent { intent ->
                             startForProfileImageResult.launch(intent)
                         }

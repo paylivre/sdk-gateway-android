@@ -135,7 +135,7 @@ class MainViewModel(
     private val _transfer_proof_response = MutableLiveData<InsertTransferProofDataResponse?>()
     val transfer_proof_response: LiveData<InsertTransferProofDataResponse?> get() = _transfer_proof_response
 
-    private val _proof_image_uri = MutableLiveData<Uri>()
+    private val _proof_image_uri = MutableLiveData<Uri?>()
     val proof_image_uri: LiveData<Uri?> get() = _proof_image_uri
 
     private val _merchant_id = MutableLiveData<Int>()
@@ -440,7 +440,7 @@ class MainViewModel(
         _origin_type_insert_proof.value = originTypeInsertProof
     }
 
-    fun setProofImageUri(uri: Uri) {
+    fun setProofImageUri(uri: Uri?) {
         _proof_image_uri.value = uri
     }
 

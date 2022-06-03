@@ -22,13 +22,47 @@ import java.lang.Exception
 
 class SelectBankAccountFragment : Fragment() {
     private var _binding: FragmentSelectBankAccountBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
+
+    fun setOnBankClick(position: Int, banksList: List<BankAccount>? = null) {
+        //Set Log Analytics
+        LogEvents.setLogEventAnalytics("Spinner_SelectBankAccount")
+
+        val selectedItemText = banksList?.elementAt(position)
+        val infoSelectedBankText = selectedItemText?.let {
+            getBankAccountInfo(requireContext(),
+                it
+            )
+        }
+
+        mainViewModel.setSelectedBankAccountWireTransfer(selectedItemText)
+
+        binding.textViewBankInfo.visibility = View.VISIBLE
+        binding.textViewBankInfo.text = infoSelectedBankText
+
+        binding.textViewBankInfo.makeBold(
+            DataMakeBold(
+                getString(R.string.label_bank) + ":",
+                infoSelectedBankText.toString(),
+            ),
+            DataMakeBold(
+                getString(R.string.label_bank_office) + ":",
+                infoSelectedBankText.toString(),
+            ),
+            DataMakeBold(
+                getString(R.string.label_account) + ":",
+                infoSelectedBankText.toString(),
+            )
+        )
+
+        binding.editSpinnerBanks.clearFocus()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSelectBankAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -64,45 +98,15 @@ class SelectBankAccountFragment : Fragment() {
 
 
         binding.editSpinnerBanks.setOnItemClickListener { _, _, position, _ ->
-            //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Spinner_SelectBankAccount")
-
-            val selectedItemText = banksList?.elementAt(position)
-            val infoSelectedBankText = selectedItemText?.let {
-                getBankAccountInfo(requireContext(),
-                    it
-                )
-            }
-
-            mainViewModel.setSelectedBankAccountWireTransfer(selectedItemText)
-
-            binding.textViewBankInfo.visibility = View.VISIBLE
-            binding.textViewBankInfo.text = infoSelectedBankText
-
-            binding.textViewBankInfo.makeBold(
-                DataMakeBold(
-                    getString(R.string.label_bank)+":",
-                    infoSelectedBankText.toString(),
-                ),
-                DataMakeBold(
-                    getString(R.string.label_bank_office)+":",
-                    infoSelectedBankText.toString(),
-                ),
-                DataMakeBold(
-                    getString(R.string.label_account)+":",
-                    infoSelectedBankText.toString(),
-                )
-            )
-
-            binding.editSpinnerBanks.clearFocus()
+            setOnBankClick(position, banksList)
         }
 
-        mainViewModel.clearAllFocus.observe(viewLifecycleOwner, {
+        mainViewModel.clearAllFocus.observe(viewLifecycleOwner) {
             if (it == true) {
                 binding.editSpinnerBanks.clearFocus()
                 mainViewModel.setClearAllFocus(false)
             }
-        })
+        }
 
         return root
     }

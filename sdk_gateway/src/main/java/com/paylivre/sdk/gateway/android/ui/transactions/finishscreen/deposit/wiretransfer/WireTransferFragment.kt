@@ -50,7 +50,8 @@ fun setSelectBankFragment(
 
 class WireTransferFragment : Fragment() {
     private var _binding: FragmentDepositWireTransferBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
+
     private val binding get() = _binding!!
     private var language: String? = null
 
@@ -78,7 +79,7 @@ class WireTransferFragment : Fragment() {
         //Set Log Analytics
         LogEvents.setLogFinishScreen(Operation.DEPOSIT, Types.WIRETRANSFER)
 
-        mainViewModel.language.observe(viewLifecycleOwner, { language = it })
+        mainViewModel.language.observe(viewLifecycleOwner) { language = it }
 
         mainViewModel.checkStatusDepositLoading.observe(viewLifecycleOwner) {
             if (it == true) {
@@ -174,7 +175,6 @@ class WireTransferFragment : Fragment() {
                 R.id.containerSelectBank,
                 binding.containerSelectBank,
                 BankAccounts(bank_accounts = it.data?.bank_accounts)
-
             )
 
             if (it.data?.deposit_id != null) {
@@ -182,7 +182,6 @@ class WireTransferFragment : Fragment() {
             }
 
             val currency = it.data?.original_currency
-
 
             setTransactionData(
                 this,

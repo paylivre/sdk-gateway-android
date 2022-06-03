@@ -10,9 +10,6 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true">
-        <activity
-            android:name=".ActivityTest"
-            android:exported="false" />
 
         <meta-data
             android:name="io.sentry.dsn"
@@ -29,6 +26,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SDKGatewayAndroid"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".test.ActivityTest"
+            android:theme="@style/Theme.SDKGatewayAndroid"
+            android:exported="false" />
     </application>
 
 </manifest>
