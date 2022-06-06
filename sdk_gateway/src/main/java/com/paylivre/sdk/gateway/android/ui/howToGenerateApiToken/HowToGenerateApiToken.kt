@@ -1,17 +1,13 @@
 package com.paylivre.sdk.gateway.android.ui.howToGenerateApiToken
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentHowToGenerateApiTokenBinding
-import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.utils.DataMakeBold
 import com.paylivre.sdk.gateway.android.utils.makeBold
 

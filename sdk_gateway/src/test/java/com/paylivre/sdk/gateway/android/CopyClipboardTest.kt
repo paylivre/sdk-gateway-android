@@ -6,10 +6,14 @@ import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.utils.copyToClipboard
 import com.paylivre.sdk.gateway.android.utils.showToast
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowToast
@@ -20,6 +24,17 @@ import org.robolectric.shadows.ShadowToast
 class CopyClipboardTest {
 
     private var clipboardManager: ClipboardManager? = null
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     @Before
     @Throws(Exception::class)

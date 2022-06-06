@@ -8,17 +8,17 @@ import androidx.fragment.app.Fragment
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentButtonsTypeSelectBinding
 import android.widget.RelativeLayout
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Type
 import com.paylivre.sdk.gateway.android.domain.model.checkTypeEnable
 import com.paylivre.sdk.gateway.android.ui.buttons.ButtonTypeFragment
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class ButtonsTypeSelectFragment : Fragment() {
     private var _binding: FragmentButtonsTypeSelectBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
     private var type: Int = 0
     private var operation: Int = -1

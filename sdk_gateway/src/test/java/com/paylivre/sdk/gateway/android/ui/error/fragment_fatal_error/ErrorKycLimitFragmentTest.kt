@@ -10,11 +10,12 @@ import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.ErrorTransaction
 import com.paylivre.sdk.gateway.android.data.model.order.Errors
 import com.paylivre.sdk.gateway.android.ui.error.ErrorKycLimitFragment
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -24,6 +25,18 @@ import org.robolectric.annotation.Config
 class ErrorKycLimitFragmentTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
 
     @Test

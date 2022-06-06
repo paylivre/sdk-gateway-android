@@ -7,17 +7,17 @@ import io.sentry.Sentry
 import org.json.JSONException
 import org.json.JSONObject
 
-class LogEvents {
-    companion object {
+class LogEventsServiceImpl {
+    companion object : LogEventsService {
         private val customEventAnalytics = JSONObject()
 
-        fun setLogEventAnalytics(eventName: String?) {
+        override fun setLogEventAnalytics(eventName: String?) {
             if (eventName != null) {
                 Amplitude.getInstance().logEvent(eventName)
             }
         }
 
-        fun setLogEventAnalyticsWithParams(
+        override fun setLogEventAnalyticsWithParams(
             eventName: String,
             vararg params: Pair<String, String>?,
         ) {
@@ -39,11 +39,8 @@ class LogEvents {
             Amplitude.getInstance().logEvent(eventName, customEventAnalytics)
         }
 
-        fun setLogFinishScreen(
-            operation: Operation,
-            type: Types,
-        ) {
-            setLogEventAnalyticsWithParams(
+        override fun setLogFinishScreen(operation: Operation, type: Types) {
+            this.setLogEventAnalyticsWithParams(
                 "Screen_TransactionFinish",
                 Pair("operation", operation.code.toString()),
                 Pair("operation_name", operation.toString().lowercase()),
@@ -54,5 +51,4 @@ class LogEvents {
             )
         }
     }
-
 }

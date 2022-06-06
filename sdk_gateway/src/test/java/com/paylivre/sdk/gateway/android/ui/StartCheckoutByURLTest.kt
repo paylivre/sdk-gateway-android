@@ -3,17 +3,7 @@ package com.paylivre.sdk.gateway.android.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.widget.TextView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.test.core.app.launchActivity
-import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.PaymentActivity
 import com.paylivre.sdk.gateway.android.StartCheckoutByURL
 import com.paylivre.sdk.gateway.android.domain.model.extractDataFromUrl
@@ -30,14 +20,29 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowActivity
 import java.util.*
 import com.paylivre.sdk.gateway.android.R
-import io.mockk.every
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.After
+import org.junit.Before
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class StartCheckoutByURLTest {
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     private var activityMocked: Activity =
         Robolectric.buildActivity(Activity::class.java).create().get()

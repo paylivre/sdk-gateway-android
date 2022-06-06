@@ -8,24 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.ErrorTransaction
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.FragmentErrorKycUserBlockedBinding
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.checkValidDrawableId
 import com.paylivre.sdk.gateway.android.utils.dpToPx
 import com.paylivre.sdk.gateway.android.utils.getBlockReasonByLocale
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
-import java.util.*
 import kotlin.math.roundToInt
 
 class ErrorKycUserBlocked : Fragment() {
 
     private var _binding: FragmentErrorKycUserBlockedBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
 
     private val binding get() = _binding!!
 
@@ -42,11 +43,11 @@ class ErrorKycUserBlocked : Fragment() {
         val root: View = binding.root
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_ErrorKycUserBlocked")
+        logEventsService.setLogEventAnalytics("Screen_ErrorKycUserBlocked")
 
         binding.btnClose.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_Close_Screen_ErrorKycUserBlocked")
+            logEventsService.setLogEventAnalytics("Btn_Close_Screen_ErrorKycUserBlocked")
 
             mainViewModel.setIsCloseSDK(true)
         }
@@ -132,7 +133,7 @@ class ErrorKycUserBlocked : Fragment() {
 
         binding.textLink.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_OpenLinkBlockReason")
+            logEventsService.setLogEventAnalytics("Btn_OpenLinkBlockReason")
             openUrl(linkBlockReason)
         }
 

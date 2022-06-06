@@ -5,19 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.FragmentFatalErrorBinding
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.*
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import kotlin.math.roundToInt
 
 class FragmentFatalError : Fragment() {
 
     private var _binding: FragmentFatalErrorBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
-
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,11 +40,11 @@ class FragmentFatalError : Fragment() {
 
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_GenericError")
+        logEventsService.setLogEventAnalytics("Screen_GenericError")
 
         binding.btnClose.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_Close_ScreenError")
+            logEventsService.setLogEventAnalytics("Btn_Close_ScreenError")
 
             mainViewModel.setIsCloseSDK(true)
         }
@@ -103,7 +104,7 @@ class FragmentFatalError : Fragment() {
             }
 
             //Set Log Analytics
-            LogEvents.setLogEventAnalyticsWithParams(
+            logEventsService.setLogEventAnalyticsWithParams(
                 "Screen_Error",
                 Pair("message_error_1", msgError1 ?: ""),
                 Pair("message_error_2", msgError2 ?: ""),

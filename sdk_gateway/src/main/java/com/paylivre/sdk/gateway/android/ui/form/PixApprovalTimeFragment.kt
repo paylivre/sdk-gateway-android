@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.data.model.pixApprovalTime.getDataAveragePixApprovalTime
 import com.paylivre.sdk.gateway.android.databinding.PixApprovalTimeBinding
 import com.paylivre.sdk.gateway.android.domain.model.Operation
@@ -16,13 +15,14 @@ import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.utils.dpToPx
 import com.paylivre.sdk.gateway.android.utils.getStringByKey
 import com.paylivre.sdk.gateway.android.utils.getStringIdByKey
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 
 class PixApprovalTimeFragment : Fragment() {
     private var _binding: PixApprovalTimeBinding? = null
     private val binding get() = _binding!!
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

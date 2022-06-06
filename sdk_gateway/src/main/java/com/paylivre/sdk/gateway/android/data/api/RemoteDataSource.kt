@@ -14,6 +14,7 @@ import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferP
 import com.paylivre.sdk.gateway.android.data.model.transferProof.insertTransferProofHandleResponse
 import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
 import com.paylivre.sdk.gateway.android.data.model.transaction.handleResponseTransactionCheckStatus
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import io.sentry.Sentry
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -27,7 +28,7 @@ import java.lang.RuntimeException
 import okhttp3.MultipartBody
 
 
-class RemoteDataSource(private val apiService: ApiService) {
+class RemoteDataSource(private val apiService: ApiService, private val logEventsService : LogEventsService) {
     fun getPixApprovalTime(
         onResponse: (PixApprovalTimeResponse?, Throwable?) -> Unit,
     ) {
@@ -108,7 +109,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 response: Response<ResponseBody>,
             ) {
                 //Trata os possíveis erros do response
-                handleResponseTransaction(dataRequest, response, onResponse)
+                handleResponseTransaction(dataRequest, response, onResponse, logEventsService)
             }
 
             //Geralmente Erros de Falha de conexão
@@ -256,7 +257,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 response: Response<ResponseBody>,
             ) {
                 //Trata os possíveis erros do response
-                handleResponseCheckStatusOrder(dataRequest, response, onResponse)
+                handleResponseCheckStatusOrder(dataRequest, response, onResponse, logEventsService)
             }
 
             //Geralmente Erros de Falha de conexão

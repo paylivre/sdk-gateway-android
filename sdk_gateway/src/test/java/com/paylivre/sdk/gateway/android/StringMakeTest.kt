@@ -9,13 +9,17 @@ import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.utils.makeLinks
 import com.paylivre.sdk.gateway.android.utils.setTextBackground
 import com.paylivre.sdk.gateway.android.utils.setTextWithSpan
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.mockito.Mock
 import org.mockito.Mockito.times
 import org.robolectric.RobolectricTestRunner
@@ -31,14 +35,21 @@ class OpenUrl {
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class StringMakeTest {
 
+
     @Mock
     private var textView: TextView? = null
     private var context: Application? = null
 
     @Before
     fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
         context = ApplicationProvider.getApplicationContext()
         textView = TextView(context)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test

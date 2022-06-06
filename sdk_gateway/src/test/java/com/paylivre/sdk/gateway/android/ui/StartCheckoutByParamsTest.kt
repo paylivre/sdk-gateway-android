@@ -17,12 +17,27 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowActivity
 import com.paylivre.sdk.gateway.android.R
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.After
+import org.junit.Before
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class StartCheckoutByParamsTest {
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
     @Test
     fun `CASE 1, StartCheckoutByParams given, request_code=null, locale=null`() {

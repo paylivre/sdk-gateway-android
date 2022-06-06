@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentInsertProofWireTransferBinding
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
@@ -21,17 +20,19 @@ import kotlin.math.roundToInt
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataRequest
 import com.paylivre.sdk.gateway.android.domain.model.OriginTypeInsertProof
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.File
-
 
 class InsertProofWireTransferFragment : Fragment() {
     private var _binding: FragmentInsertProofWireTransferBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
     private val binding get() = _binding!!
     private var uriProofFile: Uri? = null
     private var tokenTransferTransaction: String? = null
     private var orderIdTransferTransaction: Int? = null
+    private val logEventsService : LogEventsService by inject()
 
     fun handleImagePickerSuccess(data: Intent?) {
         //Image Uri will not be null for RESULT_OK
@@ -47,18 +48,18 @@ class InsertProofWireTransferFragment : Fragment() {
         uriProofFile = uri
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("EnteredProofImage")
+        logEventsService.setLogEventAnalytics("EnteredProofImage")
     }
 
     fun handleImagePickerError(data: Intent?) {
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("ErrorEnteredProofImage")
+        logEventsService.setLogEventAnalytics("ErrorEnteredProofImage")
         println("data: ${ImagePicker.getError(data)}")
     }
 
     fun handleImagePickerCancelled() {
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("CancelledEnteredProofImage")
+        logEventsService.setLogEventAnalytics("CancelledEnteredProofImage")
         println("Task Cancelled")
     }
 
@@ -176,13 +177,13 @@ class InsertProofWireTransferFragment : Fragment() {
 
         binding.btnChooseFile.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_ChooseFile")
+            logEventsService.setLogEventAnalytics("Btn_ChooseFile")
             openModalSelectTypeInsertProof(true)
         }
 
         binding.btnSubmit.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_SubmitTransferProof")
+            logEventsService.setLogEventAnalytics("Btn_SubmitTransferProof")
 
             val file = File(uriProofFile?.path)
 

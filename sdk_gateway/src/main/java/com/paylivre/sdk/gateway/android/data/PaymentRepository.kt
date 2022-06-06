@@ -1,6 +1,5 @@
 package com.paylivre.sdk.gateway.android.data
 
-import com.paylivre.sdk.gateway.android.App
 import com.paylivre.sdk.gateway.android.data.api.RemoteDataSource
 import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
 import com.paylivre.sdk.gateway.android.data.model.order.*
@@ -11,9 +10,7 @@ import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferP
 import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
 import java.lang.Exception
 
-class PaymentRepository(
-    private val remoteDataSource: RemoteDataSource = RemoteDataSource(App.apiService),
-) {
+class PaymentRepository(private val remoteDataSource: RemoteDataSource) {
 
     fun getPixApprovalTime(
         getApprovalTimeSuccess: (response: PixApprovalTimeResponse) -> Unit,

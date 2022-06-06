@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.DataGenerateSignature
@@ -14,16 +13,19 @@ import com.paylivre.sdk.gateway.android.data.model.order.getDataWithOnlySelected
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.FragmentCheckServicesStatusBinding
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
 import com.paylivre.sdk.gateway.android.utils.getNameByTypesKeys
 import com.paylivre.sdk.gateway.android.utils.getTypesKeyNameInNumberTypes
 import io.sentry.Sentry
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CheckServicesStatus : Fragment() {
 
     private var _binding: FragmentCheckServicesStatusBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
 
     private val binding get() = _binding!!
 
@@ -53,7 +55,7 @@ class CheckServicesStatus : Fragment() {
         var dataStartPayment = emptyDataGenerateSignature
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_CheckServicesStatus")
+        logEventsService.setLogEventAnalytics("Screen_CheckServicesStatus")
 
         fun checkIsAutoStart() {
             if (checkDataToAutoStartTransaction(dataStartPayment)) {

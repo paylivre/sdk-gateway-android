@@ -12,12 +12,16 @@ import com.paylivre.sdk.gateway.android.PaymentActivity
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -30,6 +34,16 @@ class ActivityNavFormTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     private var activity: PaymentActivity? = null
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
     @Before
     fun setUp() {

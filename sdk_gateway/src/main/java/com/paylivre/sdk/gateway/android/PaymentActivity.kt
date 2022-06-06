@@ -8,7 +8,6 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,7 +16,9 @@ import com.paylivre.sdk.gateway.android.data.model.order.*
 import com.paylivre.sdk.gateway.android.databinding.StartCheckoutBinding
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 interface IOnBackPressed {
@@ -26,9 +27,10 @@ interface IOnBackPressed {
 
 class PaymentActivity : AppCompatActivity() {
 
-    lateinit var mainViewModel: MainViewModel
+    val mainViewModel: MainViewModel by viewModel()
     lateinit var binding: StartCheckoutBinding
     var insertRegisterResultData = InsertRegisterResultData(this)
+    private val logEventsService: LogEventsService by inject()
 
     /**
      * Does not allow returning to previous navigation within SDK screens
@@ -43,7 +45,7 @@ class PaymentActivity : AppCompatActivity() {
 
             setResult(Activity.RESULT_OK, intent)
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("onBackPressed")
+            logEventsService.setLogEventAnalytics("onBackPressed")
             finish()
             // super.onBackPressed()
         }
@@ -62,13 +64,10 @@ class PaymentActivity : AppCompatActivity() {
         //Set StatusBarColor
         window.statusBarColor = ContextCompat.getColor(this, R.color.light_bg)
         //Set TextColor StatusBar
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         binding = StartCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        mainViewModel =
-            ViewModelProvider(this).get(MainViewModel::class.java)
 
         mainViewModel.order_data.observe(this) {
             insertRegisterResultData.typeSelect = it?.selected_type?.toInt()
@@ -127,7 +126,7 @@ class PaymentActivity : AppCompatActivity() {
                 insertRegisterResultData.getIntentWithResultData(intent)
                 setResult(Activity.RESULT_OK, intent)
                 //Set Log Analytics
-                LogEvents.setLogEventAnalytics("CloseSDK")
+                logEventsService.setLogEventAnalytics("CloseSDK")
                 finish()
             }
 

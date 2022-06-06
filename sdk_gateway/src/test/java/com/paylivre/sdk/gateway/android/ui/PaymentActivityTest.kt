@@ -19,12 +19,16 @@ import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionRespon
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataResponse
 import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -43,6 +47,7 @@ class PaymentActivityTest {
 
     @Before
     fun setUp() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
 
         val dataStartCheckout = DataStartCheckout(
             merchant_id = 123,
@@ -85,6 +90,12 @@ class PaymentActivityTest {
             .resume()
             .get()
     }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
 
     @Test

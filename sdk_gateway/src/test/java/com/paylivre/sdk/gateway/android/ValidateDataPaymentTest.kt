@@ -5,16 +5,31 @@ import com.paylivre.sdk.gateway.android.data.model.order.OrderDataRequest
 import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.utils.BASE_URL_ENVIRONMENT_DEV
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
 import org.bouncycastle.util.StringList
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class ValidateDataPaymentTest {
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
     private val mockDataStartCheckoutAllValidByParams = DataStartCheckout(
         10, "123asd4a56sf4a56s4d65as4d",
         Operation.DEPOSIT.code, "12asd323", 500,

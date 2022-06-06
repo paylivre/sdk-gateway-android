@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImpl
 import com.paylivre.sdk.gateway.android.utils.FormDataExtra
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
 import com.paylivre.sdk.gateway.android.utils.setDataPaymentIntent
@@ -33,7 +33,7 @@ class StartCheckoutByURL private constructor(
     }
 
     fun startPayment(context: Context) {
-        var dataCheckout = extractDataFromUrl(url)
+        val dataCheckout = extractDataFromUrl(url)
 
         startIntent(
             context,
@@ -45,7 +45,7 @@ class StartCheckoutByURL private constructor(
         )
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalyticsWithParams(
+        LogEventsServiceImpl.setLogEventAnalyticsWithParams(
             "StartCheckoutSDK",
             Pair("type_start_checkout", "by_url"),
             Pair("operation", dataCheckout.operation.toString()),

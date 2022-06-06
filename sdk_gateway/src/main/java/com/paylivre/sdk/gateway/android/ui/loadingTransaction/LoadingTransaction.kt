@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.OrderDataRequest
@@ -14,13 +13,16 @@ import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.FragmentLoadingTransactionBinding
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Type
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.error.handleNavigateToErrorScreen
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoadingTransaction : Fragment() {
 
     private var _binding: FragmentLoadingTransactionBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
 
     private val binding get() = _binding!!
 
@@ -45,7 +47,7 @@ class LoadingTransaction : Fragment() {
         )
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_LoadingTransaction")
+        logEventsService.setLogEventAnalytics("Screen_LoadingTransaction")
 
         mainViewModel.order_data.observe(viewLifecycleOwner) {
             if (it != null) {

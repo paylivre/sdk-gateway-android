@@ -6,15 +6,31 @@ import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.data.model.order.BankAccount
 import com.paylivre.sdk.gateway.android.data.model.order.BankAccounts
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wiretransfer.*
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers="pt-port")
 class GetBankAccountsDataTest {
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
+
     private val mockBankAccounts = listOf(
         BankAccount(
             "Teste Account Hidden",

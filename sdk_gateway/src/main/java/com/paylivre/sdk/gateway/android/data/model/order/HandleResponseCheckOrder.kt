@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import io.sentry.Sentry
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -69,15 +69,15 @@ fun handleResponseCheckStatusOrder(
     dataRequest: CheckStatusOrderDataRequest,
     response: Response<ResponseBody>,
     onResponse: (CheckStatusOrderDataResponse?, ErrorTransaction?) -> Unit,
+    logEventsService : LogEventsService,
 ) {
     try {
         if (response.isSuccessful) {
             val res: CheckStatusOrderDataResponse = getResponseJsonCheckStatusOrder(response)
             onResponse(res, null)
 
-
             //Set Log Analytics
-            LogEvents.setLogEventAnalyticsWithParams(
+            logEventsService.setLogEventAnalyticsWithParams(
                 "SuccessCheckStatusOrder",
                 Pair("order_id", dataRequest.order_id.toString()),
                 Pair("order_type", res.order?.type.toString()),
@@ -93,7 +93,7 @@ fun handleResponseCheckStatusOrder(
             onResponse(null, getErrorDataByCode(response))
 
             //Set Log Analytics
-            LogEvents.setLogEventAnalyticsWithParams(
+            logEventsService.setLogEventAnalyticsWithParams(
                 "ErrorTransaction",
                 Pair("order_id", dataRequest.order_id.toString()),
             )

@@ -10,11 +10,12 @@ import com.paylivre.sdk.gateway.android.FileTestsUtils
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -26,6 +27,15 @@ class SelectBankAccountFragmentTest {
 
     var fileTestsUtils = FileTestsUtils()
 
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
     private fun getMockStatusTransactionResponseSuccess(): StatusTransactionResponse {
         val responseExpectedString =

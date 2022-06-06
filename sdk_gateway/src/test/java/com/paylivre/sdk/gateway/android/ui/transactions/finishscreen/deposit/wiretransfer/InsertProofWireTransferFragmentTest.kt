@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.FileTestsUtils
 import com.paylivre.sdk.gateway.android.R
@@ -18,13 +20,22 @@ import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionRespon
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataResponse
 import com.paylivre.sdk.gateway.android.domain.model.OriginTypeInsertProof
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
+import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImpl
+import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImplTest
+import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import io.mockk.coEvery
+import io.mockk.mockk
 import io.mockk.mockkStatic
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -35,6 +46,18 @@ class InsertProofWireTransferFragmentTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     var fileTestsUtils = FileTestsUtils()
+
+    @Before
+    fun setup() {
+        //configure a mocked MainViewModel instance for all tests
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     private fun getMockStatusTransactionResponseSuccess(): StatusTransactionResponse {
         val responseExpectedString =
@@ -117,6 +140,33 @@ class InsertProofWireTransferFragmentTest {
 
     @Test
     fun `CASE 03, test btnChooseFile`() {
+        val mockMainViewModel: MainViewModel = mockk()
+        val logEventsServiceImpl = LogEventsServiceImplTest()
+
+        loadKoinModules(module(override = true) {
+            single<LogEventsService> {
+                logEventsServiceImpl
+            }
+            viewModel {
+                mockMainViewModel
+            }
+        })
+
+        coEvery {
+            mockMainViewModel.proof_image_uri
+        } returns MutableLiveData(null)
+
+        coEvery {
+            mockMainViewModel.statusResponseTransaction
+        } returns MutableLiveData(StatusTransactionResponse(isLoading = false,
+            isSuccess = false,
+            null,
+            null))
+
+        coEvery {
+            mockMainViewModel.origin_type_insert_proof
+        } returns MutableLiveData(null)
+
         val fragmentArgs = Bundle()
         val fragment = launchFragmentInContainer<InsertProofWireTransferFragment>(fragmentArgs,
             themeResId = R.style.Theme_SDKGatewayAndroid)
@@ -129,6 +179,12 @@ class InsertProofWireTransferFragmentTest {
 
             //To run childFragmentManager transactions
             insertProofWireTransferFragment.childFragmentManager.executePendingTransactions()
+
+            Assert.assertEquals(
+                mutableListOf<String?>(
+                    "Btn_ChooseFile",
+                    "ModalSelectOriginImportProof"),
+                logEventsServiceImpl.logEventAnalytics)
         }
     }
 

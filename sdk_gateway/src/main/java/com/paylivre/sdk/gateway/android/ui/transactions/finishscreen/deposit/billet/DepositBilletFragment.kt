@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentDepositBilletBinding
 import com.paylivre.sdk.gateway.android.domain.model.Currency
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Types
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.form.AcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.data.TransactionDataFragment
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.*
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet.BilletBarCodeFragment
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet.getBilletDueDateFormatted
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 fun setBilletBarCodeFragment(
@@ -48,10 +49,10 @@ fun setBilletBarCodeFragment(
 
 class DepositBilletFragment : Fragment() {
     private var _binding: FragmentDepositBilletBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
     private val binding get() = _binding!!
     private var language: String? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +78,7 @@ class DepositBilletFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Set Log Analytics
-        LogEvents.setLogFinishScreen(Operation.DEPOSIT, Types.BILLET)
+        logEventsService.setLogFinishScreen(Operation.DEPOSIT, Types.BILLET)
 
         mainViewModel.language.observe(viewLifecycleOwner, { language = it })
 

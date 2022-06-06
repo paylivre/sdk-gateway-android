@@ -8,19 +8,17 @@ import androidx.fragment.app.Fragment
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentButtonsTypePixKeySelectBinding
 import android.widget.RelativeLayout
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.TypePixKey
 import com.paylivre.sdk.gateway.android.ui.buttons.ButtonPixTypeFragment
-import com.paylivre.sdk.gateway.android.ui.buttons.ButtonTypeFragment
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class ButtonsTypePixKeySelect : Fragment() {
     private var _binding: FragmentButtonsTypePixKeySelectBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
-    private var type: Int = 0
     private var operation: Int = -1
 
     private val binding get() = _binding!!

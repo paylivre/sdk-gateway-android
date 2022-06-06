@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
@@ -25,8 +24,10 @@ import com.paylivre.sdk.gateway.android.utils.START_TIME_IN_MILLIS
 import androidx.core.text.HtmlCompat
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Types
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,7 +37,8 @@ val START_TIME_IN_MINUTES = TimeUnit.MILLISECONDS.toMinutes(START_TIME_IN_MILLIS
 
 class DepositPixFragment : Fragment() {
     private var _binding: FragmentDepositPixBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
     private val binding get() = _binding!!
     private var minutesToExpirePix: Long = -1
     private var depositId: Int? = 0
@@ -75,7 +77,7 @@ class DepositPixFragment : Fragment() {
                 finishCheckStartStatus()
 
                 //Set Log Analytics
-                LogEvents.setLogEventAnalyticsWithParams(
+                logEventsService.setLogEventAnalyticsWithParams(
                     "TransactionStatus",
                     Pair("type_status", "deposit_status_id"),
                     Pair("status_id", statusCodeDepositPix.toString()),
@@ -176,7 +178,7 @@ class DepositPixFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Set Log Analytics
-        LogEvents.setLogFinishScreen(Operation.DEPOSIT, Types.PIX)
+        logEventsService.setLogFinishScreen(Operation.DEPOSIT, Types.PIX)
 
         var codePix = ""
 
@@ -200,7 +202,7 @@ class DepositPixFragment : Fragment() {
 
         binding.textCodePix.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Click_Text_CopyCodePix")
+            logEventsService.setLogEventAnalytics("Click_Text_CopyCodePix")
 
             copyToClipboard(codePix)
         }
@@ -238,7 +240,7 @@ class DepositPixFragment : Fragment() {
 
         binding.btnCopyCodePix.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_CopyCodePix")
+            logEventsService.setLogEventAnalytics("Btn_CopyCodePix")
 
             copyToClipboard(codePix)
         }

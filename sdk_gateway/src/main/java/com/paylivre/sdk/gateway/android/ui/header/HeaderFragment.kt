@@ -6,23 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.BuildConfig
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.HeaderTitleBinding
 import com.paylivre.sdk.gateway.android.domain.model.Operation
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.checkValidDrawableId
 import com.paylivre.sdk.gateway.android.utils.dpToPx
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import kotlin.math.roundToInt
 
 
 class HeaderFragment : Fragment() {
 
     private var _binding: HeaderTitleBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,7 +42,7 @@ class HeaderFragment : Fragment() {
 
         binding.ButtonCloseSDK.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_GoBack_Header")
+            logEventsService.setLogEventAnalytics("Btn_GoBack_Header")
             mainViewModel.setIsCloseSDK(true)
         }
 

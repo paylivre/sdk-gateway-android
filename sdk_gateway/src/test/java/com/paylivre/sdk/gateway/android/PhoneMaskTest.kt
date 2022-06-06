@@ -7,10 +7,14 @@ import android.util.AttributeSet
 import android.widget.EditText
 import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.utils.MaskPhoneUtil
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.mockito.Mock
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -27,6 +31,8 @@ class PhoneMaskTest {
 
     @Before
     fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+
         val attributeSet: AttributeSet = Robolectric.buildAttributeSet()
             .addAttribute(R.attr.maxLength, "20")
             .build()
@@ -34,6 +40,12 @@ class PhoneMaskTest {
         editText = EditText(context, attributeSet)
         editText?.addTextChangedListener(MaskPhoneUtil.insert(editText!!))
     }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     @Test
     fun `Test MaskPhoneUtil with 8 numbers`() {

@@ -15,8 +15,9 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.oned.Code128Writer
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentBilletBarCodeBinding
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.copyToClipboard
+import org.koin.android.ext.android.inject
 import java.lang.Exception
 
 
@@ -47,6 +48,7 @@ fun generateBarCodeBitmap(code: String?, imageView: ImageView) {
 class BilletBarCodeFragment : Fragment() {
     private var _binding: FragmentBilletBarCodeBinding? = null
     private val binding get() = _binding!!
+    private val logEventsService : LogEventsService by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,7 +76,7 @@ class BilletBarCodeFragment : Fragment() {
 
         binding.btnCopyCodeBillet.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_CopyCodeBillet")
+            logEventsService.setLogEventAnalytics("Btn_CopyCodeBillet")
 
             copyToClipboard(
                 requireContext(),
@@ -86,7 +88,7 @@ class BilletBarCodeFragment : Fragment() {
 
         binding.btnOpenBillet.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_OpenBillet")
+            logEventsService.setLogEventAnalytics("Btn_OpenBillet")
             openUrl(receivableUrl)
         }
 

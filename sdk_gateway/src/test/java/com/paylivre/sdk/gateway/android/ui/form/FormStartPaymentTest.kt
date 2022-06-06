@@ -21,11 +21,16 @@ import com.paylivre.sdk.gateway.android.domain.model.TypePixKey
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
 import com.paylivre.sdk.gateway.android.utils.ERROR_INVALID_USER_NAME_OR_PASSWORD
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.robolectric.RobolectricTestRunner
@@ -39,6 +44,15 @@ class FormFragmentTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
     @Test
     fun `CASE 1- Deposit only Pix, given document = "" and email = "", RENDER COMPONENTS`() {

@@ -7,7 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.domain.model.DataStartCheckout
 import com.paylivre.sdk.gateway.android.domain.model.validateLocaleLanguage
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImpl
 import com.paylivre.sdk.gateway.android.utils.FormDataExtra
 import com.paylivre.sdk.gateway.android.utils.TypesStartCheckout
 import com.paylivre.sdk.gateway.android.utils.setDataPaymentIntent
@@ -31,7 +31,7 @@ class StartCheckoutByParams private constructor(
     private val auto_approve: Int,
     private val logo_url: String? = null,//OPTIONAL
     private val pix_key_type: Int? = null,//OPTIONAL
-    private val pix_key: String? = null,//OPTIONAL
+    private val pix_key: String? = null,//OPTIONAL,
 ) {
     private var logoResId: Int = -1
     private var language: String? = null
@@ -74,7 +74,7 @@ class StartCheckoutByParams private constructor(
         Sentry.setExtra("logo_res_id_start_checkout", logoResId.toString())
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalyticsWithParams(
+        LogEventsServiceImpl.setLogEventAnalyticsWithParams(
             "StartCheckoutSDK",
             Pair("type_start_checkout", "by_params"),
             Pair("operation", dataCheckout.operation.toString()),

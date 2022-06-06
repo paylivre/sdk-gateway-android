@@ -4,10 +4,14 @@ import android.app.Activity
 import android.os.Build
 import com.paylivre.sdk.gateway.android.data.model.servicesStatus.ServicesStatus
 import com.paylivre.sdk.gateway.android.utils.*
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -20,10 +24,19 @@ class TypesUtilsTest {
     private val activityMocked: Activity =
         Robolectric.buildActivity(Activity::class.java).create().get()
 
+
+
     @Before
-    fun setupTheme() {
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
         activityMocked.setTheme(R.style.Theme_MaterialComponents_Light)
     }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     @Test
     fun `Test BitwiseTypes`() {

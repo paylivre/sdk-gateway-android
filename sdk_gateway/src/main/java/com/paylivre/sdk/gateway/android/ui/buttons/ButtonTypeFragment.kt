@@ -12,19 +12,17 @@ import androidx.fragment.app.Fragment
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FragmentButtonTypeBinding
 import android.graphics.drawable.GradientDrawable
-import androidx.fragment.app.activityViewModels
-import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Type
-import com.paylivre.sdk.gateway.android.domain.model.TypePixKey
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.utils.dpToPx
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import kotlin.math.roundToInt
 
 
 class ButtonTypeFragment : Fragment() {
 
     private var _binding: FragmentButtonTypeBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
     private var type: Int = 0
 

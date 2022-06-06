@@ -16,9 +16,7 @@ import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.utils.getNumberByTypes
 import kotlinx.coroutines.*
 
-class MainViewModel(
-    private val paymentRepository: PaymentRepository = PaymentRepository(),
-) : ViewModel() {
+class MainViewModel(private val paymentRepository: PaymentRepository) : ViewModel() {
     private val _clearAllFocus = MutableLiveData<Boolean>()
     val clearAllFocus: MutableLiveData<Boolean> get() = _clearAllFocus
 
@@ -639,19 +637,23 @@ class MainViewModel(
         )
     }
 
-    fun insertTransferProof(
-        insertTransferProofDataRequest: InsertTransferProofDataRequest,
-    ) {
+    fun insertTransferProofLoading(isLoading: Boolean){
         _transfer_proof_response.value = InsertTransferProofDataResponse(
             null,
             null,
             null,
             null,
             null,
-            loading = true,
+            loading = isLoading,
             error = null,
         )
+    }
 
+    fun insertTransferProof(
+        insertTransferProofDataRequest: InsertTransferProofDataRequest,
+    ) {
+
+        insertTransferProofLoading(true)
         paymentRepository.transferProof(
             insertTransferProofDataRequest,
             ::insertTransferProofSuccess,

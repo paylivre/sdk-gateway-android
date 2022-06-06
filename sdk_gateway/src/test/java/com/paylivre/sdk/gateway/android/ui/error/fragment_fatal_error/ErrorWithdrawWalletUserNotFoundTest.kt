@@ -7,11 +7,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.ui.error.FragmentFatalError
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -21,6 +22,17 @@ class ErrorWithdrawWalletUserNotFoundTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     @Test
     fun `FragmentFatalError, case - Withdraw Wallet, request error, User not found`(){

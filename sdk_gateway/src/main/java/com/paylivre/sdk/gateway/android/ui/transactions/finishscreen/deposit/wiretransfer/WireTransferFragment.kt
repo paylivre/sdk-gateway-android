@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.BankAccounts
@@ -14,7 +13,7 @@ import com.paylivre.sdk.gateway.android.databinding.FragmentDepositWireTransferB
 import com.paylivre.sdk.gateway.android.domain.model.Currency
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Types
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.form.AcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.data.TransactionDataFragment
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.StatusTransactionFragment
@@ -22,6 +21,8 @@ import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.setTextAcce
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.setTransactionData
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.setTransactionStatus
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 fun setSelectBankFragment(
@@ -50,7 +51,8 @@ fun setSelectBankFragment(
 
 class WireTransferFragment : Fragment() {
     private var _binding: FragmentDepositWireTransferBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
 
     private val binding get() = _binding!!
     private var language: String? = null
@@ -77,7 +79,7 @@ class WireTransferFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Set Log Analytics
-        LogEvents.setLogFinishScreen(Operation.DEPOSIT, Types.WIRETRANSFER)
+        logEventsService.setLogFinishScreen(Operation.DEPOSIT, Types.WIRETRANSFER)
 
         mainViewModel.language.observe(viewLifecycleOwner) { language = it }
 
@@ -97,7 +99,7 @@ class WireTransferFragment : Fragment() {
                 binding.containerSelectBank.visibility = View.GONE
                 binding.textErrorUploadProofFile.visibility = View.GONE
                 //Set Log Analytics
-                LogEvents.setLogEventAnalytics("LoadingInsertTransferProof")
+                logEventsService.setLogEventAnalytics("LoadingInsertTransferProof")
             } else {
                 if (it?.isSuccess == true) {
                     binding.fragmentDepositStatus.visibility = View.VISIBLE
@@ -115,7 +117,7 @@ class WireTransferFragment : Fragment() {
                         it.deposit_status_id
                     )
                     //Set Log Analytics
-                    LogEvents.setLogEventAnalytics("SuccessInsertTransferProof")
+                    logEventsService.setLogEventAnalytics("SuccessInsertTransferProof")
 
                 } else {
                     binding.containerLoadingStatusDeposit.visibility = View.GONE
@@ -125,7 +127,7 @@ class WireTransferFragment : Fragment() {
                     binding.containerBackMerchantAndInstructions.visibility = View.GONE
                     binding.textErrorUploadProofFile.visibility = View.VISIBLE
                     //Set Log Analytics
-                    LogEvents.setLogEventAnalytics("ErrorInsertTransferProof")
+                    logEventsService.setLogEventAnalytics("ErrorInsertTransferProof")
                 }
 
             }

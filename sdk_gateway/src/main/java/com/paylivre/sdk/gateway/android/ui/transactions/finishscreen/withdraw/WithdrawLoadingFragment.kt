@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataRequest
@@ -14,12 +13,13 @@ import com.paylivre.sdk.gateway.android.databinding.FragmentLoadingWithdrawBindi
 import com.paylivre.sdk.gateway.android.domain.model.Type
 import com.paylivre.sdk.gateway.android.ui.error.handleNavigateToErrorScreen
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 const val TIMER_INTERVAL_LOADING_WAIT_WITHDRAW: Long = 1000 * 10;
 
 class WithdrawLoadingFragment : Fragment() {
     private var _binding: FragmentLoadingWithdrawBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
     private val binding get() = _binding!!
     private var language: String? = null
     private var orderId: Int = -1

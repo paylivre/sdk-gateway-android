@@ -6,7 +6,7 @@ import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.ERROR_INVALID_USER_NAME_OR_PASSWORD
 import io.sentry.Sentry
 import okhttp3.ResponseBody
@@ -290,7 +290,7 @@ fun handleResponseTransaction(
     dataRequest: OrderDataRequest,
     response: Response<ResponseBody>,
     onResponse: (ResponseCommonTransactionData?, ErrorTransaction?) -> Unit,
-
+    logEventsService: LogEventsService,
     ) {
     try {
         if (response.isSuccessful) {
@@ -298,7 +298,7 @@ fun handleResponseTransaction(
             onResponse(res, null)
 
             //Set Log Analytics
-            LogEvents.setLogEventAnalyticsWithParams(
+            logEventsService.setLogEventAnalyticsWithParams(
                 "SuccessTransaction",
                 Pair("operation", dataRequest.operation),
                 Pair("type", dataRequest.type),
@@ -308,7 +308,7 @@ fun handleResponseTransaction(
             onResponse(null, getErrorDataByCode(response))
 
             //Set Log Analytics
-            LogEvents.setLogEventAnalyticsWithParams(
+            logEventsService.setLogEventAnalyticsWithParams(
                 "ErrorTransaction",
                 Pair("operation", dataRequest.operation),
                 Pair("type", dataRequest.type),

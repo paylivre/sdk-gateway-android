@@ -7,27 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.BankAccount
 import com.paylivre.sdk.gateway.android.data.model.order.BankAccounts
 import com.paylivre.sdk.gateway.android.databinding.FragmentSelectBankAccountBinding
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.utils.DataMakeBold
 import com.paylivre.sdk.gateway.android.utils.makeBold
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 
 
 class SelectBankAccountFragment : Fragment() {
     private var _binding: FragmentSelectBankAccountBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
     private val binding get() = _binding!!
 
     fun setOnBankClick(position: Int, banksList: List<BankAccount>? = null) {
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Spinner_SelectBankAccount")
+        logEventsService.setLogEventAnalytics("Spinner_SelectBankAccount")
 
         val selectedItemText = banksList?.elementAt(position)
         val infoSelectedBankText = selectedItemText?.let {

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataRequest
@@ -16,19 +15,21 @@ import com.paylivre.sdk.gateway.android.databinding.FragmentWithdrawBinding
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Types
 import com.paylivre.sdk.gateway.android.domain.model.WithdrawTypes
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.form.AcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.data.TransactionDataFragment
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.setTextAcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.setTransactionData
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 const val TIMER_INTERVAL_IN_MILLIS: Long = 1000;
 const val TIMER_FINAL_CHECK_IN_MILLIS: Long = 1000 * 121;
 
 class WithdrawFragment : Fragment() {
     private var _binding: FragmentWithdrawBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
     private val binding get() = _binding!!
     private var language: String? = null
     private var orderId: Int? = 0
@@ -37,6 +38,7 @@ class WithdrawFragment : Fragment() {
     private var token: String? = null
     private lateinit var countDownTimer: CountDownTimer
     private var countDownTimerIsExpired: Boolean = false
+    private val logEventsService : LogEventsService by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +50,7 @@ class WithdrawFragment : Fragment() {
         val root: View = binding.root
 
         //Set Log Analytics
-        LogEvents.setLogFinishScreen(Operation.WITHDRAW, Types.PIX)
+        logEventsService.setLogFinishScreen(Operation.WITHDRAW, Types.PIX)
 
         //set text custom terms
         setTextAcceptTerms(

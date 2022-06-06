@@ -8,10 +8,14 @@ import android.widget.EditText
 import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.utils.MaskDocumentUtil
 import com.paylivre.sdk.gateway.android.utils.MaskType
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.mockito.Mock
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -21,13 +25,14 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class DocumentMaskTest {
-
     @Mock
     private var editText: EditText? = null
     private var context: Application? = null
 
     @Before
     fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+
         val attributeSet: AttributeSet = Robolectric.buildAttributeSet()
             .addAttribute(R.attr.maxLength, "20")
             .build()
@@ -35,6 +40,13 @@ class DocumentMaskTest {
         editText = EditText(context, attributeSet)
         editText?.addTextChangedListener(MaskDocumentUtil.insert(editText!!, null))
     }
+
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
 
     @Test
     fun `Test DocumentMask with cpf mask`() {

@@ -19,20 +19,19 @@ import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositRes
 import com.paylivre.sdk.gateway.android.data.model.deposit.DataStatusDeposit
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
-import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataRequest
 import com.paylivre.sdk.gateway.android.data.model.transferProof.InsertTransferProofDataResponse
 import com.paylivre.sdk.gateway.android.domain.model.DepositStatus
 import com.paylivre.sdk.gateway.android.getOrAwaitValueTest
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.testutil.CheckBottomComponentsTestUtils
-import io.mockk.mockk
-import org.junit.Assert
-import org.junit.Rule
-import org.junit.Test
+import com.paylivre.sdk.gateway.android.viewmodel.MockMainViewModel
+import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.io.File
 import java.lang.RuntimeException
 
 @RunWith(RobolectricTestRunner::class)
@@ -42,6 +41,17 @@ class WireTransferFragmentTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     var fileTestsUtils = FileTestsUtils()
+
+
+    @Before
+    fun setup() {
+        loadKoinModules(MockMainViewModel().mockedAppModule)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
 
     private fun getMockStatusTransactionResponseSuccess(): StatusTransactionResponse {
@@ -75,16 +85,17 @@ class WireTransferFragmentTest {
 
     @Test
     fun `Test Show render components, before select bank account`() {
+
         val fragmentArgs = Bundle()
         val fragment = launchFragmentInContainer<WireTransferFragment>(fragmentArgs,
             themeResId = R.style.Theme_SDKGatewayAndroid)
 
+        //GIVEN
+        val mockStatusTransactionResponse = getMockStatusTransactionResponseSuccess()
+        val mockCheckStatusDepositResponse = getMockCheckStatusDepositResponse()
+
+
         fragment.onFragment { wireTransferFragment ->
-
-            //GIVEN
-            val mockStatusTransactionResponse = getMockStatusTransactionResponseSuccess()
-            val mockCheckStatusDepositResponse = getMockCheckStatusDepositResponse()
-
             //WHEN
             wireTransferFragment.mainViewModel.setStatusTransactionResponse(
                 mockStatusTransactionResponse
@@ -96,7 +107,6 @@ class WireTransferFragmentTest {
 
             //To run childFragmentManager transactions
             wireTransferFragment.childFragmentManager.executePendingTransactions()
-
 
             //THEN
             //Title
@@ -293,7 +303,6 @@ class WireTransferFragmentTest {
                 RuntimeException("error_request_not_connect_server")
             )
 
-
             //To run childFragmentManager transactions
             wireTransferFragment.childFragmentManager.executePendingTransactions()
 
@@ -314,13 +323,7 @@ class WireTransferFragmentTest {
         fragment.onFragment { wireTransferFragment ->
 
             //WHEN
-            wireTransferFragment.mainViewModel.insertTransferProof(
-                InsertTransferProofDataRequest(
-                    file = File("brasil.png"),
-                    order_id = 1234,
-                    token = "asddfjhalskdjfhlaskjgdpaouydfpds"
-                )
-            )
+            wireTransferFragment.mainViewModel.insertTransferProofLoading(true)
 
             //To run childFragmentManager transactions
             wireTransferFragment.childFragmentManager.executePendingTransactions()

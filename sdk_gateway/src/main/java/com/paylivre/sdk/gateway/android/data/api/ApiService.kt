@@ -10,12 +10,6 @@ import retrofit2.http.POST
 import retrofit2.http.Multipart
 
 interface ApiService {
-    @POST("/api/v1/gateway/verifyUser")
-    fun verifyUser(
-        @Body
-        requestBody: RequestBody
-    ): Call<ResponseBody>
-
     @GET("/api/v2/gateway/averagePixApprovalTime")
     fun getPixApprovalTime(): Call<ResponseBody>
 

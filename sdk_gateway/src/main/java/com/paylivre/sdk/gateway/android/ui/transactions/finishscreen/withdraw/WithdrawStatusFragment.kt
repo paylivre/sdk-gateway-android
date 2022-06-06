@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.StatusWithdrawOrder
 import com.paylivre.sdk.gateway.android.databinding.FragmentStatusWithdrawBinding
 import com.paylivre.sdk.gateway.android.domain.model.WithdrawTypes
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class WithdrawStatusFragment : Fragment() {
     private var _binding: FragmentStatusWithdrawBinding? = null
-    private val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
     private val binding get() = _binding!!
 
     override fun onCreateView(

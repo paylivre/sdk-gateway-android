@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.databinding.FormStartPaymentBinding
@@ -23,15 +22,18 @@ import com.paylivre.sdk.gateway.android.data.model.order.DataGenerateSignature
 import com.paylivre.sdk.gateway.android.data.model.order.OrderDataRequest
 import com.paylivre.sdk.gateway.android.data.model.order.checkIsErrorApiToken
 import com.paylivre.sdk.gateway.android.domain.model.*
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.howToGenerateApiToken.HowToGenerateApiToken
 import com.paylivre.sdk.gateway.android.utils.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class FormStartPaymentFragment : Fragment(), IOnBackPressed {
 
     private var _binding: FormStartPaymentBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
+    private val logEventsService : LogEventsService by inject()
     private val binding get() = _binding!!
     var enableOnchangeValidateFields = false
 
@@ -96,7 +98,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
         super.onViewCreated(view, savedInstanceState)
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_FormStartPayment")
+        logEventsService.setLogEventAnalytics("Screen_FormStartPayment")
 
         var documentPassedByParam = false
         val editDocument: EditText = binding.editDocument
@@ -552,7 +554,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
                     handleStartPaymentByUrl()
                 }
                 //Set Log Analytics
-                LogEvents.setLogEventAnalyticsWithParams(
+                logEventsService.setLogEventAnalyticsWithParams(
                     "Validation_FormStartPayment",
                     Pair("validation_status", "Ok"),
                 )
@@ -561,7 +563,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
                 enableOnchangeValidateFields = true
 
                 //Set Log Analytics
-                LogEvents.setLogEventAnalyticsWithParams(
+                logEventsService.setLogEventAnalyticsWithParams(
                     "Validation_FormStartPayment",
                     Pair("validation_status", "Error"),
                 )
@@ -609,7 +611,7 @@ class FormStartPaymentFragment : Fragment(), IOnBackPressed {
 
         binding.btnStartPayment.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_FormStartPayment")
+            logEventsService.setLogEventAnalytics("Btn_FormStartPayment")
 
             handleValidateForm()
             onBlurAllInputs()

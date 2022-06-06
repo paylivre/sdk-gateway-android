@@ -8,16 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.Errors
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.databinding.FragmentErrorKycLimitBinding
-import com.paylivre.sdk.gateway.android.services.log.LogEvents
+import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.utils.checkValidDrawableId
 import com.paylivre.sdk.gateway.android.utils.dpToPx
 import com.paylivre.sdk.gateway.android.utils.formatToCurrencyBRL
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
 import kotlin.math.roundToInt
 
@@ -29,11 +30,12 @@ const val LINK_PAGE_REGISTER =
 class ErrorKycLimitFragment : Fragment() {
 
     private var _binding: FragmentErrorKycLimitBinding? = null
-    val mainViewModel: MainViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by sharedViewModel()
     private val binding get() = _binding!!
     private var language: String? = ""
     var urlToOpen: String = LINK_PAGE_SUPPORT_LIMITS
     var urlPageSupportLimits: String = LINK_PAGE_SUPPORT_LIMITS
+    private val logEventsService : LogEventsService by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +51,7 @@ class ErrorKycLimitFragment : Fragment() {
         var document: String? = null
 
         //Set Log Analytics
-        LogEvents.setLogEventAnalytics("Screen_ErrorKycLimit")
+        logEventsService.setLogEventAnalytics("Screen_ErrorKycLimit")
 
         mainViewModel.order_data.observe(viewLifecycleOwner) {
             document = it?.document_number
@@ -61,7 +63,7 @@ class ErrorKycLimitFragment : Fragment() {
 
         binding.btnClose.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_Close_ScreenErrorKycLimit")
+            logEventsService.setLogEventAnalytics("Btn_Close_ScreenErrorKycLimit")
 
             mainViewModel.setIsCloseSDK(true)
         }
@@ -186,14 +188,14 @@ class ErrorKycLimitFragment : Fragment() {
 
         binding.btnIncreaseLimit.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_OpenLinkIncreaseLimit")
+            logEventsService.setLogEventAnalytics("Btn_OpenLinkIncreaseLimit")
             openUrl()
         }
 
 
         binding.linkPageSupportHelp.setOnClickListener {
             //Set Log Analytics
-            LogEvents.setLogEventAnalytics("Btn_OpenLinkPageDocumentsLimits")
+            logEventsService.setLogEventAnalytics("Btn_OpenLinkPageDocumentsLimits")
             openUrlPageSupportLimits()
         }
 
