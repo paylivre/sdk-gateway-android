@@ -14,7 +14,7 @@ import com.paylivre.sdk.gateway.android.utils.formatToCurrencyUSD
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-const val LIMIT_VALUE_WITHDRAW_USD = "40000"
+const val LIMIT_VALUE_WITHDRAW_USD = "100000"
 const val LIMIT_VALUE_WITHDRAW_BRL = "500000"
 
 class AlertLimitWithdraw : Fragment() {

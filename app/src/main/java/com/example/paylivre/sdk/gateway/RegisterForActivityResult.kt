@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.paylivre.sdk.gateway.databinding.ActivityRegisterForResultBinding
 import com.example.paylivre.sdk.gateway.utils.RegisterForActivityResultData
+import com.example.paylivre.sdk.gateway.utils.setTextThemeStatusBar
 import com.example.paylivre.sdk.gateway.utils.setValueTextViewWithLabelBold
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.BuildConfig
@@ -19,6 +20,7 @@ class RegisterForActivityResult : AppCompatActivity() {
         binding = ActivityRegisterForResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setTextThemeStatusBar(this, "Light")
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"

@@ -16,7 +16,7 @@ val dataMerchantDev = MerchantData(
 )
 
 const val REDIRECT_URL = "https://www.merchant_to_you.com"
-const val CALLBACK_URL = "https://www.google.com"
+const val CALLBACK_URL = "https://api.dev.paylivre.com/api/v2/callbac"
 const val LOGO_URL =
     "https://github.com/paylivre/gateway-example-react-js/blob/master/assets/logo_jackpot_new.png?raw=true"
 const val USER_EMAIL = "user_gateway_test@tutanota.com"

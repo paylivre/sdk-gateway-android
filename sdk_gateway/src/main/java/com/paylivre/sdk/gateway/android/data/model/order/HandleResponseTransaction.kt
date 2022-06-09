@@ -83,6 +83,17 @@ data class BankAccount(
     val office_digit: Int?,
     val account_number: String?,
     val account_digit: String?,
+    val bank: Bank?,
+)
+
+data class Bank(
+    val id: Int?,
+    val country_cca3: String?,
+    val name: String?,
+    val number: String?,
+    val website: String?,
+    val display: Int?,
+    val blacklisted: Int?,
 )
 
 const val GENERIC_ERROR = "invalid_data_error"
@@ -291,7 +302,7 @@ fun handleResponseTransaction(
     response: Response<ResponseBody>,
     onResponse: (ResponseCommonTransactionData?, ErrorTransaction?) -> Unit,
     logEventsService: LogEventsService,
-    ) {
+) {
     try {
         if (response.isSuccessful) {
             val res: ResponseCommonTransactionData = getResponseJson(response)

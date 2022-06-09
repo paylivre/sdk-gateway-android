@@ -221,9 +221,9 @@
     <string name="please_contact_support">Entre em contato com o suporte.</string>
     <string name="exceeded_withdrawal_limit_title">A retirada solicitada excede o valor máximo.</string>
     <string name="exceeded_withdrawal_limit_valueBRL">Apenas uma retirada pode ser realizada por
-        dia com valor máximo de R$ 2000,00.</string>
+        dia com valor máximo de R$ 5.000,00.</string>
     <string name="exceeded_withdrawal_limit_valueUSD">Apenas uma retirada pode ser realizada por
-        dia com valor máximo de US$ 400,00.</string>
+        dia com valor máximo de US$ 1.000,00.</string>
     <string name="alert_limit_withdraw">Apenas uma retirada pode ser realizada por dia. A
         retirada deverá ter valor máximo de %1$s.</string>
     <string name="warning">Alerta</string>
@@ -264,4 +264,5 @@
     <string name="label_for_more_information_article">Quais são os limites?</string>
     <string name="label_button_increase_limit">Quero aumentar meu limite na Paylivre</string>
     <string name="paylivre_gateway_sdk_is_outdated">Recurso não disponível para esta versão do SDK do Gateway da Paylivre.</string>
+    <string name="label_favored">Favorecido</string>
 </resources>

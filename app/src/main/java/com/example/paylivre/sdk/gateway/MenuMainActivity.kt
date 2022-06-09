@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.paylivre.sdk.gateway.databinding.ActivityMenuMainBinding
+import com.example.paylivre.sdk.gateway.utils.setTextThemeStatusBar
 import com.paylivre.sdk.gateway.android.BuildConfig
 
 class MenuMainActivity : AppCompatActivity() {
@@ -14,16 +15,12 @@ class MenuMainActivity : AppCompatActivity() {
         binding = ActivityMenuMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        //Set Theme do SDK Gateway Paylivre
-        setTheme(R.style.Theme_SDKGatewayAndroid)
-
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"
         }
 
+        setTextThemeStatusBar(this, "Light")
         fun goToFormGenerateData(){
             val intent = Intent(this, FormActivity::class.java)
             startActivity(intent)

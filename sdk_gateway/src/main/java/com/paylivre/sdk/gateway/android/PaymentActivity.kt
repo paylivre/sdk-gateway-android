@@ -17,6 +17,7 @@ import com.paylivre.sdk.gateway.android.databinding.StartCheckoutBinding
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.domain.model.*
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
+import com.paylivre.sdk.gateway.android.utils.setTextThemeStatusBar
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -62,9 +63,10 @@ class PaymentActivity : AppCompatActivity() {
         setTheme(R.style.Theme_SDKGatewayAndroid)
 
         //Set StatusBarColor
-        window.statusBarColor = ContextCompat.getColor(this, R.color.light_bg)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color_paylivre_sdk)
         //Set TextColor StatusBar
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        val textThemeStatusBar = getString(R.string.theme_status_bar_sdk_paylivre)
+        setTextThemeStatusBar(this, textThemeStatusBar)
 
         binding = StartCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)

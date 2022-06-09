@@ -83,7 +83,7 @@ class StringMakeTest {
         val contextMock = ApplicationProvider.getApplicationContext<Context>()
         setTextBackground(
             contextMock,
-            textView!!, "All text ir here in SpanText", "SpanText", R.color.dark)
+            textView!!, "All text ir here in SpanText", "SpanText", R.color.dark_color_paylivre_sdk)
         Assert.assertEquals("All text ir here in SpanText", textView?.text.toString())
     }
 

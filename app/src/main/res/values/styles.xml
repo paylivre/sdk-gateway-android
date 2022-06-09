@@ -8,7 +8,7 @@
 
     <style name="CustomTextInput">
         ...
-        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimary">@color/primary_color_paylivre_sdk</item>
         <item name="colorOnSurface">@color/secondary</item>
         <item name="colorError">@color/danger</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
@@ -22,6 +22,7 @@
     <style name="MyRadioButton" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/grey_dark</item>
         <item name="colorControlActivated">@color/primary</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">

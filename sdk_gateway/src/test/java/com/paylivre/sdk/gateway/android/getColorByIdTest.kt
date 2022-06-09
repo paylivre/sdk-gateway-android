@@ -38,8 +38,8 @@ class GetColorByIdTest {
     @Test
     fun `test getColorByIdTest`() {
         Assert.assertEquals(
-            activityMocked.getColor(R.color.primary),
-            getColorById(activityMocked, R.color.primary)
+            activityMocked.getColor(R.color.primary_color_paylivre_sdk),
+            getColorById(activityMocked, R.color.primary_color_paylivre_sdk)
         )
     }
 }

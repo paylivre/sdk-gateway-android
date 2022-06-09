@@ -6,7 +6,7 @@
     android:id="@+id/containerFormScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_bg"
+    android:background="@color/light_bg_color_paylivre_sdk"
     android:clickable="true"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
@@ -35,7 +35,7 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="5dp"
-            android:background="@color/grey4"
+            android:background="@color/grey4_color_paylivre_sdk"
             app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
         <androidx.cardview.widget.CardView
@@ -45,7 +45,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/white_color_paylivre_sdk"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/avenir_next_lt_pro_bold"
                     android:text="Pix"
-                    android:textColor="@color/secondary"
+                    android:textColor="@color/secondary_color_paylivre_sdk"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/avenir_next_lt_pro_regular"
                     android:text="@string/check_your_email_for_more_details"
-                    android:textColor="@color/secondary"
+                    android:textColor="@color/secondary_color_paylivre_sdk"
                     android:textSize="15sp"
                     android:visibility="gone"
                     android:textAlignment="center"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/avenir_next_lt_pro_regular"
                     android:text="@string/label_message_merchant_approval_pending"
-                    android:textColor="@color/secondary"
+                    android:textColor="@color/secondary_color_paylivre_sdk"
                     android:textSize="15sp"
                     android:visibility="gone"
                     android:lineHeight="20sp"
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="25dp"
-                    android:background="@color/grey3"
+                    android:background="@color/grey3_color_paylivre_sdk"
                     app:layout_constraintTop_toBottomOf="@+id/containerFragmentTransactionData" />
 
                 <androidx.fragment.app.FragmentContainerView
@@ -185,7 +185,7 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="25dp"
-            android:background="@color/grey4"
+            android:background="@color/grey4_color_paylivre_sdk"
             app:layout_constraintTop_toBottomOf="@+id/CardView" />
 
         <include

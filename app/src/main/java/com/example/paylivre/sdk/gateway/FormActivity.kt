@@ -22,6 +22,7 @@ import com.paylivre.sdk.gateway.android.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import com.example.paylivre.sdk.gateway.utils.setTextThemeStatusBar
 
 
 class FormActivity : AppCompatActivity() {
@@ -32,14 +33,11 @@ class FormActivity : AppCompatActivity() {
         binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Set Theme do SDK Gateway Paylivre
-        setTheme(R.style.Theme_SDKGatewayAndroid)
-
+        setTextThemeStatusBar(this, "Light")
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "Form Generate Checkout - v${BuildConfig.VERSION_NAME}"
         }
-
 
         val idMerchant = binding.editMerchantId
         val merchantTransactionId = binding.editMerchantTransactionId

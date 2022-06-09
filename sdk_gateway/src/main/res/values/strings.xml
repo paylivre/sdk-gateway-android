@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- To personalize StatusBar Paylivre SDK -->
+    <string name="theme_status_bar_sdk_paylivre" translatable="false">Dark</string>
+
     <string name="app_name">SDK Gateway Android</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -219,9 +222,9 @@
     <string name="please_contact_support">Please contact support.</string>
     <string name="exceeded_withdrawal_limit_title">The requested withdrawal exceeds the maximum amount.</string>
     <string name="exceeded_withdrawal_limit_valueBRL">Only one withdrawal can be made per day with a
-        maximum value of R$ 2000.00.</string>
+        maximum value of R$ 5000.00.</string>
     <string name="exceeded_withdrawal_limit_valueUSD">Only one withdrawal can be made per day with a
-        maximum value of US$ 400.00.</string>
+        maximum value of US$ 1000.00.</string>
     <string name="alert_limit_withdraw">Only one withdrawal can be performed per day. The
         withdrawal must have a maximum value of %1$s.</string>
     <string name="warning">Warning</string>
@@ -264,4 +267,5 @@
     <string name="label_for_more_information_article">What are the limits?</string>
     <string name="label_button_increase_limit">I want to increase my limit on Paylivre</string>
     <string name="paylivre_gateway_sdk_is_outdated">Feature not available for this version of Paylivre Gateway SDK.</string>
+    <string name="label_favored">Favored</string>
 </resources>

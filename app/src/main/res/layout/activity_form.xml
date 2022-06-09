@@ -53,6 +53,51 @@
                 app:strokeWidth="2dp" />
 
             <TextView
+                android:id="@+id/textTypeEnvironment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Select Environment"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonNewMerchantTransactionId" />
+
+            <RadioGroup
+                android:id="@+id/checkGroupEnvironment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-5dp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTypeEnvironment">
+
+                <RadioButton
+                    android:id="@+id/checkPlayground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="Playground"
+                    android:theme="@style/MyRadioButton" />
+
+                <!--                <RadioButton-->
+                <!--                    android:id="@+id/checkProduction"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginRight="20dp"-->
+                <!--                    android:text="Production"-->
+                <!--                    android:theme="@style/MyRadioButton" />-->
+
+                <RadioButton
+                    android:id="@+id/checkDev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dev"
+                    android:theme="@style/MyRadioButton" />
+
+            </RadioGroup>
+
+            <TextView
                 android:id="@+id/merchantTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +106,7 @@
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonReloadDataDefault" />
+                app:layout_constraintTop_toBottomOf="@id/checkGroupEnvironment" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -628,50 +673,6 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textTypeEnvironment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Select Environment"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/checkGroupAutoApprove" />
-
-            <RadioGroup
-                android:id="@+id/checkGroupEnvironment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-5dp"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textTypeEnvironment">
-
-                <RadioButton
-                    android:id="@+id/checkPlayground"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:text="Playground"
-                    android:theme="@style/MyRadioButton" />
-
-                <!--                <RadioButton-->
-                <!--                    android:id="@+id/checkProduction"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginRight="20dp"-->
-                <!--                    android:text="Production"-->
-                <!--                    android:theme="@style/MyRadioButton" />-->
-
-                <RadioButton
-                    android:id="@+id/checkDev"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dev"
-                    android:theme="@style/MyRadioButton" />
-
-            </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editBaseUrlLayout"
@@ -681,7 +682,7 @@
                 android:hint="Base URL"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/checkGroupEnvironment">
+                app:layout_constraintTop_toBottomOf="@id/checkGroupAutoApprove">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editBaseUrl"

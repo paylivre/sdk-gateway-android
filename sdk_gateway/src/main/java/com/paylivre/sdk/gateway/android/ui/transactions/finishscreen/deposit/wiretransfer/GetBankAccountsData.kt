@@ -7,7 +7,7 @@ import com.paylivre.sdk.gateway.android.data.model.order.BankAccounts
 
 
 fun getEnabledBanksAccounts(bankAccounts: BankAccounts): List<BankAccount>? {
-    return bankAccounts.bank_accounts?.filter { it.hidden != 1 }
+    return bankAccounts.bank_accounts?.filter { it.hidden != 1 && it.bank?.display != 0 }
 }
 
 fun getNameBanksAccountsList(bankAccounts: List<BankAccount>): List<String> {
@@ -44,8 +44,11 @@ fun getBankAccountInfo(context: Context, bankAccount: BankAccount): String {
     val bankLabel = context.resources.getString(R.string.label_bank)
     val agencyLabel = context.resources.getString(R.string.label_bank_office)
     val accountLabel = context.resources.getString(R.string.label_account)
+    val ownerLabel = context.resources.getString(R.string.label_favored)
 
-    val bankAccountInfo =  "$bankLabel: ${bankAccount.account_name}\n$agencyLabel: $office\n$accountLabel: $account\n"
-    val accountOwnerInfo = "${bankAccount.account_holder_full_name}\n${bankAccount.account_holder_document}"
+    val bankAccountInfo =
+        "$bankLabel: ${bankAccount.account_name}\n$agencyLabel: $office\n$accountLabel: $account\n"
+    val accountOwnerInfo =
+        "$ownerLabel: ${bankAccount.account_holder_full_name}\n${bankAccount.account_holder_document}"
     return "$bankAccountInfo$accountOwnerInfo"
 }

@@ -95,9 +95,9 @@ class InsertProofWireTransferFragment : Fragment() {
             val bgInactive = R.drawable.button_outline_with_ripple_secondary
             val bgCurrent = if (isActive) bgActive else bgInactive
             val currentColorContent = if (isActive) {
-                getColorById(requireContext(), R.color.primary)
+                getColorById(requireContext(), R.color.primary_color_paylivre_sdk)
             } else {
-                getColorById(requireContext(), R.color.white)
+                getColorById(requireContext(), R.color.white_color_paylivre_sdk)
             }
 
             binding.txtChooseFile.setTextColor(currentColorContent)

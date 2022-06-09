@@ -126,12 +126,12 @@ class ButtonPixTypeFragment : Fragment() {
 
         fun setActivateButton(isActive: Boolean) {
             if (isActive) {
-                val colorActive = ContextCompat.getColor(requireContext(), R.color.primary)
+                val colorActive = ContextCompat.getColor(requireContext(), R.color.primary_color_paylivre_sdk)
                 logoImageView.setColorFilter(colorActive)
                 textViewOperation.setTextColor(colorActive)
                 setActivateBorderButton(colorActive)
             } else {
-                val colorNotActive = ContextCompat.getColor(requireContext(), R.color.grey)
+                val colorNotActive = ContextCompat.getColor(requireContext(), R.color.grey_color_paylivre_sdk)
                 logoImageView.setColorFilter(colorNotActive)
                 textViewOperation.setTextColor(colorNotActive)
                 setActivateBorderButton(colorNotActive)

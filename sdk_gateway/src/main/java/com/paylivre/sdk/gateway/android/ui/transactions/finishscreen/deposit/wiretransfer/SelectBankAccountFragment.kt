@@ -33,9 +33,7 @@ class SelectBankAccountFragment : Fragment() {
 
         val selectedItemText = banksList?.elementAt(position)
         val infoSelectedBankText = selectedItemText?.let {
-            getBankAccountInfo(requireContext(),
-                it
-            )
+            getBankAccountInfo(requireContext(), it)
         }
 
         mainViewModel.setSelectedBankAccountWireTransfer(selectedItemText)
@@ -54,6 +52,14 @@ class SelectBankAccountFragment : Fragment() {
             ),
             DataMakeBold(
                 getString(R.string.label_account) + ":",
+                infoSelectedBankText.toString(),
+            ),
+            DataMakeBold(
+                getString(R.string.label_favored) + ":",
+                infoSelectedBankText.toString(),
+            ),
+            DataMakeBold(
+                "CNPJ:",
                 infoSelectedBankText.toString(),
             )
         )
@@ -83,7 +89,7 @@ class SelectBankAccountFragment : Fragment() {
                     BankAccounts::class.java
                 )
 
-                //Filter bank accounts with hidden = 1
+                //Filter bank accounts with hidden = 1 and display = 0
                 banksList = getEnabledBanksAccounts(bankAccounts)
 
                 if (banksList != null) {

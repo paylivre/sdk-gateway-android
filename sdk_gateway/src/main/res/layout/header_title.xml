@@ -38,7 +38,7 @@
         android:layout_marginTop="0dp"
         android:minHeight="70dp"
         android:orientation="horizontal"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/white_color_paylivre_sdk"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -61,7 +61,7 @@
                 android:fontFamily="@font/avenir_next_lt_pro_bold"
                 android:singleLine="true"
                 android:text="@string/deposit"
-                android:textColor="@color/secondary"
+                android:textColor="@color/secondary_color_paylivre_sdk"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_width="38dp"
                     android:layout_height="26dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/white"
+                    android:background="@color/white_color_paylivre_sdk"
                     android:contentDescription="TODO"
                     android:scaleType="centerCrop"
                     android:src="@drawable/current_lang"
@@ -107,7 +107,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondary_color_paylivre_sdk"
             android:textSize="10sp" />
 
 

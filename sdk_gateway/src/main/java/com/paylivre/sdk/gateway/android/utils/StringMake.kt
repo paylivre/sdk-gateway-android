@@ -34,7 +34,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
                     link.second.onClick(view)
                 }
 
-                val colorPrimary = getColor(context, R.color.primary)
+                val colorPrimary = getColor(context, R.color.primary_color_paylivre_sdk)
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
                     ds.color = colorPrimary
@@ -69,7 +69,7 @@ fun setTextBackground(
     fulltext: String,
     subtext: String,
     backgroundColor: Int,
-    textColor: Int = R.color.white,
+    textColor: Int = R.color.white_color_paylivre_sdk,
 ) {
     view.setText(fulltext, TextView.BufferType.SPANNABLE)
     val str = view.text as Spannable

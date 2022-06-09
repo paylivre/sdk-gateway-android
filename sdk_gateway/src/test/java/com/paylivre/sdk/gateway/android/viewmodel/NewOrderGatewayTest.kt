@@ -28,7 +28,7 @@ class NewOrderGatewayTest {
     private var fileTestsUtils = FileTestsUtils()
 
     @Test
-    fun `test mainViewModel newOrderGateway success`() = runBlocking {
+    fun `mainViewModel newOrderGateway success`() = runBlocking {
         //GIVEN
         val server = MockWebServer()
         server.start()

@@ -14,10 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.paylivre.sdk.gateway.data.DataStartCheckoutByParams
 import com.example.paylivre.sdk.gateway.databinding.ActivityPreviewDataBinding
-import com.example.paylivre.sdk.gateway.utils.DataMakeBold
-import com.example.paylivre.sdk.gateway.utils.getSdkGatewayExtraData
-import com.example.paylivre.sdk.gateway.utils.makeBold
-import com.example.paylivre.sdk.gateway.utils.setValueTextViewWithLabelBold
+import com.example.paylivre.sdk.gateway.utils.*
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.StartCheckoutByParams
 import com.paylivre.sdk.gateway.android.StartCheckoutByURL
@@ -40,9 +37,7 @@ class PreviewDataActivity : AppCompatActivity() {
         binding = ActivityPreviewDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Set Theme do SDK Gateway Paylivre
-        setTheme(R.style.Theme_SDKGatewayAndroid)
-
+        setTextThemeStatusBar(this, "Light")
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "SDK Gateway Paylivre - v${BuildConfig.VERSION_NAME}"

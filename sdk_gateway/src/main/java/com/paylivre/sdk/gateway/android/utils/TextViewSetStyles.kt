@@ -16,7 +16,7 @@ import com.paylivre.sdk.gateway.android.R
 data class DataMakeBold(
     val label: String,
     val value: String,
-    val bgColorId: Int = R.color.grey,
+    val bgColorId: Int = R.color.grey_color_paylivre_sdk,
 )
 
 fun TextView.makeBold(vararg texts: DataMakeBold) {

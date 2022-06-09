@@ -75,13 +75,13 @@
                 android:minHeight="60dp"
                 android:text="@string/label_button_increase_limit"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/white_color_paylivre_sdk"
                 android:textSize="16sp"
                 android:letterSpacing="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewLimits"
-                app:rippleColor="@color/primary_2" />
+                app:rippleColor="@color/primary_dark_color_paylivre_sdk" />
 
             <TextView
                 android:id="@+id/textViewMsgSubtitle3Error"
@@ -108,7 +108,7 @@
                 android:paddingRight="10dp"
                 android:text="@string/label_for_more_information_article"
                 android:textAlignment="textStart"
-                android:textColor="@color/primary"
+                android:textColor="@color/primary_color_paylivre_sdk"
                 android:textSize="16sp"
                 android:visibility="visible"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -127,7 +127,7 @@
                 android:paddingRight="10dp"
                 android:text="@string/close_underline"
                 android:textAlignment="textStart"
-                android:textColor="@color/primary"
+                android:textColor="@color/primary_color_paylivre_sdk"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linkPageSupportHelp" />
