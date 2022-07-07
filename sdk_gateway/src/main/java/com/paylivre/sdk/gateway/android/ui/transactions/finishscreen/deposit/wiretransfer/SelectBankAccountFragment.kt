@@ -14,8 +14,6 @@ import com.paylivre.sdk.gateway.android.data.model.order.BankAccounts
 import com.paylivre.sdk.gateway.android.databinding.FragmentSelectBankAccountBinding
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
-import com.paylivre.sdk.gateway.android.utils.DataMakeBold
-import com.paylivre.sdk.gateway.android.utils.makeBold
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.lang.Exception
@@ -24,45 +22,75 @@ import java.lang.Exception
 class SelectBankAccountFragment : Fragment() {
     private var _binding: FragmentSelectBankAccountBinding? = null
     val mainViewModel: MainViewModel by sharedViewModel()
-    private val logEventsService : LogEventsService by inject()
+    private val logEventsService: LogEventsService by inject()
     private val binding get() = _binding!!
+
+    private fun setButtonBankField(
+        containerResourceId: Int,
+        label: String,
+        value: String,
+        isShowDividerLine: Boolean = true,
+    ) {
+        val bundle = Bundle()
+        bundle.putString("label", label)
+        bundle.putString("value", value)
+        bundle.putBoolean("isShowDividerLine", isShowDividerLine)
+
+        val viewFragment = ButtonBankInfoRow()
+        viewFragment.arguments = bundle
+
+        childFragmentManager.beginTransaction().apply {
+            replace(containerResourceId, viewFragment)
+            commit()
+        }
+    }
 
     fun setOnBankClick(position: Int, banksList: List<BankAccount>? = null) {
         //Set Log Analytics
         logEventsService.setLogEventAnalytics("Spinner_SelectBankAccount")
 
         val selectedItemText = banksList?.elementAt(position)
-        val infoSelectedBankText = selectedItemText?.let {
-            getBankAccountInfo(requireContext(), it)
-        }
 
         mainViewModel.setSelectedBankAccountWireTransfer(selectedItemText)
 
-        binding.textViewBankInfo.visibility = View.VISIBLE
-        binding.textViewBankInfo.text = infoSelectedBankText
+        binding.containerBankInfo.visibility = View.VISIBLE
 
-        binding.textViewBankInfo.makeBold(
-            DataMakeBold(
-                getString(R.string.label_bank) + ":",
-                infoSelectedBankText.toString(),
-            ),
-            DataMakeBold(
-                getString(R.string.label_bank_office) + ":",
-                infoSelectedBankText.toString(),
-            ),
-            DataMakeBold(
-                getString(R.string.label_account) + ":",
-                infoSelectedBankText.toString(),
-            ),
-            DataMakeBold(
-                getString(R.string.label_favored) + ":",
-                infoSelectedBankText.toString(),
-            ),
-            DataMakeBold(
-                "CNPJ:",
-                infoSelectedBankText.toString(),
-            )
+        //Set bank name
+        setButtonBankField(
+            R.id.bankName,
+            getString(R.string.label_bank),
+            "${selectedItemText?.bank_number} - ${selectedItemText?.account_name}"
         )
+
+        //Set bank office number and digit
+        setButtonBankField(
+            R.id.bankOffice,
+            getString(R.string.label_bank_office),
+            getBankOffice(selectedItemText?.office_number, selectedItemText?.office_digit)
+        )
+
+        //Set bank account number and digit
+        setButtonBankField(
+            R.id.bankAccount,
+            getString(R.string.label_account),
+            getBankAccountNumber(selectedItemText?.account_number, selectedItemText?.account_digit)
+        )
+
+
+        //Set bank owner
+        setButtonBankField(
+            R.id.bankOwner,
+            getString(R.string.label_favored),
+            selectedItemText?.account_holder_full_name.toString()
+        )
+
+        //Set bank document
+        setButtonBankField(
+            R.id.bankDocument,
+            "CNPJ",
+            getDocumentAccountNumber(selectedItemText?.account_holder_document),
+        )
+
 
         binding.editSpinnerBanks.clearFocus()
     }
@@ -84,6 +112,7 @@ class SelectBankAccountFragment : Fragment() {
         if (bundle != null) {
             try {
                 val bankAccountsString = bundle.getString("bankAccounts")
+
                 val bankAccounts = Gson().fromJson(
                     bankAccountsString,
                     BankAccounts::class.java

@@ -39,6 +39,7 @@ class GetBankAccountsDataTest {
             1, null, null, null,
             null,
             bank = null,
+            null,
         ),
         BankAccount(
             "Teste Account Not Hidden",
@@ -46,6 +47,7 @@ class GetBankAccountsDataTest {
             null, null, null, null,
             null,
             bank = null,
+            null
         )
     )
 
@@ -59,6 +61,7 @@ class GetBankAccountsDataTest {
                     null, null, null, null,
                     null,
                     bank = null,
+                    null
                 )
             ),
             getEnabledBanksAccounts(
@@ -122,35 +125,6 @@ class GetBankAccountsDataTest {
     }
 
 
-    @Test
-    fun `Test getBankAccountInfo`() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-
-        val mockBankAccount = BankAccount(
-            "Teste Account Hidden",
-            "Joao Teste da Silva", "12.345.678/912.1-43",
-            null, 1234, null, "12346",
-            "7",
-            bank = Bank(
-                id = null,
-                display = 1,
-                name = "Banco Test",
-                number = "123",
-                country_cca3 = "BRL",
-                blacklisted = 0,
-                website = "https://test.com",
-            )
-        )
-
-        Assert.assertEquals(
-            "Banco: Teste Account Hidden\n" +
-                    "Agência: 1234\n" +
-                    "Conta: 12346-7\n" +
-                    "Favorecido: Joao Teste da Silva\n" +
-                    "12.345.678/912.1-43",
-            getBankAccountInfo(context, mockBankAccount)
-        )
-    }
 
 
 }

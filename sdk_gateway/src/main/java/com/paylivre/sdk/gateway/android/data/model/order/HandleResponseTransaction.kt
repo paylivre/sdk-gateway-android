@@ -84,6 +84,7 @@ data class BankAccount(
     val account_number: String?,
     val account_digit: String?,
     val bank: Bank?,
+    val bank_number: Int?,
 )
 
 data class Bank(

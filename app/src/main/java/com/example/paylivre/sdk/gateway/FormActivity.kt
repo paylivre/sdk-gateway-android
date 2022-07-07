@@ -408,6 +408,7 @@ class FormActivity : AppCompatActivity() {
             val generateUrlToCheckout = GenerateUrlToCheckout(
                 dataGenerateUrl,
                 Argon2iHash(),
+                saltRandomString = HASH_ARGON2I
             )
 
             withContext(Dispatchers.Default) {

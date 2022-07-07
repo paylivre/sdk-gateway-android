@@ -265,4 +265,7 @@
     <string name="label_button_increase_limit">Quero aumentar meu limite na Paylivre</string>
     <string name="paylivre_gateway_sdk_is_outdated">Recurso não disponível para esta versão do SDK do Gateway da Paylivre.</string>
     <string name="label_favored">Favorecido</string>
+    <string name="message_copied_value">%1$s copiado(a) com sucesso</string>
+    <string name="withdrawal_limits_error">Você excedeu o limite diário de retiradas.</string>
+    <string name="withdrawal_limits_error_content">Apenas uma retirada pode ser realizada por dia com valor máximo de %1$s.</string>
 </resources>

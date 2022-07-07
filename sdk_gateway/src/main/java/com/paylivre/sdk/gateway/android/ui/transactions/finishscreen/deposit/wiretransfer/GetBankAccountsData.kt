@@ -38,17 +38,9 @@ fun getBankAccountNumber(accountNumber: String?, accountDigit: String?): String 
     }
 }
 
-fun getBankAccountInfo(context: Context, bankAccount: BankAccount): String {
-    val office = getBankOffice(bankAccount.office_number, bankAccount.office_digit)
-    val account = getBankAccountNumber(bankAccount.account_number, bankAccount.account_digit)
-    val bankLabel = context.resources.getString(R.string.label_bank)
-    val agencyLabel = context.resources.getString(R.string.label_bank_office)
-    val accountLabel = context.resources.getString(R.string.label_account)
-    val ownerLabel = context.resources.getString(R.string.label_favored)
-
-    val bankAccountInfo =
-        "$bankLabel: ${bankAccount.account_name}\n$agencyLabel: $office\n$accountLabel: $account\n"
-    val accountOwnerInfo =
-        "$ownerLabel: ${bankAccount.account_holder_full_name}\n${bankAccount.account_holder_document}"
-    return "$bankAccountInfo$accountOwnerInfo"
+fun getDocumentAccountNumber(documentAccountNumber:String?): String {
+    if(documentAccountNumber!= null){
+        return documentAccountNumber.replace("CNPJ: ", "")
+    }
+    return ""
 }

@@ -1,4 +1,4 @@
-package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wallet
+package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet
 
 import android.os.*
 import androidx.fragment.app.Fragment
@@ -17,8 +17,6 @@ import com.paylivre.sdk.gateway.android.ui.form.AcceptTerms
 import com.paylivre.sdk.gateway.android.ui.transactions.data.TransactionDataFragment
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.*
-import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet.BilletBarCodeFragment
-import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet.getBilletDueDateFormatted
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

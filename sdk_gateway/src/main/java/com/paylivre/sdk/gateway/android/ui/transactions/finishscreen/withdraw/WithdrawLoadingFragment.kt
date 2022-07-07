@@ -2,6 +2,7 @@ package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.withdraw
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,11 @@ import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataRequest
 import com.paylivre.sdk.gateway.android.databinding.FragmentLoadingWithdrawBinding
 import com.paylivre.sdk.gateway.android.domain.model.Type
+import com.paylivre.sdk.gateway.android.services.countdowntimer.CountDownTimerService
+import com.paylivre.sdk.gateway.android.services.postdelayed.PostDelayedService
 import com.paylivre.sdk.gateway.android.ui.error.handleNavigateToErrorScreen
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 const val TIMER_INTERVAL_LOADING_WAIT_WITHDRAW: Long = 1000 * 10;
@@ -24,6 +28,7 @@ class WithdrawLoadingFragment : Fragment() {
     private var language: String? = null
     private var orderId: Int = -1
     private var token: String = ""
+    private val postDelayedService: PostDelayedService by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +55,6 @@ class WithdrawLoadingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.language.observe(viewLifecycleOwner) { language = it }
 
-
         mainViewModel.statusResponseTransaction.observe(viewLifecycleOwner) {
             if (it != null && it.isSuccess == true) {
                 if (it.data?.order?.id != null) {
@@ -60,7 +64,7 @@ class WithdrawLoadingFragment : Fragment() {
             }
         }
 
-        Handler().postDelayed({
+        postDelayedService.postDelayed({
             mainViewModel.checkStatusOrder(
                 CheckStatusOrderDataRequest(
                     orderId,
