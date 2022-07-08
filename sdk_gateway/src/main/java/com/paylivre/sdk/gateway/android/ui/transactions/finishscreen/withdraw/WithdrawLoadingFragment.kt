@@ -1,8 +1,6 @@
 package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.withdraw
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,8 @@ import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderDataRequest
 import com.paylivre.sdk.gateway.android.databinding.FragmentLoadingWithdrawBinding
 import com.paylivre.sdk.gateway.android.domain.model.Type
-import com.paylivre.sdk.gateway.android.services.countdowntimer.CountDownTimerService
 import com.paylivre.sdk.gateway.android.services.postdelayed.PostDelayedService
-import com.paylivre.sdk.gateway.android.ui.error.handleNavigateToErrorScreen
+import com.paylivre.sdk.gateway.android.ui.error.getErrorScreen
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -81,7 +78,7 @@ class WithdrawLoadingFragment : Fragment() {
                 }
                 //Handle error in check status order request
                 false -> {
-                    handleNavigateToErrorScreen(view, it.error)
+                    Navigation.findNavController(view).navigate(getErrorScreen(it.error))
                 }
             }
         }

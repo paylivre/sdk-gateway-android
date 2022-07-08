@@ -14,7 +14,7 @@ import com.paylivre.sdk.gateway.android.databinding.FragmentLoadingTransactionBi
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.domain.model.Type
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
-import com.paylivre.sdk.gateway.android.ui.error.handleNavigateToErrorScreen
+import com.paylivre.sdk.gateway.android.ui.error.getErrorScreen
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -94,7 +94,7 @@ class LoadingTransaction : Fragment() {
             if (isSuccess == true) {
                 navigateToFinishScreen()
             } else {
-                handleNavigateToErrorScreen(view, statusTransactionResponse.error)
+                Navigation.findNavController(view).navigate(getErrorScreen(statusTransactionResponse.error))
             }
         }
 
