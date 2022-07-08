@@ -97,7 +97,6 @@ class PaymentActivityTest {
     }
 
 
-
     @Test
     fun `PaymentActivity, withdraw - PIX, given invalid document and email navigate to Form`() {
         val textViewTitleForm = activity!!.findViewById<TextView>(R.id.textViewTitleForm)
@@ -108,10 +107,10 @@ class PaymentActivityTest {
         val textViewErrorDocument = activity!!.findViewById<TextView>(R.id.textViewErrorDocument)
         val btnStartPayment = activity!!.findViewById<Button>(R.id.btnStartPayment)
 
-        editTextEmail.setText("test@")
-        editTextDocument.setText("6131758107")
+        editTextEmail?.setText("test@")
+        editTextDocument?.setText("6131758107")
 
-        btnStartPayment.performClick()
+        btnStartPayment?.performClick()
 
         assertEquals("Email inválido.",
             textViewErrorEmail?.text.toString())
