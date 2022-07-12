@@ -2,19 +2,14 @@ package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wi
 
 import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import com.paylivre.sdk.gateway.android.R
-import com.paylivre.sdk.gateway.android.utils.makeBold
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

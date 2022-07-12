@@ -79,7 +79,7 @@
 
     <fragment
         android:id="@+id/navigation_finish_screen_deposit_billet"
-        android:name="com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wallet.DepositBilletFragment"
+        android:name="com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.billet.DepositBilletFragment"
         android:label="@string/verify_user"
         tools:layout="@layout/fragment_deposit_billet" />
 
