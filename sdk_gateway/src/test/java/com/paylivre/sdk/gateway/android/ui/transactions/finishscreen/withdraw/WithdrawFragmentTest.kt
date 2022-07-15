@@ -635,7 +635,7 @@ class WithdrawFragmentTest {
             //To run childFragmentManager transactions
             withdrawFragment.childFragmentManager.executePendingTransactions()
 
-            mockCountDownTimerGivenHelper.dispatchOnTick(10)
+            mockCountDownTimerGivenHelper.dispatchOnTick(10000)
 
             verify {
                 withdrawMainViewModelMockData.mockMainViewModel.checkStatusOrder(

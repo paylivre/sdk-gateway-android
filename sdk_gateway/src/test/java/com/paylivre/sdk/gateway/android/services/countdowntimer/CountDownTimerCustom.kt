@@ -1,39 +1,6 @@
 package com.paylivre.sdk.gateway.android.services.countdowntimer
-
 import android.os.CountDownTimer
 
-
-class CountDownTimerServiceImpl : CountDownTimerService {
-    override lateinit var countDownTimer: CountDownTimer
-    var timerFinalCheckInMillisMocked: Long = 0
-    var timerIntervalInMillisMocked: Long = 0
-
-    override fun startTimer(
-        timerFinalCheckInMillis: Long,
-        timerIntervalInMillis: Long,
-        onTickAction: (Long) -> Unit,
-        onFinishAction: () -> Unit,
-    ) {
-        countDownTimer = object : CountDownTimer(timerFinalCheckInMillisMocked,
-            timerIntervalInMillisMocked) {
-            override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished / 1000
-                onTickAction(seconds)
-            }
-
-            override fun onFinish() {
-                onFinishAction()
-            }
-        }
-
-        countDownTimer.start()
-    }
-
-    override fun cancel() {
-        countDownTimer.cancel()
-    }
-
-}
 
 class MockCountDownTimerGivenHelper :
     CountDownTimerService {
@@ -53,8 +20,7 @@ class MockCountDownTimerGivenHelper :
         countDownTimer = object : CountDownTimer(timerFinalCheckInMillisMocked,
             timerIntervalInMillisMocked) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished / 1000
-                onTickAction(seconds)
+                onTickAction(millisUntilFinished)
             }
 
             override fun onFinish() {
@@ -77,8 +43,8 @@ class MockCountDownTimerGivenHelper :
         _onFinishAction()
     }
 
-    fun dispatchOnTick(seconds: Long) {
-        _onTickAction(seconds)
+    fun dispatchOnTick(millisUntilFinished: Long) {
+        _onTickAction(millisUntilFinished)
     }
 
 }

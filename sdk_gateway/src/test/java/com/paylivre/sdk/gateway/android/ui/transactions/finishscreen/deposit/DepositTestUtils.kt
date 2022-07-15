@@ -20,6 +20,8 @@ import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransacti
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
 import com.paylivre.sdk.gateway.android.data.model.order.StatusWithdrawOrder
 import com.paylivre.sdk.gateway.android.domain.model.Operation
+import com.paylivre.sdk.gateway.android.services.countdowntimer.CountDownTimerService
+import com.paylivre.sdk.gateway.android.services.countdowntimer.MockCountDownTimerGivenHelper
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImplTest
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
@@ -55,6 +57,7 @@ var statusWithdrawOrderMock = StatusWithdrawOrder(
 data class MainViewModelMockData(
     var mockMainViewModel: MainViewModel,
     val logEventsServiceImpl: LogEventsService,
+    val mockCountDownTimerServiceImpl: CountDownTimerService,
 )
 
 fun getResponseCommonTransactionDataByFile(fileName: String): ResponseCommonTransactionData? {
@@ -137,6 +140,12 @@ fun checkTerms(fragment: Fragment){
     )
 }
 
+fun checkDrawable(fragment: Fragment, imageViewId: Int, expectedDrawableId: Int){
+    val imgViewDrawable = fragment.view?.findViewById<ImageView>(imageViewId)
+    val expectedDrawable: Drawable = fragment.resources.getDrawable(expectedDrawableId)
+    Assert.assertTrue(checkDrawableImageView(imgViewDrawable, expectedDrawable))
+}
+
 fun checkHeaderDeposit(fragment: Fragment) {
     //check button close sdk
     val headerView = fragment?.view?.findViewById<FragmentContainerView>(R.id.header_title)
@@ -168,13 +177,17 @@ fun createDepositInstances(
     statusTransactionResponse: StatusTransactionResponse? = statusTransactionResponseMock,
     checkStatusDepositResponse: CheckStatusDepositResponse? = checkStatusDepositResponseMock,
     checkStatusDepositLoading: Boolean = false,
+    mockCountDownTimerServiceImpl: CountDownTimerService = MockCountDownTimerGivenHelper(),
 ): MainViewModelMockData {
     val mockMainViewModel: MainViewModel = mockk()
     val logEventsServiceImpl = mockk<LogEventsService>(relaxed = true)
 
-    loadKoinModules(module(override = true) {
-        single<LogEventsService> {
+    loadKoinModules(module {
+        single {
             logEventsServiceImpl
+        }
+        single {
+            mockCountDownTimerServiceImpl
         }
         viewModel {
             mockMainViewModel
@@ -214,9 +227,9 @@ fun createDepositInstances(
     } returns Unit
 
 
-
     return MainViewModelMockData(
         mockMainViewModel = mockMainViewModel,
         logEventsServiceImpl = logEventsServiceImpl,
+        mockCountDownTimerServiceImpl = mockCountDownTimerServiceImpl,
     )
 }

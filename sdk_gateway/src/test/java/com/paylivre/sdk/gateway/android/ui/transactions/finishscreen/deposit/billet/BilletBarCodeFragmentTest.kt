@@ -30,15 +30,12 @@ import org.robolectric.shadows.ShadowToast
 @Config(sdk = [Build.VERSION_CODES.O_MR1], qualifiers = "pt-port")
 class BilletBarCodeFragmentTest {
     private var clipboardManager: ClipboardManager? = null
-    private var context: Context? = null
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
         clipboardManager = ApplicationProvider.getApplicationContext<Context>()
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-        context = ApplicationProvider.getApplicationContext();
     }
 
     @Test

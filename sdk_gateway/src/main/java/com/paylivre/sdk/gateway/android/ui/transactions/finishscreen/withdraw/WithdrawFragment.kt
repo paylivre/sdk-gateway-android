@@ -95,7 +95,10 @@ class WithdrawFragment() : Fragment() {
         countDownTimerService.startTimer(
             TIMER_FINAL_CHECK_IN_MILLIS,
             TIMER_INTERVAL_IN_MILLIS,
-            { seconds -> dispatchCheckStatusWithdraw(seconds) },
+            { millisUntilFinished ->
+                val seconds = millisUntilFinished / 1000
+                dispatchCheckStatusWithdraw(seconds)
+            },
             { onFinishCountDownTimer() }
         )
     }

@@ -27,8 +27,7 @@ class CountDownTimerServiceImpl : CountDownTimerService {
         countDownTimer = object : CountDownTimer(timerFinalCheckInMillis,
             timerIntervalInMillis) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished / 1000
-                onTickAction(seconds)
+                onTickAction(millisUntilFinished)
             }
 
             override fun onFinish() {
