@@ -15,15 +15,15 @@ import com.paylivre.sdk.gateway.android.BuildConfig
 import com.paylivre.sdk.gateway.android.FileTestsUtils
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
-import com.paylivre.sdk.gateway.android.data.model.order.CheckStatusOrderResponse
 import com.paylivre.sdk.gateway.android.data.model.order.ResponseCommonTransactionData
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
 import com.paylivre.sdk.gateway.android.data.model.order.StatusWithdrawOrder
+import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
+import com.paylivre.sdk.gateway.android.data.model.transaction.DataStatusTransaction
 import com.paylivre.sdk.gateway.android.domain.model.Operation
 import com.paylivre.sdk.gateway.android.services.countdowntimer.CountDownTimerService
 import com.paylivre.sdk.gateway.android.services.countdowntimer.MockCountDownTimerGivenHelper
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
-import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImplTest
 import com.paylivre.sdk.gateway.android.ui.viewmodel.MainViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -38,6 +38,13 @@ var checkStatusDepositResponseMock = CheckStatusDepositResponse(
     status_code = 0,
     data = null,
     message = ""
+)
+
+var checkStatusTransactionResponseMock = CheckStatusTransactionResponse(
+    status = "success",
+    status_code = 200,
+    message = "OK",
+    data = DataStatusTransaction(transaction_status_id = 2)
 )
 
 var statusTransactionResponseMock = StatusTransactionResponse(
@@ -99,7 +106,7 @@ fun checkTransactionData(
     taxValue: String,
     dueDateValue: String,
     totalValue: String,
-    availableLimitValue: String
+    availableLimitValue: String,
 ) {
     checkTextView(fragment.view?.findViewById(R.id.textIdValue), transactionId)
     checkTextView(fragment.view?.findViewById(R.id.textOriginalAmountValue), originalValue)
@@ -122,7 +129,7 @@ fun checkStatusDeposit(fragment: Fragment, title: String, subtitle: String, draw
     Assert.assertTrue(checkDrawableImageView(imgLocaleImage, expectedDrawable))
 }
 
-fun checkButtonBackToMerchant(fragment: Fragment){
+fun checkButtonBackToMerchant(fragment: Fragment) {
     //Check button back to merchant
     Assert.assertEquals(
         View.VISIBLE,
@@ -131,7 +138,7 @@ fun checkButtonBackToMerchant(fragment: Fragment){
     )
 }
 
-fun checkTerms(fragment: Fragment){
+fun checkTerms(fragment: Fragment) {
     //Check terms
     Assert.assertEquals(
         View.VISIBLE,
@@ -140,7 +147,7 @@ fun checkTerms(fragment: Fragment){
     )
 }
 
-fun checkDrawable(fragment: Fragment, imageViewId: Int, expectedDrawableId: Int){
+fun checkDrawable(fragment: Fragment, imageViewId: Int, expectedDrawableId: Int) {
     val imgViewDrawable = fragment.view?.findViewById<ImageView>(imageViewId)
     val expectedDrawable: Drawable = fragment.resources.getDrawable(expectedDrawableId)
     Assert.assertTrue(checkDrawableImageView(imgViewDrawable, expectedDrawable))
@@ -173,11 +180,14 @@ fun checkHeaderDeposit(fragment: Fragment) {
     Assert.assertTrue(checkDrawableImageView(imgLogoMerchant, logoMerchantExpectedDrawable))
 }
 
+
 fun createDepositInstances(
     statusTransactionResponse: StatusTransactionResponse? = statusTransactionResponseMock,
     checkStatusDepositResponse: CheckStatusDepositResponse? = checkStatusDepositResponseMock,
     checkStatusDepositLoading: Boolean = false,
     mockCountDownTimerServiceImpl: CountDownTimerService = MockCountDownTimerGivenHelper(),
+    checkStatusTransactionResponse: CheckStatusTransactionResponse = checkStatusTransactionResponseMock,
+    checkStatusTransactionLoading: Boolean? = null,
 ): MainViewModelMockData {
     val mockMainViewModel: MainViewModel = mockk()
     val logEventsServiceImpl = mockk<LogEventsService>(relaxed = true)
@@ -193,6 +203,7 @@ fun createDepositInstances(
             mockMainViewModel
         }
     })
+
 
     coEvery {
         mockMainViewModel.language
@@ -226,6 +237,17 @@ fun createDepositInstances(
         mockMainViewModel.checkStatusDeposit(any())
     } returns Unit
 
+    coEvery {
+        mockMainViewModel.checkStatusTransactionLoading
+    } returns MutableLiveData(checkStatusTransactionLoading)
+
+    coEvery {
+        mockMainViewModel.checkStatusTransactionResponse
+    } returns MutableLiveData(checkStatusTransactionResponse)
+
+    coEvery {
+        mockMainViewModel.checkStatusTransaction(any())
+    } returns Unit
 
     return MainViewModelMockData(
         mockMainViewModel = mockMainViewModel,
