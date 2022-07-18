@@ -2,14 +2,20 @@ package com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.wa
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.paylivre.sdk.gateway.android.R
 import com.paylivre.sdk.gateway.android.data.model.deposit.CheckStatusDepositResponse
 import com.paylivre.sdk.gateway.android.data.model.deposit.DataStatusDeposit
 import com.paylivre.sdk.gateway.android.data.model.order.StatusTransactionResponse
+import com.paylivre.sdk.gateway.android.data.model.transaction.CheckStatusTransactionResponse
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.*
-import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.deposit.pix.DepositPixFragment
 import com.paylivre.sdk.gateway.android.ui.transactions.finishscreen.testutil.CheckBottomComponentsTestUtils
+import io.mockk.verify
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -92,6 +98,72 @@ class DepositWalletFragmentTest {
             //Bottom components
             CheckBottomComponentsTestUtils(depositWalletFragment.view)
 
+            verify {
+                depositInstances.mockMainViewModel.checkStatusTransaction(58665)
+            }
+
+        }
+    }
+
+    @Test
+    fun `CASE 02, checkStatusTransactionLoading is true`() {
+        //GIVEN
+        val depositInstances =
+            createDepositInstances(
+                checkStatusTransactionLoading = true
+            )
+
+        val fragmentArgs = Bundle()
+        val fragment = launchFragmentInContainer<DepositWalletFragment>(fragmentArgs,
+            themeResId = R.style.Theme_SDKGatewayAndroid)
+
+        fragment.onFragment { depositWalletFragment ->
+            //THEN
+            Assert.assertEquals(
+                View.VISIBLE,
+                depositWalletFragment.view?.findViewById<LinearLayout>(R.id.containerLoadingStatusDeposit)
+                    ?.visibility
+            )
+
+            Assert.assertEquals(
+                View.GONE,
+                depositWalletFragment.view?.findViewById<FragmentContainerView>(R.id.fragmentDepositStatus)
+                    ?.visibility
+            )
+        }
+    }
+
+    @Test
+    fun `CASE 03, data in checkStatusTransactionResponse is null`() {
+        //GIVEN
+        val depositInstances =
+            createDepositInstances(
+                checkStatusTransactionResponse = CheckStatusTransactionResponse(
+                    status = "",
+                    status_code = null,
+                    message = null,
+                    data = null
+                )
+            )
+
+        val fragmentArgs = Bundle()
+        val fragment = launchFragmentInContainer<DepositWalletFragment>(fragmentArgs,
+            themeResId = R.style.Theme_SDKGatewayAndroid)
+
+        fragment.onFragment { depositWalletFragment ->
+            //THEN
+            Assert.assertEquals(
+                View.GONE,
+                depositWalletFragment.view?.findViewById<LinearLayout>(R.id.containerLoadingStatusDeposit)
+                    ?.visibility
+            )
+
+            Assert.assertEquals(
+                View.VISIBLE,
+                depositWalletFragment.view
+                    ?.findViewById<ConstraintLayout>(R.id.containerBackMerchantAndInstructions)
+                    ?.visibility
+            )
         }
     }
 }
