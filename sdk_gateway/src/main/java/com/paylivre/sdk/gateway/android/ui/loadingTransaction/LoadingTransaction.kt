@@ -66,10 +66,6 @@ class LoadingTransaction : Fragment() {
                         Navigation.findNavController(view)
                             .navigate(R.id.navigation_finish_screen_deposit_pix)
                     }
-                    Type.WALLET.code.toString() -> {
-                        Navigation.findNavController(view)
-                            .navigate(R.id.navigation_finish_screen_deposit_wallet)
-                    }
                     Type.BILLET.code.toString() -> {
                         Navigation.findNavController(view)
                             .navigate(R.id.navigation_finish_screen_deposit_billet)
@@ -78,9 +74,10 @@ class LoadingTransaction : Fragment() {
                         Navigation.findNavController(view)
                             .navigate(R.id.navigation_finish_screen_deposit_wiretransfer)
                     }
-                    else -> {
+
+                    else -> { //Type.WALLET.code.toString()
                         Navigation.findNavController(view)
-                            .navigate(R.id.navigation_transaction_completion)
+                            .navigate(R.id.navigation_finish_screen_deposit_wallet)
                     }
                 }
             }
