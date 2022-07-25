@@ -14,6 +14,7 @@
         android:fontFamily="@font/avenir_next_lt_pro_bold"
         android:lineHeight="18sp"
         android:text="@string/label_info_bank_paylivre"
+        android:contentDescription="@string/label_info_bank_paylivre"
         android:textAlignment="textStart"
         android:textColor="@color/grey_dark_color_paylivre_sdk"
         android:textSize="15sp"
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:inputType="none"
             android:text="@string/label_select"
+            android:contentDescription="@string/label_select"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -58,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:contentDescription="@string/label_bank"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -67,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:contentDescription="@string/label_bank_office"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bankName" />
@@ -76,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:contentDescription="@string/label_account"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bankOffice" />
@@ -85,6 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:contentDescription="@string/label_favored"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bankAccount" />
@@ -94,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:contentDescription="CNPJ:"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bankOwner" />

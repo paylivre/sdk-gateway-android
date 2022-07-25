@@ -13,6 +13,7 @@
         android:fontFamily="@font/avenir_next_lt_pro_bold"
         android:lineHeight="18sp"
         android:text="@string/title_proof_deposit"
+        android:contentDescription="@string/title_proof_deposit"
         android:textAlignment="textStart"
         android:textColor="@color/grey_dark_color_paylivre_sdk"
         android:textSize="16sp"
@@ -27,6 +28,7 @@
         android:fontFamily="@font/avenir_next_lt_pro_regular"
         android:lineHeight="18sp"
         android:text="@string/no_file_selected"
+        android:contentDescription="@string/no_file_selected"
         android:textAlignment="textStart"
         android:textColor="@color/black_color_paylivre_sdk"
         android:textSize="15sp"
@@ -40,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/white_color_paylivre_sdk"
         android:backgroundTint="@color/grey_color_paylivre_sdk"
-        android:contentDescription="@string/title_proof_deposit"
+        android:contentDescription="@string/proof_preview"
         android:maxHeight="150dp"
         android:padding="0dp"
         android:scaleType="centerInside"
@@ -57,6 +59,7 @@
         android:background="@drawable/button_outline_with_ripple_primary"
         android:clickable="true"
         android:minHeight="50dp"
+        android:contentDescription="@string/choose_file"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgPreviewProof">
@@ -89,6 +92,7 @@
                 android:layout_height="15.7dp"
                 android:clickable="false"
                 android:outlineSpotShadowColor="@color/primary_color_paylivre_sdk"
+                android:contentDescription="@string/choose_file_image"
                 android:src="@drawable/ic_upload_file" />
 
         </LinearLayout>
@@ -104,6 +108,7 @@
         android:fontFamily="@font/avenir_next_lt_pro_regular"
         android:lineHeight="18sp"
         android:text="@string/label_instructions_insert_proof_file"
+        android:contentDescription="@string/insert_proof_tip_text"
         android:textAlignment="textStart"
         android:textColor="@color/black_color_paylivre_sdk"
         android:textSize="15sp"
@@ -122,6 +127,7 @@
         android:fontFamily="@font/avenir_next_lt_pro_regular"
         android:minHeight="60dp"
         android:text="@string/submit"
+        android:contentDescription="@string/submit"
         android:textAllCaps="false"
         android:textColor="@color/white_color_paylivre_sdk"
         android:textSize="18sp"

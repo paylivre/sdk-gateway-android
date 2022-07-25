@@ -36,6 +36,7 @@
                 android:fontFamily="@font/avenir_next_lt_pro_regular"
                 android:minHeight="60dp"
                 android:text="@string/label_back_to_merchant"
+                android:contentDescription="@string/label_back_to_merchant"
                 android:textAllCaps="false"
                 android:textColor="@color/primary_color_paylivre_sdk"
                 android:textSize="16sp"

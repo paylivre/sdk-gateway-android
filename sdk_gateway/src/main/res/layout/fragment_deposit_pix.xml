@@ -11,6 +11,7 @@
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:contentDescription="Deposit pix finish screen"
     tools:context=".ui.transactions.finishscreen.deposit.pix.DepositPixFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -36,6 +37,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="5dp"
             android:background="@color/grey4_color_paylivre_sdk"
+            android:contentDescription="@null"
             app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
         <androidx.cardview.widget.CardView
@@ -67,6 +69,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/avenir_next_lt_pro_bold"
                     android:text="PIX"
+                    android:contentDescription="PIX"
                     android:textColor="@color/secondary_color_paylivre_sdk"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -88,6 +91,7 @@
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/avenir_next_lt_pro_regular"
                         android:text="00020101021226580014BR.GOV.BCB.PIX0136b46359c8-3eaa-4b42-a3c6-0972a9c4a2265204000053039865406111.115802BR5912Pay Livrepix6014Belo Horizonte610830380403620605029X6304BFA4"
+                        android:contentDescription="@string/pix_code"
                         android:textAlignment="textStart"
                         android:textColor="@color/secondary_color_paylivre_sdk"
                         android:textIsSelectable="true"
@@ -106,6 +110,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_regular"
                         android:minHeight="60dp"
                         android:text="@string/copy_key_pix"
+                        android:contentDescription="@string/copy_key_pix"
                         android:textAllCaps="false"
                         android:textColor="@color/white_color_paylivre_sdk"
                         android:textSize="16sp"
@@ -135,6 +140,7 @@
                             android:paddingHorizontal="5dp"
                             android:paddingVertical="2dp"
                             android:text="@string/time_to_expire_pix"
+                            android:contentDescription="@string/time_to_expire_pix"
                             android:textColor="@color/primary_color_paylivre_sdk"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -149,6 +155,7 @@
                             android:lineHeight="13sp"
                             android:paddingVertical="2dp"
                             android:text=""
+                            android:contentDescription="@string/expiration_time_value"
                             android:textColor="@color/primary_color_paylivre_sdk"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -165,6 +172,7 @@
                         android:lineHeight="18sp"
                         android:paddingVertical="20dp"
                         android:text=""
+                        android:contentDescription="@string/last_status_text"
                         android:textColor="@color/grey_dark_color_paylivre_sdk"
                         android:textSize="14sp"
                         android:visibility="gone"
@@ -196,6 +204,7 @@
                             android:paddingHorizontal="5dp"
                             android:paddingVertical="2dp"
                             android:text="@string/checking_status_loading"
+                            android:contentDescription="@string/checking_status_loading"
                             android:textColor="@color/grey_dark_color_paylivre_sdk"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -206,6 +215,7 @@
                             android:layout_height="18dp"
                             android:indeterminate="true"
                             app:indicatorColor="@color/primary_color_paylivre_sdk"
+                            android:contentDescription="@string/loading_animation"
                             app:indicatorSize="18dp"
                             app:trackThickness="2dp" />
 
@@ -233,6 +243,7 @@
                     android:layout_marginTop="0dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:contentDescription="@string/transaction_data"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragmentDepositStatus" />
@@ -252,6 +263,7 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="25dp"
                         android:background="@color/grey3_color_paylivre_sdk"
+                        android:contentDescription="@null"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.fragment.app.FragmentContainerView
@@ -292,6 +304,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="25dp"
             android:background="@color/grey4_color_paylivre_sdk"
+            android:contentDescription="@null"
             app:layout_constraintTop_toBottomOf="@+id/CardView" />
 
         <include

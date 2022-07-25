@@ -30,6 +30,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="@string/label_transaction_id"
+            android:contentDescription="@string/label_transaction_id"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -43,6 +44,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="12345"
+            android:contentDescription="@string/transaction_id_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -68,6 +70,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="@string/label_origin_amount"
+            android:contentDescription="@string/label_origin_amount"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -81,6 +84,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text=""
+            android:contentDescription="@string/origin_amount_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -106,6 +110,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="@string/label_converted_amount"
+            android:contentDescription="@string/label_converted_amount"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -119,6 +124,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="R$ 5,00"
+            android:contentDescription="@string/converted_amount_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -144,6 +150,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="@string/label_tax"
+            android:contentDescription="@string/label_tax"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -157,6 +164,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="R$ 0,00"
+            android:contentDescription="@string/tax_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -182,6 +190,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text="@string/label_duedate"
+            android:contentDescription="@string/label_duedate"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -195,6 +204,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="18sp"
             android:text=""
+            android:contentDescription="@string/duedate_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -209,6 +219,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:background="@color/grey3_color_paylivre_sdk"
+        android:contentDescription="@null"
         app:layout_constraintTop_toBottomOf="@+id/rowDueDate" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -228,6 +239,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="20sp"
             android:text="@string/label_total"
+            android:contentDescription="@string/label_total"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="17sp"
@@ -242,6 +254,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_bold"
             android:lineHeight="20sp"
             android:text=""
+            android:contentDescription="@string/total_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="17sp"
@@ -256,6 +269,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="20dp"
         android:background="@color/grey3_color_paylivre_sdk"
+        android:contentDescription="@null"
         app:layout_constraintTop_toBottomOf="@+id/rowTotalAmount" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -276,6 +290,7 @@
             android:lineHeight="20sp"
             android:paddingBottom="5dp"
             android:text="@string/label_available_limit"
+            android:contentDescription="@string/label_available_limit"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -291,7 +306,7 @@
             android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
-            android:contentDescription="About limit"
+            android:contentDescription="@string/available_limit_tooltip"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="2dp"
             android:scaleType="centerCrop"
@@ -308,6 +323,7 @@
             android:lineHeight="20sp"
             android:paddingBottom="5dp"
             android:text=""
+            android:contentDescription="@string/available_limit_value"
             android:textAlignment="textStart"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
@@ -319,6 +335,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-

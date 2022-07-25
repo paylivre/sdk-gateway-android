@@ -6,12 +6,13 @@ import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
 import com.paylivre.sdk.gateway.android.domain.model.*
+import com.paylivre.sdk.gateway.android.services.log.LogErrorScopeImpl
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
+import com.paylivre.sdk.gateway.android.services.log.LogErrorService
+import com.paylivre.sdk.gateway.android.services.log.LogErrorServiceImpl
 import com.paylivre.sdk.gateway.android.utils.ERROR_INVALID_USER_NAME_OR_PASSWORD
-import io.sentry.Sentry
 import okhttp3.ResponseBody
 import retrofit2.Response
-import java.lang.Exception
 
 data class StatusWithdrawOrder(
     val withdrawal_type_id: Int?,
@@ -107,6 +108,7 @@ fun getResponseJson(response: Response<ResponseBody>): ResponseCommonTransaction
     return Gson().fromJson(message, ResponseCommonTransactionData::class.java)
 }
 
+
 data class Errors(
     val email: List<String>? = null,
     val amount: List<String>? = null,
@@ -142,6 +144,7 @@ data class Errors(
     val free_transaction_limit: Int? = null,
 )
 
+
 data class ErrorTransaction(
     val message: String? = null,
     val messageDetails: String? = null,
@@ -167,16 +170,16 @@ fun checkIsErrorApiToken(error: ErrorTransaction?): Boolean {
 
 fun getErrorTags422(error: ErrorTransaction? = null): String {
     if (error?.errors != null) {
-        var errorTags: MutableList<String> = mutableListOf()
+        val errorTags: MutableList<String> = mutableListOf()
 
-        error.errors?.email?.let { errorTags.add(ErrorTags.RT001.toString()) }
-        error.errors?.amount?.let { errorTags.add(ErrorTags.RT002.toString()) }
-        error.errors?.currency?.let { errorTags.add(ErrorTags.RT003.toString()) }
-        error.errors?.document_number?.let { errorTags.add(ErrorTags.RT004.toString()) }
-        error.errors?.callback_url?.let { errorTags.add(ErrorTags.RT005.toString()) }
-        error.errors?.operation?.let { errorTags.add(ErrorTags.RT006.toString()) }
-        error.errors?.merchant_transaction_id?.let { errorTags.add(ErrorTags.RT007.toString()) }
-        error.errors?.auto_approve?.let { errorTags.add(ErrorTags.RT008.toString()) }
+        error.errors.email?.let { errorTags.add(ErrorTags.RT001.toString()) }
+        error.errors.amount?.let { errorTags.add(ErrorTags.RT002.toString()) }
+        error.errors.currency?.let { errorTags.add(ErrorTags.RT003.toString()) }
+        error.errors.document_number?.let { errorTags.add(ErrorTags.RT004.toString()) }
+        error.errors.callback_url?.let { errorTags.add(ErrorTags.RT005.toString()) }
+        error.errors.operation?.let { errorTags.add(ErrorTags.RT006.toString()) }
+        error.errors.merchant_transaction_id?.let { errorTags.add(ErrorTags.RT007.toString()) }
+        error.errors.auto_approve?.let { errorTags.add(ErrorTags.RT008.toString()) }
 
         return errorTags.joinToString { it }
     } else {
@@ -194,10 +197,17 @@ fun getErrorResponseJson(response: Response<ResponseBody>): ErrorTransaction {
     return try {
         Gson().fromJson(message, ErrorTransaction::class.java)
     } catch (e: Exception) {
-        val errorTransaction = Gson().fromJson(message, ErrorTransactionTwo::class.java)
-        return ErrorTransaction(message = errorTransaction.message)
-    } catch (e: Exception) {
-        return getGenericErrorData()
+        try {
+            val errorTransactionTwo = Gson().fromJson(message, ErrorTransactionTwo::class.java)
+            val errorTransaction = ErrorTransaction(message = errorTransactionTwo?.message)
+            if (errorTransaction.message == null) {
+                return getGenericErrorData()
+            } else {
+                return errorTransaction
+            }
+        } catch (e: Exception) {
+            return getGenericErrorData()
+        }
     }
 }
 
@@ -260,7 +270,7 @@ fun getErrorCode401ResponseJson(): ErrorTransaction {
     )
 }
 
-fun getErrorCommon(response: Response<ResponseBody>, errorStag: String? = ""): ErrorTransaction {
+fun getErrorCommon(response: Response<ResponseBody>, errorStag: String?): ErrorTransaction {
     val commonErrorTransaction = getErrorResponseJson(response)
     return ErrorTransaction(
         message = "title_unexpected_error",
@@ -273,7 +283,10 @@ fun getErrorCommon(response: Response<ResponseBody>, errorStag: String? = ""): E
 }
 
 
-fun getErrorDataByCode(response: Response<ResponseBody>): ErrorTransaction {
+fun getErrorDataByCode(
+    response: Response<ResponseBody>,
+    logErrorService: LogErrorService = LogErrorServiceImpl(),
+): ErrorTransaction {
     val error = when (response.code()) {
         400 -> getErrorCode400ResponseJson(response)
         401 -> getErrorCode401ResponseJson()
@@ -283,17 +296,16 @@ fun getErrorDataByCode(response: Response<ResponseBody>): ErrorTransaction {
         500 -> getErrorCommon(response, ErrorTags.UX005.toString())
         else -> getErrorCommon(response, ErrorTags.UX000.toString())
     }
-    Sentry.setExtra("response_error_data", error.toString())
+    logErrorService.setExtra("response_error_data", error.toString())
     return error
 }
 
 
-fun filterPasswordFromRequest(dataRequest: OrderDataRequest): JsonObject? {
+fun filterPasswordFromRequest(dataRequest: OrderDataRequest): JsonObject {
     val gson = Gson()
     val dataRequestWithoutPass = gson.toJsonTree(dataRequest).asJsonObject
     dataRequestWithoutPass.remove("password")
     dataRequestWithoutPass.addProperty("p@ssword", "field filtered")
-
     return dataRequestWithoutPass
 }
 
@@ -303,6 +315,7 @@ fun handleResponseTransaction(
     response: Response<ResponseBody>,
     onResponse: (ResponseCommonTransactionData?, ErrorTransaction?) -> Unit,
     logEventsService: LogEventsService,
+    logErrorService: LogErrorService = LogErrorServiceImpl(),
 ) {
     try {
         if (response.isSuccessful) {
@@ -328,28 +341,24 @@ fun handleResponseTransaction(
             )
 
             //Sentry config
-            Sentry.setExtra("request_body_json_gateway",
+            logErrorService.setExtra("request_body_json_gateway",
                 filterPasswordFromRequest(dataRequest).toString())
 
-            Sentry.configureScope { scope ->
-                scope.setTag("status_code_gateway", response.code().toString())
-                filterPasswordFromRequest(dataRequest)?.let {
-                    scope.setContexts("request_body_gateway", it)
-                }
-            }
-
-            Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway)")
+            val logErrorScopeImpl = LogErrorScopeImpl()
+            logErrorScopeImpl.setTag("status_code_gateway", response.code().toString())
+            logErrorScopeImpl.setContexts("request_body_gateway", filterPasswordFromRequest(dataRequest))
+            logErrorService.configureScope(logErrorScopeImpl)
+            logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway)")
         }
     } catch (err: Exception) {
         onResponse(null, getGenericErrorData())
 
-        Sentry.setExtra("error_catch_gateway", err.message.toString())
-        Sentry.setExtra("error_generic_gateway", Gson().toJson(getGenericErrorData()))
-        Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway)")
+        logErrorService.setExtra("error_catch_gateway", err.message.toString())
+        logErrorService.setExtra("error_generic_gateway", Gson().toJson(getGenericErrorData()))
+        logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway)")
     }
 }
 
-//fun valueOfTypesToSelect(code: Int): Type? = Type.values().find { it.code == code }
 
 fun getSelectedTypeByType(type: Int): String {
     return when (type) {
@@ -373,6 +382,7 @@ fun getSelectedTypeByType(type: Int): String {
 
 fun getDataWithOnlySelectedType(data: DataGenerateSignature): DataGenerateSignature {
     val selectedType = getSelectedTypeByType(data.type.toInt())
+    println("selectedType: $selectedType")
     return if (selectedType.isNotEmpty()) {
         data.selected_type = selectedType
         data

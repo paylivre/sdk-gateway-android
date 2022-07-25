@@ -4,6 +4,9 @@ import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
+import com.paylivre.sdk.gateway.android.services.log.LogErrorScopeImpl
+import com.paylivre.sdk.gateway.android.services.log.LogErrorService
+import com.paylivre.sdk.gateway.android.services.log.LogErrorServiceImpl
 import com.paylivre.sdk.gateway.android.services.log.LogEventsService
 import io.sentry.Sentry
 import okhttp3.ResponseBody
@@ -69,7 +72,8 @@ fun handleResponseCheckStatusOrder(
     dataRequest: CheckStatusOrderDataRequest,
     response: Response<ResponseBody>,
     onResponse: (CheckStatusOrderDataResponse?, ErrorTransaction?) -> Unit,
-    logEventsService : LogEventsService,
+    logEventsService: LogEventsService,
+    logErrorService: LogErrorService = LogErrorServiceImpl(),
 ) {
     try {
         if (response.isSuccessful) {
@@ -99,22 +103,20 @@ fun handleResponseCheckStatusOrder(
             )
 
             //Sentry config
-            Sentry.setExtra("request_body_json_gateway", dataRequest.toString())
+            logErrorService.setExtra("request_body_json_gateway", dataRequest.toString())
 
-            Sentry.configureScope { scope ->
-                scope.setTag("status_code_gateway", response.code().toString())
-                dataRequest?.let {
-                    scope.setContexts("request_body_gateway", it)
-                }
-            }
+            val logErrorScopeImpl = LogErrorScopeImpl()
+            logErrorScopeImpl.setTag("status_code_gateway", response.code().toString())
+            logErrorScopeImpl.setContexts("request_body_gateway", dataRequest)
+            logErrorService.configureScope(logErrorScopeImpl)
 
-            Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway/status)")
+            logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway/status)")
         }
     } catch (err: Exception) {
         onResponse(null, getGenericErrorData())
 
-        Sentry.setExtra("error_catch_gateway", err.message.toString())
-        Sentry.setExtra("error_generic_gateway", Gson().toJson(getGenericErrorData()))
-        Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway)")
+        logErrorService.setExtra("error_catch_gateway", err.message.toString())
+        logErrorService.setExtra("error_generic_gateway", Gson().toJson(getGenericErrorData()))
+        logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/gateway/status)")
     }
 }

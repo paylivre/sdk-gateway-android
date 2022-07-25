@@ -46,6 +46,7 @@
                     android:textStyle="bold"
                     android:lineHeight="20sp"
                     android:text="@string/label_title_withdraw_wallet"
+                    android:contentDescription="@string/label_title_withdraw_wallet"
                     android:textAlignment="center"
                     android:textColor="@color/grey_dark_color_paylivre_sdk"
                     android:textSize="18sp" />
@@ -60,6 +61,7 @@
                 android:fontFamily="@font/avenir_next_lt_pro_regular"
                 android:lineHeight="18sp"
                 android:text="@string/info_withdraw_wallet_body"
+                android:contentDescription="@string/withdraw_wallet_instruction1_text"
                 android:textAlignment="textStart"
                 android:textColor="@color/grey_color_paylivre_sdk"
                 android:textSize="14sp"

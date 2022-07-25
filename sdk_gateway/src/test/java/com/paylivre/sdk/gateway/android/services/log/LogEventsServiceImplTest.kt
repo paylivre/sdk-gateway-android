@@ -49,4 +49,26 @@ class LogEventsServiceImplTest : LogEventsService {
         )
     }
 
+    fun getLogEventAnalyticsWithParamsList(
+        eventName: String,
+        vararg params: Pair<String, String>?,
+    ) : List<Pair<String?, JSONObject>> {
+        val eventAnalyticsWithParams = mutableListOf<Pair<String?, JSONObject>>()
+        try {
+            for (param in params) {
+                if (param?.first != null && param.second != null) {
+                    val paramKey = param.first
+                    val paramValue = param.second
+                    customEventAnalytics.put(paramKey, paramValue)
+                }
+
+            }
+        } catch (e: JSONException) {
+            System.err.println("Invalid JSON")
+            e.printStackTrace()
+        }
+        eventAnalyticsWithParams.add(Pair(eventName, customEventAnalytics))
+        return eventAnalyticsWithParams
+    }
+
 }

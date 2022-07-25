@@ -14,6 +14,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="@color/grey3_color_paylivre_sdk"
+        android:contentDescription="@null"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/avenir_next_lt_pro_bold"
             android:text="@string/label_details"
+            android:contentDescription="@string/label_details"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/avenir_next_lt_pro_bold"
             android:text="@string/label_status"
+            android:contentDescription="@string/label_status"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -69,6 +72,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="22sp"
             android:text="@string/label_status_approval_in_merchant"
+            android:contentDescription="@string/label_status_approval_in_merchant"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -81,6 +85,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="22sp"
             android:text="@string/status_pending"
+            android:contentDescription="@string/merchant_approval_status_value"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -95,7 +100,7 @@
             android:layout_marginHorizontal="10dp"
             android:adjustViewBounds="true"
             android:background="@color/white_color_paylivre_sdk"
-            android:contentDescription="@string/label_status"
+            android:contentDescription="@string/merchant_approval_status_icon"
             android:scaleType="centerInside"
             android:src="@drawable/ic_new"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -122,6 +127,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="22sp"
             android:text="@string/payment_label_status"
+            android:contentDescription="@string/payment_label_status"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -134,6 +140,7 @@
             android:fontFamily="@font/avenir_next_lt_pro_regular"
             android:lineHeight="22sp"
             android:text="@string/status_pending"
+            android:contentDescription="@string/payment_status_value"
             android:textColor="@color/grey_dark_color_paylivre_sdk"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -148,7 +155,7 @@
             android:layout_marginHorizontal="10dp"
             android:adjustViewBounds="true"
             android:background="@color/white_color_paylivre_sdk"
-            android:contentDescription="@string/label_status"
+            android:contentDescription="@string/payment_status_icon"
             android:scaleType="centerInside"
             android:src="@drawable/ic_new"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -164,6 +171,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="30dp"
         android:background="@color/grey3_color_paylivre_sdk"
+        android:contentDescription="@null"
         app:layout_constraintTop_toBottomOf="@id/containerStatusPayment" />
 
 

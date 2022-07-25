@@ -47,6 +47,7 @@
                     android:textStyle="bold"
                     android:lineHeight="20sp"
                     android:text="@string/label_title_withdraw_pix"
+                    android:contentDescription="@string/label_title_withdraw_pix"
                     android:textAlignment="center"
                     android:textColor="@color/grey_dark_color_paylivre_sdk"
                     android:textSize="18sp" />
@@ -58,7 +59,7 @@
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
                     android:background="@color/white_color_paylivre_sdk"
-                    android:contentDescription="@string/instructions_make_pix_text_1"
+                    android:contentDescription="@string/pix_icon"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_pix"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -83,7 +84,7 @@
                     android:layout_marginRight="9dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white_color_paylivre_sdk"
-                    android:contentDescription="icon"
+                    android:contentDescription="@string/fast_icon"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_clock_fast"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -102,6 +103,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_bold"
                         android:lineHeight="18sp"
                         android:text="@string/label_fast"
+                        android:contentDescription="@string/label_fast"
                         android:textAlignment="textStart"
                         android:textColor="@color/primary_color_paylivre_sdk"
                         android:textSize="16sp"
@@ -116,6 +118,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_regular"
                         android:lineHeight="18sp"
                         android:text="@string/info_withdraw_pix_fast"
+                        android:contentDescription="@string/withdraw_pix_instruction1_text"
                         android:textAlignment="textStart"
                         android:textColor="@color/grey_color_paylivre_sdk"
                         android:textSize="14sp" />
@@ -142,7 +145,7 @@
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white_color_paylivre_sdk"
-                    android:contentDescription="none"
+                    android:contentDescription="@string/simple_icon"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_arrow_fast"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -161,6 +164,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_bold"
                         android:lineHeight="18sp"
                         android:text="@string/label_simple"
+                        android:contentDescription="@string/label_simple"
                         android:textAlignment="textStart"
                         android:textColor="@color/primary_color_paylivre_sdk"
                         android:textSize="16sp"
@@ -175,6 +179,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_regular"
                         android:lineHeight="18sp"
                         android:text="@string/info_withdraw_pix_simple"
+                        android:contentDescription="@string/withdraw_pix_instruction2_text"
                         android:textAlignment="textStart"
                         android:textColor="@color/grey_color_paylivre_sdk"
                         android:textSize="14sp" />
@@ -198,7 +203,7 @@
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white_color_paylivre_sdk"
-                    android:contentDescription="@string/instructions_make_pix_text_1"
+                    android:contentDescription="@string/safe_icon"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_security"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -217,6 +222,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_bold"
                         android:lineHeight="18sp"
                         android:text="@string/label_safe"
+                        android:contentDescription="@string/label_safe"
                         android:textAlignment="textStart"
                         android:textColor="@color/primary_color_paylivre_sdk"
                         android:textSize="16sp"
@@ -231,6 +237,7 @@
                         android:fontFamily="@font/avenir_next_lt_pro_regular"
                         android:lineHeight="18sp"
                         android:text="@string/info_withdraw_pix_safe"
+                        android:contentDescription="@string/withdraw_pix_instruction3_text"
                         android:textAlignment="textStart"
                         android:textColor="@color/grey_color_paylivre_sdk"
                         android:textSize="14sp" />

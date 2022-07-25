@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
         android:text="@string/instruction_wallet_1"
+        android:contentDescription="@string/wallet_instruction1_text"
         android:textAlignment="textStart"
         android:textColor="@color/grey_color_paylivre_sdk"
         android:textSize="14sp" />
@@ -20,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
         android:text="@string/instruction_wallet_2"
+        android:contentDescription="@string/wallet_instruction2_text"
         android:textAlignment="textStart"
         android:textColor="@color/grey_color_paylivre_sdk"
         android:textSize="14sp" />
