@@ -4,17 +4,17 @@ import com.paylivre.sdk.gateway.android.R
 
 
 data class ResponseGetDataAveragePixApprovalTime(
-    val average_time_key: String = "",
-    val average_unit_time_1: Int = 0,
-    val average_unit_time_2: Int = 0,
-    val level_key: String = "",
-    val flag_color_id: Int = 0,
+    val average_time_key: String,
+    val average_unit_time_1: Int,
+    val average_unit_time_2: Int,
+    val level_key: String,
+    val flag_color_id: Int,
 )
 
 data class ResponseGetTime(
-    val average_time_hours: Int = 0,
-    val average_time_minutes: Int = 0,
-    val average_time_seconds: Int = 0,
+    val average_time_hours: Int,
+    val average_time_minutes: Int,
+    val average_time_seconds: Int,
 )
 
 
@@ -72,16 +72,7 @@ fun getAverageTimeKey(average_time: ResponseGetTime): ResponseGetAverageTimeKey 
     }
 }
 
-//val mockData = DataPixApprovalTime(
-//    "30",
-//    "2",
-//    "00:00:17",
-//    "normal",
-//    0
-//)
-
 fun getDataAveragePixApprovalTime(data: DataPixApprovalTime): ResponseGetDataAveragePixApprovalTime {
-
     val flag_color_id = getFlagColorId(data.level)
     val average_age_time = getTime(data.average_age)
     val average_time_key = getAverageTimeKey(average_age_time)
@@ -93,7 +84,5 @@ fun getDataAveragePixApprovalTime(data: DataPixApprovalTime): ResponseGetDataAve
         average_time_key.time_unit_value2,
         level_key,
         flag_color_id
-
     )
-
 }

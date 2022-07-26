@@ -4,6 +4,9 @@
 
 Paylivre SDK Gateway Android
 
+- run only test and generate jacoco coverage
+- ./gradlew  :sdk_gateway:testDebugUnitTest --tests "test_path" jacocoTestDebugUnitTestReport
+
 - run all test and generate jacoco coverage reports for the debug variant.
   ./gradlew --no-daemon clean jacocoTestDebugUnitTestReport
 

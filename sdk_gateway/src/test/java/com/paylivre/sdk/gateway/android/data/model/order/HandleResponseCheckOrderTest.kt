@@ -1,12 +1,10 @@
 package com.paylivre.sdk.gateway.android.data.model.order
 
-import com.paylivre.sdk.gateway.android.FileTestsUtils
+
 import com.paylivre.sdk.gateway.android.data.MockCallResponseBody
 import com.paylivre.sdk.gateway.android.data.RemoteDataSourceTestUtils
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.KYC.LimitsKyc
-import com.paylivre.sdk.gateway.android.services.log.LogErrorScope
-import com.paylivre.sdk.gateway.android.services.log.LogErrorScopeImpl
 import com.paylivre.sdk.gateway.android.services.log.LogErrorServiceImplTest
 import com.paylivre.sdk.gateway.android.services.log.LogEventsServiceImplTest
 import org.junit.Assert

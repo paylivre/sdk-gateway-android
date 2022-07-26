@@ -2,8 +2,10 @@ package com.paylivre.sdk.gateway.android.data.model.deposit
 
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
+import com.paylivre.sdk.gateway.android.data.getGenericErrorData
 import com.paylivre.sdk.gateway.android.data.model.order.ErrorTransaction
-import io.sentry.Sentry
+import com.paylivre.sdk.gateway.android.services.log.LogErrorService
+import com.paylivre.sdk.gateway.android.services.log.LogErrorServiceImpl
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.lang.Exception
@@ -33,18 +35,21 @@ fun getErrorResponseJson(response: Response<ResponseBody>): ErrorTransaction {
 fun handleResponseDepositCheckStatus(
     response: Response<ResponseBody>,
     onResponse: (CheckStatusDepositResponse?, ErrorTransaction?) -> Unit,
-    depositId: Int
+    depositId: Int,
+    logErrorService: LogErrorService = LogErrorServiceImpl(),
 ) {
     try {
         if (response.isSuccessful) {
             val res: CheckStatusDepositResponse = getResponseJson(response)
-
             if (!checkInternStatusOk(res.status)) {
-                onResponse(null, getErrorResponseJson(response))
+                onResponse(null, getGenericErrorData())
 
                 //Sentry error logs
-                Sentry.setExtra("request_url_status_deposit", "(/api/v2/transaction/deposit/status/$depositId)")
-                Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
+                logErrorService.setExtra(
+                    "request_url_status_deposit",
+                    "(/api/v2/transaction/deposit/status/$depositId)"
+                )
+                logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
             } else {
                 onResponse(res, null)
             }
@@ -53,16 +58,22 @@ fun handleResponseDepositCheckStatus(
             onResponse(null, getErrorResponseJson(response))
 
             //Sentry error logs
-            Sentry.setExtra("request_url_status_deposit", "(/api/v2/transaction/deposit/status/$depositId)")
-            Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
+            logErrorService.setExtra(
+                "request_url_status_deposit",
+                "(/api/v2/transaction/deposit/status/$depositId)"
+            )
+            logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
         }
 
     } catch (err: Exception) {
         onResponse(null, ErrorTransaction(GENERIC_ERROR, null, null))
 
         //Sentry log errors
-        Sentry.setExtra("error_catch_status_deposit", err.message.toString())
-        Sentry.setExtra("request_url_status_deposit", "(/api/v2/transaction/deposit/status/$depositId)")
-        Sentry.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
+        logErrorService.setExtra("error_catch_status_deposit", err.message.toString())
+        logErrorService.setExtra(
+            "request_url_status_deposit",
+            "(/api/v2/transaction/deposit/status/$depositId)"
+        )
+        logErrorService.captureMessage("ERROR_API | status_code: ${response.code()} (api/v2/transaction/deposit/status/{id})")
     }
 }

@@ -3,7 +3,8 @@ package com.paylivre.sdk.gateway.android.data.model.pixApprovalTime
 import com.google.gson.Gson
 import com.paylivre.sdk.gateway.android.data.api.addSentryBreadcrumb
 import com.paylivre.sdk.gateway.android.data.getGenericErrorData
-import io.sentry.Sentry
+import com.paylivre.sdk.gateway.android.services.log.LogErrorService
+import com.paylivre.sdk.gateway.android.services.log.LogErrorServiceImpl
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.lang.Exception
@@ -15,7 +16,6 @@ fun checkInternStatusOk(status: String): Boolean {
 
 fun getResponseJson(response: Response<ResponseBody>): PixApprovalTimeResponse {
     val message = response.body()?.string()
-    println("message: $message")
     //Log error Sentry
     addSentryBreadcrumb("original_response_average_pix_approval_time",
         message.toString())
@@ -27,6 +27,7 @@ fun getResponseJson(response: Response<ResponseBody>): PixApprovalTimeResponse {
 fun handleResponsePixApprovalTime(
     response: Response<ResponseBody>,
     onResponse: (PixApprovalTimeResponse?, Throwable?) -> Unit,
+    logErrorService: LogErrorService = LogErrorServiceImpl(),
 ) {
     try {
         if (response.isSuccessful) {
@@ -37,7 +38,8 @@ fun handleResponsePixApprovalTime(
                 onResponse(null, RuntimeException(message))
 
                 //Sentry log errors
-                Sentry.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
+                logErrorService.setExtra("response_status", res.status)
+                logErrorService.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
             } else {
                 onResponse(res, null)
             }
@@ -47,8 +49,8 @@ fun handleResponsePixApprovalTime(
             onResponse(null, RuntimeException(message))
 
             //Sentry log errors
-            Sentry.setExtra("original_response_error_average_pix_approval_time", response.errorBody().toString())
-            Sentry.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
+            logErrorService.setExtra("original_response_error_average_pix_approval_time", response.errorBody().toString())
+            logErrorService.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
 
         }
 
@@ -56,7 +58,7 @@ fun handleResponsePixApprovalTime(
         onResponse(null, RuntimeException(getGenericErrorData().message))
 
         //Sentry log errors
-        Sentry.setExtra("error_catch_average_pix_approval_time", err.message.toString())
-        Sentry.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
+        logErrorService.setExtra("error_catch_average_pix_approval_time", err.message.toString())
+        logErrorService.captureMessage("ERROR_API (api/v2/gateway/averagePixApprovalTime)")
     }
 }

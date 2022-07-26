@@ -1,0 +1,9 @@
+{
+  "status":"failure",
+  "status_code":200,
+  "message":"OK",
+  "data":{
+    "transaction_status_id":2,
+    "deposit_status_id":2
+  }
+}
