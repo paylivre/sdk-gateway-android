@@ -63,7 +63,7 @@ class CheckStatusDepositHandleResponseTest {
     }
 
     @Test
-    fun `CASE 03, handleResponseDepositCheckStatus, given request isSuccessful and deposit status in response is failure`() {
+    fun `CASE 03, handleResponseDepositCheckStatus, given request isSuccessful and deposit status in response is not success`() {
         // GIVEN
         val logErrorService = LogErrorServiceImplTest()
         val checkStatusDepositResponseDataString =
@@ -104,7 +104,6 @@ class CheckStatusDepositHandleResponseTest {
         // THEN
         Assert.assertEquals(expectedError, receivedError)
         Assert.assertEquals(null, receivedResponse)
-
         Assert.assertEquals(
             listOfListOfCapturedExtrasExpected,
             logErrorService.listOfCapturedExtras
