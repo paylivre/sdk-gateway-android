@@ -121,4 +121,64 @@ class ServicesStatusHandleResponseTest {
         )
         Assert.assertEquals(listOfCapturedMessagesExpected, logErrorService.listOfCapturedMessages)
     }
+
+    @Test
+    fun `CASE 04, instantiating the ServicesStatus class with valid values`() {
+        // GIVEN
+        val servicesStatus =
+            ServicesStatus(
+                statusWallet = true,
+                statusWiretransfer = true,
+                statusBillet = false,
+                statusPix = true,
+            )
+
+        // THEN
+        Assert.assertEquals(true,servicesStatus.statusWallet)
+        Assert.assertEquals(true,servicesStatus.statusWiretransfer)
+        Assert.assertEquals(false,servicesStatus.statusBillet)
+        Assert.assertEquals(true,servicesStatus.statusPix)
+    }
+
+
+    @Test
+    fun `CASE 04b, instantiating the ServicesStatus class with null values`() {
+        // GIVEN
+        val servicesStatus =
+            ServicesStatus(
+                statusWallet = null,
+                statusWiretransfer = null,
+                statusBillet = null,
+                statusPix = null,
+            )
+
+        // THEN
+        Assert.assertEquals(null,servicesStatus.statusWallet)
+        Assert.assertEquals(null,servicesStatus.statusWiretransfer)
+        Assert.assertEquals(null,servicesStatus.statusBillet)
+        Assert.assertEquals(null,servicesStatus.statusPix)
+    }
+
+    @Test
+    fun `CASE 05, instantiating the ServiceStatusResponseAdapter class with valid values`() {
+        // GIVEN
+        val serviceStatusResponseAdapter =
+            ServiceStatusResponseAdapter(
+                status = "success",
+                status_code = 200,
+                message = "OK",
+                data = ServicesStatus(
+                    statusWallet = null,
+                    statusWiretransfer = null,
+                    statusBillet = false,
+                    statusPix = null,
+                ),
+            )
+
+        // THEN
+        Assert.assertEquals("success",serviceStatusResponseAdapter.status)
+        Assert.assertEquals(200,serviceStatusResponseAdapter.status_code)
+        Assert.assertEquals("OK",serviceStatusResponseAdapter.message)
+        Assert.assertEquals(false,serviceStatusResponseAdapter.data.statusBillet)
+    }
 }

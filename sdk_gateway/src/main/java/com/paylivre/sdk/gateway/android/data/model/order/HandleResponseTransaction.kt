@@ -382,7 +382,6 @@ fun getSelectedTypeByType(type: Int): String {
 
 fun getDataWithOnlySelectedType(data: DataGenerateSignature): DataGenerateSignature {
     val selectedType = getSelectedTypeByType(data.type.toInt())
-    println("selectedType: $selectedType")
     return if (selectedType.isNotEmpty()) {
         data.selected_type = selectedType
         data

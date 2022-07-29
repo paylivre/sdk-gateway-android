@@ -25,10 +25,10 @@ fun getResponseJson(response: Response<ResponseBody>): ServiceStatusResponse {
 }
 
 data class ServicesStatus(
-    val statusWallet: Boolean? = null,
-    val statusWiretransfer: Boolean? = null,
-    val statusBillet: Boolean? = null,
-    val statusPix: Boolean? = null,
+    val statusWallet: Boolean?,
+    val statusWiretransfer: Boolean?,
+    val statusBillet: Boolean?,
+    val statusPix: Boolean?,
 )
 
 data class ServiceStatusResponseAdapter(
